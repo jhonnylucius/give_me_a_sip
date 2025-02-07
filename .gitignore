@@ -31,3 +31,7 @@ appdrinks/lib/models/cocktail_api.dart
 appdrinks/lib/utils/generate_drinks_data.dart
 appdrinks/lib/utils/generate_ingredients_map.dart
 appdrinks/lib/utils/generate_special_drinks_data.dart
+appdrinks/.firebaserc
+appdrinks/firebase.json
+appdrinks/analysis_options.yaml
+appdrinks/.metadata
