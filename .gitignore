@@ -35,3 +35,5 @@ appdrinks/.firebaserc
 appdrinks/firebase.json
 appdrinks/analysis_options.yaml
 appdrinks/.metadata
+appdrinks/lib/services/search_service.dart
+appdrinks/storage.rules
