@@ -25,3 +25,9 @@ doc/api/
 
 .flutter-plugins
 .flutter-plugins-dependencies
+appdrinks/android/app/google-services.json
+appdrinks/lib/firebase_options.dart
+appdrinks/lib/models/cocktail_api.dart
+appdrinks/lib/utils/generate_drinks_data.dart
+appdrinks/lib/utils/generate_ingredients_map.dart
+appdrinks/lib/utils/generate_special_drinks_data.dart
