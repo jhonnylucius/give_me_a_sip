@@ -1,0 +1,30 @@
+{
+    "app_name": "NetDrinks",
+    "category": "Categoría",
+    "type": "Tipo",
+    "glass": "Vaso",
+    "ingredients": "Ingredientes",
+    "instructions": "Instrucciones",
+    "login": {
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "sign_in": "Iniciar sesión",
+      "sign_in_google": "Iniciar sesión con Google",
+      "create_account": "Crear una cuenta",
+      "forgot_password": "Olvidé mi contraseña"
+    },
+    "menu": {
+      "home": "Inicio",
+      "logout": "Cerrar sesión",
+      "delete_account": "Eliminar cuenta"
+    },
+    "search": {
+      "title": "Buscar Cocktail",
+      "name": "Nombre del Cocktail",
+      "category": "Categoría"
+    },
+    "verify": {
+      "title": "Verifica tu correo electrónico",
+      "resent": "Correo de verificación reenviado"
+    }
+  }

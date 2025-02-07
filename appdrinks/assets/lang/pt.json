@@ -1,0 +1,30 @@
+{
+    "app_name": "NetDrinks",
+    "category": "Categoria",
+    "type": "Tipo",
+    "glass": "Copo",
+    "ingredients": "Ingredientes",
+    "instructions": "Instruções",
+    "login": {
+      "email": "E-mail",
+      "password": "Senha",
+      "sign_in": "Entrar",
+      "sign_in_google": "Entrar com Google",
+      "create_account": "Criar uma conta",
+      "forgot_password": "Esqueci minha senha"
+    },
+    "menu": {
+      "home": "Início",
+      "logout": "Sair",
+      "delete_account": "Excluir Conta"
+    },
+    "search": {
+      "title": "Pesquisar Cocktail",
+      "name": "Nome do Cocktail",
+      "category": "Categoria"
+    },
+    "verify": {
+      "title": "Verifique seu Email",
+      "resent": "Email de verificação reenviado"
+    }
+  }

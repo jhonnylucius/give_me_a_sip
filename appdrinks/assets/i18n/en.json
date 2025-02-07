@@ -1,0 +1,10 @@
+{
+    "verify": {
+      "title": "Verify Email",
+      "email_sent": "A verification email has been sent to {email}.",
+      "check_email": "Please check your email and click on the verification link.",
+      "resend": "Resend Verification Email",
+      "resent": "Verification email successfully resent!",
+      "waiting": "Waiting for email verification..."
+    }
+}

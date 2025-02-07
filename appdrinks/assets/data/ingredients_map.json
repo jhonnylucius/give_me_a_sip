@@ -1,0 +1,2447 @@
+{
+  "Vodka": {
+    "en": "Vodka",
+    "pt": "Vodka",
+    "es": "Vodka"
+  },
+  "Gin": {
+    "en": "Gin",
+    "pt": "Gin",
+    "es": "Ginebra"
+  },
+  "Rum": {
+    "en": "Rum",
+    "pt": "Rum",
+    "es": "Ron"
+  },
+  "Tequila": {
+    "en": "Tequila",
+    "pt": "Tequila",
+    "es": "Tequila"
+  },
+  "Scotch": {
+    "en": "Scotch",
+    "pt": "Escocês",
+    "es": "escocés"
+  },
+  "Absolut Kurant": {
+    "en": "Absolut Kurant",
+    "pt": "Absolut Kurant",
+    "es": "Absolut Kurant"
+  },
+  "Absolut Peppar": {
+    "en": "Absolut Peppar",
+    "pt": "Absolut Peppar",
+    "es": "Absolut Peppar"
+  },
+  "Absolut Vodka": {
+    "en": "Absolut Vodka",
+    "pt": "Absolut vodka",
+    "es": "Vodka Absolut"
+  },
+  "Advocaat": {
+    "en": "Advocaat",
+    "pt": "Advocaat",
+    "es": "Abogado"
+  },
+  "Aejo Rum": {
+    "en": "Aejo Rum",
+    "pt": "Rum aejo",
+    "es": "Ron de aojo"
+  },
+  "Aftershock": {
+    "en": "Aftershock",
+    "pt": "Aftershock",
+    "es": "Réplica"
+  },
+  "Agave Syrup": {
+    "en": "Agave Syrup",
+    "pt": "Xarope de agave",
+    "es": "Jarabe de agave"
+  },
+  "Ale": {
+    "en": "Ale",
+    "pt": "Ale",
+    "es": "Cerveza inglesa"
+  },
+  "Allspice": {
+    "en": "Allspice",
+    "pt": "Pimenta da Jamaica",
+    "es": "Pimienta de Jamaica"
+  },
+  "Almond Flavoring": {
+    "en": "Almond Flavoring",
+    "pt": "Ar endo aromatizante",
+    "es": "Saborizante de almendras"
+  },
+  "Almond": {
+    "en": "Almond",
+    "pt": "Amêndoa",
+    "es": "Almendra"
+  },
+  "Amaretto": {
+    "en": "Amaretto",
+    "pt": "Amaretto",
+    "es": "Amaretto"
+  },
+  "Angelica Root": {
+    "en": "Angelica Root",
+    "pt": "Angelica Root",
+    "es": "Raíz angelica"
+  },
+  "Angostura Bitters": {
+    "en": "Angostura Bitters",
+    "pt": "Angostura Bitters",
+    "es": "Angostura Bitters"
+  },
+  "Anis": {
+    "en": "Anis",
+    "pt": "Anis",
+    "es": "Anis"
+  },
+  "Anise": {
+    "en": "Anise",
+    "pt": "Anis",
+    "es": "Anís"
+  },
+  "Anisette": {
+    "en": "Anisette",
+    "pt": "Anisette",
+    "es": "Anisete"
+  },
+  "Aperol": {
+    "en": "Aperol",
+    "pt": "Aperol",
+    "es": "Aperol"
+  },
+  "Apfelkorn": {
+    "en": "Apfelkorn",
+    "pt": "Apfelkorn",
+    "es": "Apfelkorn"
+  },
+  "Apple Brandy": {
+    "en": "Apple Brandy",
+    "pt": "Apple Brandy",
+    "es": "Brandy de manzana"
+  },
+  "Apple Cider": {
+    "en": "Apple Cider",
+    "pt": "Cidra de maçã",
+    "es": "Sidra de manzana"
+  },
+  "Apple Juice": {
+    "en": "Apple Juice",
+    "pt": "Suco de maçã",
+    "es": "Zumo de manzana"
+  },
+  "Apple Schnapps": {
+    "en": "Apple Schnapps",
+    "pt": "Apple Schnapps",
+    "es": "Apple Schnapps"
+  },
+  "Apple": {
+    "en": "Apple",
+    "pt": "Maçã",
+    "es": "Manzana"
+  },
+  "Applejack": {
+    "en": "Applejack",
+    "pt": "Applejack",
+    "es": "Aguardiente de manzana"
+  },
+  "Apricot Brandy": {
+    "en": "Apricot Brandy",
+    "pt": "Brandy de damasco",
+    "es": "Brandy de albaricoque"
+  },
+  "Apricot Nectar": {
+    "en": "Apricot Nectar",
+    "pt": "Néctar de damasco",
+    "es": "Néctar de albaricoque"
+  },
+  "Apricot": {
+    "en": "Apricot",
+    "pt": "Damasco",
+    "es": "Albaricoque"
+  },
+  "Aquavit": {
+    "en": "Aquavit",
+    "pt": "Aquavit",
+    "es": "Acuávito"
+  },
+  "Asafoetida": {
+    "en": "Asafoetida",
+    "pt": "Asafoetida",
+    "es": "Asa fétida"
+  },
+  "Añejo Rum": {
+    "en": "Añejo Rum",
+    "pt": "Rum añejo",
+    "es": "Ron de añjo"
+  },
+  "Bacardi Limon": {
+    "en": "Bacardi Limon",
+    "pt": "Bacardi Limon",
+    "es": "Bacardi Limon"
+  },
+  "Bacardi": {
+    "en": "Bacardi",
+    "pt": "Bacardi",
+    "es": "Bacardi"
+  },
+  "Baileys Irish Cream": {
+    "en": "Baileys Irish Cream",
+    "pt": "Creme irlandês Baileys",
+    "es": "Crema irlandesa de Baileys"
+  },
+  "Banana Liqueur": {
+    "en": "Banana Liqueur",
+    "pt": "Licor de banana",
+    "es": "Licor de plátano"
+  },
+  "Banana Rum": {
+    "en": "Banana Rum",
+    "pt": "Rum de banana",
+    "es": "Ron de plátano"
+  },
+  "Banana Syrup": {
+    "en": "Banana Syrup",
+    "pt": "Xarope de banana",
+    "es": "Jarabe de plátano"
+  },
+  "Banana": {
+    "en": "Banana",
+    "pt": "Banana",
+    "es": "Banana"
+  },
+  "Barenjager": {
+    "en": "Barenjager",
+    "pt": "Barenjager",
+    "es": "Barenjager"
+  },
+  "Basil": {
+    "en": "Basil",
+    "pt": "Manjericão",
+    "es": "Albahaca"
+  },
+  "Beef Stock": {
+    "en": "Beef Stock",
+    "pt": "Caldo de carne bovina",
+    "es": "Caldo de carne de res"
+  },
+  "Beer": {
+    "en": "Beer",
+    "pt": "Cerveja",
+    "es": "Cerveza"
+  },
+  "Benedictine": {
+    "en": "Benedictine",
+    "pt": "beneditino",
+    "es": "benedictino"
+  },
+  "Berries": {
+    "en": "Berries",
+    "pt": "Frutas",
+    "es": "Bayas"
+  },
+  "Bitter lemon": {
+    "en": "Bitter lemon",
+    "pt": "Limão amargo",
+    "es": "Limón amargo"
+  },
+  "Bitters": {
+    "en": "Bitters",
+    "pt": "Bitters",
+    "es": "Bíter"
+  },
+  "Black Pepper": {
+    "en": "Black Pepper",
+    "pt": "Pimenta preta",
+    "es": "Pimienta negra"
+  },
+  "Black Rum": {
+    "en": "Black Rum",
+    "pt": "Rum preto",
+    "es": "Ron negro"
+  },
+  "Black Sambuca": {
+    "en": "Black Sambuca",
+    "pt": "Black Sambuca",
+    "es": "Sambuca negra"
+  },
+  "Blackberries": {
+    "en": "Blackberries",
+    "pt": "Blackberries",
+    "es": "Moras"
+  },
+  "Blackberry Brandy": {
+    "en": "Blackberry Brandy",
+    "pt": "BlackBerry Brandy",
+    "es": "Brandy de blackberry"
+  },
+  "Blackberry Schnapps": {
+    "en": "Blackberry Schnapps",
+    "pt": "BlackBerry Schnapps",
+    "es": "Blackberry Schnapps"
+  },
+  "Blackcurrant Cordial": {
+    "en": "Blackcurrant Cordial",
+    "pt": "Blackcurrant Cordial",
+    "es": "Cordial de grosella negra"
+  },
+  "Blackcurrant Schnapps": {
+    "en": "Blackcurrant Schnapps",
+    "pt": "Blackcurrant Schnapps",
+    "es": "Schnapp de groseros negros"
+  },
+  "Blackcurrant Squash": {
+    "en": "Blackcurrant Squash",
+    "pt": "Abóbora de groselha",
+    "es": "Calabaza"
+  },
+  "Blended Whiskey": {
+    "en": "Blended Whiskey",
+    "pt": "Uísque misturado",
+    "es": "Whisky mezclado"
+  },
+  "Blue Curacao": {
+    "en": "Blue Curacao",
+    "pt": "Curaçau azul",
+    "es": "Curacao azul"
+  },
+  "Blue Maui": {
+    "en": "Blue Maui",
+    "pt": "Maui azul",
+    "es": "Maui azul"
+  },
+  "Blueberries": {
+    "en": "Blueberries",
+    "pt": "Mirtilos",
+    "es": "Arándanos"
+  },
+  "Blueberry Schnapps": {
+    "en": "Blueberry Schnapps",
+    "pt": "Schnapps de mirtilo",
+    "es": "Blueberry Schnapps"
+  },
+  "Bourbon": {
+    "en": "Bourbon",
+    "pt": "Bourbon",
+    "es": "Borbón"
+  },
+  "Brandy": {
+    "en": "Brandy",
+    "pt": "conhaque",
+    "es": "brandy"
+  },
+  "Brown Sugar": {
+    "en": "Brown Sugar",
+    "pt": "Açúcar mascavo",
+    "es": "Azúcar morena"
+  },
+  "Butter": {
+    "en": "Butter",
+    "pt": "Manteiga",
+    "es": "Manteca"
+  },
+  "Butterscotch Schnapps": {
+    "en": "Butterscotch Schnapps",
+    "pt": "Butterscotch Schnapps",
+    "es": "Butterscotch schnapps"
+  },
+  "Cachaca": {
+    "en": "Cachaca",
+    "pt": "Cachaca",
+    "es": "Cachaza"
+  },
+  "Calvados": {
+    "en": "Calvados",
+    "pt": "Calvados",
+    "es": "Calvados"
+  },
+  "Campari": {
+    "en": "Campari",
+    "pt": "Campari",
+    "es": "Campari"
+  },
+  "Canadian Whisky": {
+    "en": "Canadian Whisky",
+    "pt": "Uísque canadense",
+    "es": "Whisky canadiense"
+  },
+  "Candy": {
+    "en": "Candy",
+    "pt": "Doce",
+    "es": "Dulce"
+  },
+  "Cantaloupe": {
+    "en": "Cantaloupe",
+    "pt": "Melão",
+    "es": "Cantalupo"
+  },
+  "Caramel Coloring": {
+    "en": "Caramel Coloring",
+    "pt": "Coloração de caramelo",
+    "es": "Coloración de caramelo"
+  },
+  "Carbonated Soft Drink": {
+    "en": "Carbonated Soft Drink",
+    "pt": "Refrigerante carbonatado",
+    "es": "Refresco carbonatado"
+  },
+  "Carbonated Water": {
+    "en": "Carbonated Water",
+    "pt": "Água carbonatada",
+    "es": "Agua carbonatada"
+  },
+  "Cardamom": {
+    "en": "Cardamom",
+    "pt": "Cardamomo",
+    "es": "Cardamomo"
+  },
+  "Cayenne Pepper": {
+    "en": "Cayenne Pepper",
+    "pt": "Pimenta-caiena",
+    "es": "Pimienta de cayena"
+  },
+  "Celery Salt": {
+    "en": "Celery Salt",
+    "pt": "Sal de aipo",
+    "es": "Sal de apio"
+  },
+  "Celery": {
+    "en": "Celery",
+    "pt": "Salsão",
+    "es": "Apio"
+  },
+  "Chambord Raspberry Liqueur": {
+    "en": "Chambord Raspberry Liqueur",
+    "pt": "LICEURO DE FLAMBLEMA DE CHAMBORD",
+    "es": "Licor de frambuesa de chambord"
+  },
+  "Champagne": {
+    "en": "Champagne",
+    "pt": "champanhe",
+    "es": "Champán"
+  },
+  "Cherries": {
+    "en": "Cherries",
+    "pt": "Cerejas",
+    "es": "Guindas"
+  },
+  "Cherry Brandy": {
+    "en": "Cherry Brandy",
+    "pt": "Cherry Brandy",
+    "es": "Brandy de cereza"
+  },
+  "Cherry Cola": {
+    "en": "Cherry Cola",
+    "pt": "Cherry Cola",
+    "es": "Cola de cereza"
+  },
+  "Cherry Grenadine": {
+    "en": "Cherry Grenadine",
+    "pt": "Cherry Grenadine",
+    "es": "Granadina de cereza"
+  },
+  "Cherry Heering": {
+    "en": "Cherry Heering",
+    "pt": "Cherry Heering",
+    "es": "Heering de cereza"
+  },
+  "Cherry Juice": {
+    "en": "Cherry Juice",
+    "pt": "Suco de cereja",
+    "es": "Jugo de cereza"
+  },
+  "Cherry Liqueur": {
+    "en": "Cherry Liqueur",
+    "pt": "Licor de cereja",
+    "es": "Licor de cereza"
+  },
+  "Cherry": {
+    "en": "Cherry",
+    "pt": "Cereja",
+    "es": "Cereza"
+  },
+  "Chocolate Ice-cream": {
+    "en": "Chocolate Ice-cream",
+    "pt": "Sorvete de chocolate",
+    "es": "Helado de chocolate"
+  },
+  "Chocolate Liqueur": {
+    "en": "Chocolate Liqueur",
+    "pt": "Licor de chocolate",
+    "es": "Licor de chocolate"
+  },
+  "Chocolate Milk": {
+    "en": "Chocolate Milk",
+    "pt": "Leite com chocolate",
+    "es": "Leche de chocolate"
+  },
+  "Chocolate Syrup": {
+    "en": "Chocolate Syrup",
+    "pt": "Xarope de chocolate",
+    "es": "Jarabe de chocolate"
+  },
+  "Chocolate": {
+    "en": "Chocolate",
+    "pt": "Chocolate",
+    "es": "Chocolate"
+  },
+  "Cider": {
+    "en": "Cider",
+    "pt": "Cidra",
+    "es": "Sidra"
+  },
+  "Cinnamon Schnapps": {
+    "en": "Cinnamon Schnapps",
+    "pt": "Schnapps de canela",
+    "es": "Canela schnapps"
+  },
+  "Cinnamon": {
+    "en": "Cinnamon",
+    "pt": "Canela",
+    "es": "Canela"
+  },
+  "Citrus Vodka": {
+    "en": "Citrus Vodka",
+    "pt": "Vodka cítrica",
+    "es": "Vodka de cítricos"
+  },
+  "Clamato Juice": {
+    "en": "Clamato Juice",
+    "pt": "Suco de clamato",
+    "es": "Jugo de clamato"
+  },
+  "Cloves": {
+    "en": "Cloves",
+    "pt": "Cravo",
+    "es": "Clavo"
+  },
+  "Club Soda": {
+    "en": "Club Soda",
+    "pt": "Refrigerante de clube",
+    "es": "Soda de club"
+  },
+  "Coca-Cola": {
+    "en": "Coca-Cola",
+    "pt": "Coca Cola",
+    "es": "Coca-cola"
+  },
+  "Cocktail Onion": {
+    "en": "Cocktail Onion",
+    "pt": "Cebola de coquetel",
+    "es": "Cebolla"
+  },
+  "Cocoa Powder": {
+    "en": "Cocoa Powder",
+    "pt": "Cacau em pó",
+    "es": "Cacao en polvo"
+  },
+  "Coconut Cream": {
+    "en": "Coconut Cream",
+    "pt": "Creme de coco",
+    "es": "Crema de coco"
+  },
+  "Coconut Liqueur": {
+    "en": "Coconut Liqueur",
+    "pt": "Licor de coco",
+    "es": "Licor de coco"
+  },
+  "Coconut Milk": {
+    "en": "Coconut Milk",
+    "pt": "Leite de coco",
+    "es": "Leche de coco"
+  },
+  "Coconut Rum": {
+    "en": "Coconut Rum",
+    "pt": "Rum de coco",
+    "es": "Ron de coco"
+  },
+  "Coconut Syrup": {
+    "en": "Coconut Syrup",
+    "pt": "Xarope de coco",
+    "es": "Jarabe de coco"
+  },
+  "Coffee Brandy": {
+    "en": "Coffee Brandy",
+    "pt": "Coffee Brandy",
+    "es": "Brandy de café"
+  },
+  "Coffee Liqueur": {
+    "en": "Coffee Liqueur",
+    "pt": "Licor de café",
+    "es": "Licor de café"
+  },
+  "Coffee": {
+    "en": "Coffee",
+    "pt": "Café",
+    "es": "Café"
+  },
+  "Cognac": {
+    "en": "Cognac",
+    "pt": "Conhaque",
+    "es": "Coñac"
+  },
+  "Cointreau": {
+    "en": "Cointreau",
+    "pt": "Cointreau",
+    "es": "Cointreau"
+  },
+  "Cola": {
+    "en": "Cola",
+    "pt": "Cola",
+    "es": "Reajuste salarial"
+  },
+  "Cold Water": {
+    "en": "Cold Water",
+    "pt": "Água fria",
+    "es": "Agua fría"
+  },
+  "Condensed Milk": {
+    "en": "Condensed Milk",
+    "pt": "Leite condensado",
+    "es": "Leche condensada"
+  },
+  "Coriander": {
+    "en": "Coriander",
+    "pt": "Coentro",
+    "es": "Cilantro"
+  },
+  "Corn Syrup": {
+    "en": "Corn Syrup",
+    "pt": "Xarope de milho",
+    "es": "Jarabe de maíz"
+  },
+  "Cornstarch": {
+    "en": "Cornstarch",
+    "pt": "Amido de milho",
+    "es": "Maicena"
+  },
+  "Corona": {
+    "en": "Corona",
+    "pt": "Corona",
+    "es": "Corona"
+  },
+  "Cranberries": {
+    "en": "Cranberries",
+    "pt": "Cranberries",
+    "es": "Arándanos"
+  },
+  "Cranberry Juice": {
+    "en": "Cranberry Juice",
+    "pt": "Suco de cranberry",
+    "es": "Jugo de arándano"
+  },
+  "Cranberry Liqueur": {
+    "en": "Cranberry Liqueur",
+    "pt": "Licor de cranberry",
+    "es": "Licor de arándano"
+  },
+  "Cranberry Vodka": {
+    "en": "Cranberry Vodka",
+    "pt": "Vodka de Cranberry",
+    "es": "Vodka de arándano"
+  },
+  "Cream of Coconut": {
+    "en": "Cream of Coconut",
+    "pt": "Creme de coco",
+    "es": "Crema de coco"
+  },
+  "Cream Sherry": {
+    "en": "Cream Sherry",
+    "pt": "Creme xerez",
+    "es": "Jerez de crema"
+  },
+  "Cream Soda": {
+    "en": "Cream Soda",
+    "pt": "Soda creme",
+    "es": "Soda de crema"
+  },
+  "Cream": {
+    "en": "Cream",
+    "pt": "Creme",
+    "es": "Crema"
+  },
+  "Creme De Almond": {
+    "en": "Creme De Almond",
+    "pt": "Creme de Almond",
+    "es": "Crema de almendra"
+  },
+  "Creme De Banane": {
+    "en": "Creme De Banane",
+    "pt": "Creme de Banane",
+    "es": "Creme de Banane"
+  },
+  "Creme De Cacao": {
+    "en": "Creme De Cacao",
+    "pt": "Creme de Cacao",
+    "es": "Crema de cacao"
+  },
+  "Creme De Cassis": {
+    "en": "Creme De Cassis",
+    "pt": "Creme de Cassis",
+    "es": "Crema de cassis"
+  },
+  "Creme De Noyaux": {
+    "en": "Creme De Noyaux",
+    "pt": "Creme de Noyaux",
+    "es": "Crema de noyaux"
+  },
+  "Creme Fraiche": {
+    "en": "Creme Fraiche",
+    "pt": "Creme fraiche",
+    "es": "Crema fraiche"
+  },
+  "Crown Royal": {
+    "en": "Crown Royal",
+    "pt": "Coroa Royal",
+    "es": "Corona real"
+  },
+  "Crystal Light": {
+    "en": "Crystal Light",
+    "pt": "Luz cristalina",
+    "es": "Luz de cristal"
+  },
+  "Cucumber": {
+    "en": "Cucumber",
+    "pt": "Pepino",
+    "es": "Pepino"
+  },
+  "Cumin Powder": {
+    "en": "Cumin Powder",
+    "pt": "Cominho em pó",
+    "es": "Polvo de comino"
+  },
+  "Cumin Seed": {
+    "en": "Cumin Seed",
+    "pt": "Semente de cominho",
+    "es": "Semilla de comino"
+  },
+  "Curacao": {
+    "en": "Curacao",
+    "pt": "Curaçao",
+    "es": "Curacao"
+  },
+  "Cynar": {
+    "en": "Cynar",
+    "pt": "Cynar",
+    "es": "Cynar"
+  },
+  "Daiquiri Mix": {
+    "en": "Daiquiri Mix",
+    "pt": "Mix da Daiquiri",
+    "es": "Mezcla de daiquiri"
+  },
+  "Dark Chocolate": {
+    "en": "Dark Chocolate",
+    "pt": "Chocolate escuro",
+    "es": "Chocolate oscuro"
+  },
+  "Dark Creme De Cacao": {
+    "en": "Dark Creme De Cacao",
+    "pt": "Dark Creme de Cacao",
+    "es": "Crema oscura de cacao"
+  },
+  "Dark Rum": {
+    "en": "Dark Rum",
+    "pt": "Rum escuro",
+    "es": "Ron oscuro"
+  },
+  "Dark Soy Sauce": {
+    "en": "Dark Soy Sauce",
+    "pt": "Molho de soja escuro",
+    "es": "Salsa de soja oscura"
+  },
+  "Demerara Sugar": {
+    "en": "Demerara Sugar",
+    "pt": "Demerara Sugar",
+    "es": "Azúcar demerara"
+  },
+  "Dr. Pepper": {
+    "en": "Dr. Pepper",
+    "pt": "Dr. Pepper",
+    "es": "Dr. Pepper"
+  },
+  "Drambuie": {
+    "en": "Drambuie",
+    "pt": "Drambuie",
+    "es": "Drambuie"
+  },
+  "Dried Oregano": {
+    "en": "Dried Oregano",
+    "pt": "Orégano seco",
+    "es": "Orégano seco"
+  },
+  "Dry Vermouth": {
+    "en": "Dry Vermouth",
+    "pt": "Vermute seco",
+    "es": "Vermut seco"
+  },
+  "Dubonnet Blanc": {
+    "en": "Dubonnet Blanc",
+    "pt": "Dubonnet Blanc",
+    "es": "Dubonnet Blanc"
+  },
+  "Dubonnet Rouge": {
+    "en": "Dubonnet Rouge",
+    "pt": "Dubonnet Rouge",
+    "es": "Dubonnet Rouge"
+  },
+  "Egg White": {
+    "en": "Egg White",
+    "pt": "Ovo branco",
+    "es": "Clara de huevo"
+  },
+  "Egg Yolk": {
+    "en": "Egg Yolk",
+    "pt": "Gema de ovo",
+    "es": "Yema"
+  },
+  "Egg": {
+    "en": "Egg",
+    "pt": "Ovo",
+    "es": "Huevo"
+  },
+  "Eggnog": {
+    "en": "Eggnog",
+    "pt": "Gemada",
+    "es": "Ponche de huevo"
+  },
+  "Erin Cream": {
+    "en": "Erin Cream",
+    "pt": "Erin Cream",
+    "es": "Crema erin"
+  },
+  "Espresso": {
+    "en": "Espresso",
+    "pt": "Espresso",
+    "es": "Café exprés"
+  },
+  "Everclear": {
+    "en": "Everclear",
+    "pt": "Everclear",
+    "es": "Eterna"
+  },
+  "Fanta": {
+    "en": "Fanta",
+    "pt": "Fanta",
+    "es": "Fanta"
+  },
+  "Fennel Seeds": {
+    "en": "Fennel Seeds",
+    "pt": "Sementes de erva -doce",
+    "es": "Semillas de hinojo"
+  },
+  "Firewater": {
+    "en": "Firewater",
+    "pt": "Firewater",
+    "es": "Firewater"
+  },
+  "Flaked Almonds": {
+    "en": "Flaked Almonds",
+    "pt": "Amêndoas em flocos",
+    "es": "Almendras en escamas"
+  },
+  "Food Coloring": {
+    "en": "Food Coloring",
+    "pt": "Corante alimentar",
+    "es": "Colorante de alimentos"
+  },
+  "Forbidden Fruit": {
+    "en": "Forbidden Fruit",
+    "pt": "Fruto proibido",
+    "es": "Fruta prohibida"
+  },
+  "Frangelico": {
+    "en": "Frangelico",
+    "pt": "Frangelico",
+    "es": "Frangelico"
+  },
+  "Fresca": {
+    "en": "Fresca",
+    "pt": "Fresca",
+    "es": "Fresca"
+  },
+  "Fresh Basil": {
+    "en": "Fresh Basil",
+    "pt": "Manjericão fresco",
+    "es": "Albahaca fresca"
+  },
+  "Fresh Lemon Juice": {
+    "en": "Fresh Lemon Juice",
+    "pt": "Suco de limão fresco",
+    "es": "Jugo de limón fresco"
+  },
+  "Fruit Juice": {
+    "en": "Fruit Juice",
+    "pt": "Suco de frutas",
+    "es": "Zumo de frutas"
+  },
+  "Fruit Punch": {
+    "en": "Fruit Punch",
+    "pt": "Soco da fruta",
+    "es": "Golpe de fruta"
+  },
+  "Fruit": {
+    "en": "Fruit",
+    "pt": "Fruta",
+    "es": "Fruta"
+  },
+  "Galliano": {
+    "en": "Galliano",
+    "pt": "Galliano",
+    "es": "Galliano"
+  },
+  "Garlic Sauce": {
+    "en": "Garlic Sauce",
+    "pt": "Molho de alho",
+    "es": "Salsa de ajo"
+  },
+  "Gatorade": {
+    "en": "Gatorade",
+    "pt": "Gatorade",
+    "es": "Gatorade"
+  },
+  "Ginger Ale": {
+    "en": "Ginger Ale",
+    "pt": "Ginger Ale",
+    "es": "Cerveza de jengibre"
+  },
+  "Ginger Beer": {
+    "en": "Ginger Beer",
+    "pt": "Cerveja de gengibre",
+    "es": "Cerveza de jengibre"
+  },
+  "Ginger": {
+    "en": "Ginger",
+    "pt": "Ruivo",
+    "es": "Jengibre"
+  },
+  "Glycerine": {
+    "en": "Glycerine",
+    "pt": "Glicerina",
+    "es": "Glicerina"
+  },
+  "Godiva Liqueur": {
+    "en": "Godiva Liqueur",
+    "pt": "Godiva licor",
+    "es": "Licor de diosiva"
+  },
+  "Gold rum": {
+    "en": "Gold rum",
+    "pt": "Rum de ouro",
+    "es": "Ron de oro"
+  },
+  "Gold Tequila": {
+    "en": "Gold Tequila",
+    "pt": "Tequila de ouro",
+    "es": "Tequila de oro"
+  },
+  "Goldschlager": {
+    "en": "Goldschlager",
+    "pt": "Goldschlager",
+    "es": "Goldschlager"
+  },
+  "Grain Alcohol": {
+    "en": "Grain Alcohol",
+    "pt": "Álcool de grãos",
+    "es": "Alcohol de grano"
+  },
+  "Grand Marnier": {
+    "en": "Grand Marnier",
+    "pt": "Grand Marnier",
+    "es": "Grandero"
+  },
+  "Granulated Sugar": {
+    "en": "Granulated Sugar",
+    "pt": "Açúcar granulado",
+    "es": "Azúcar granulada"
+  },
+  "Grape juice": {
+    "en": "Grape juice",
+    "pt": "Suco de uva",
+    "es": "Jugo de uva"
+  },
+  "Grape soda": {
+    "en": "Grape soda",
+    "pt": "Soda de uva",
+    "es": "Refresco de uva"
+  },
+  "Grapefruit Juice": {
+    "en": "Grapefruit Juice",
+    "pt": "Suco de toranja",
+    "es": "Jugo de toronja"
+  },
+  "Grapes": {
+    "en": "Grapes",
+    "pt": "Uvas",
+    "es": "Uvas"
+  },
+  "Green Chartreuse": {
+    "en": "Green Chartreuse",
+    "pt": "Chartreuse verde",
+    "es": "Chartreuse verde"
+  },
+  "Green Creme de Menthe": {
+    "en": "Green Creme de Menthe",
+    "pt": "Creme Green de Menthe",
+    "es": "Crema verde de menthe"
+  },
+  "Green Ginger Wine": {
+    "en": "Green Ginger Wine",
+    "pt": "Vinho de gengibre verde",
+    "es": "Vino verde jengibre"
+  },
+  "Green Olives": {
+    "en": "Green Olives",
+    "pt": "Azeitonas verdes",
+    "es": "Aceitunas verdes"
+  },
+  "Grenadine": {
+    "en": "Grenadine",
+    "pt": "Grenadine",
+    "es": "Granadina"
+  },
+  "Ground Ginger": {
+    "en": "Ground Ginger",
+    "pt": "Gengibre moído",
+    "es": "Jengibre molido"
+  },
+  "Guava juice": {
+    "en": "Guava juice",
+    "pt": "Suco de goiaba",
+    "es": "Jugo de guayaba"
+  },
+  "Guinness stout": {
+    "en": "Guinness stout",
+    "pt": "Guinness Stout",
+    "es": "Guinness Stout"
+  },
+  "Guinness": {
+    "en": "Guinness",
+    "pt": "Guinness",
+    "es": "Guinaje"
+  },
+  "Half-and-half": {
+    "en": "Half-and-half",
+    "pt": "Meio e meio",
+    "es": "Mitad y media"
+  },
+  "Hawaiian punch": {
+    "en": "Hawaiian punch",
+    "pt": "Soco havaiano",
+    "es": "Punch hawaiano"
+  },
+  "Hazelnut liqueur": {
+    "en": "Hazelnut liqueur",
+    "pt": "Licor de avelã",
+    "es": "Licor de avellana"
+  },
+  "Heavy cream": {
+    "en": "Heavy cream",
+    "pt": "Creme de leite",
+    "es": "Crema espesa"
+  },
+  "Honey": {
+    "en": "Honey",
+    "pt": "Mel",
+    "es": "Miel"
+  },
+  "Hooch": {
+    "en": "Hooch",
+    "pt": "Hooch",
+    "es": "Bebida alcohólica"
+  },
+  "Hot Chocolate": {
+    "en": "Hot Chocolate",
+    "pt": "Chocolate quente",
+    "es": "Chocolate caliente"
+  },
+  "Hot Damn": {
+    "en": "Hot Damn",
+    "pt": "Damn quente",
+    "es": "Maldición"
+  },
+  "Hot Sauce": {
+    "en": "Hot Sauce",
+    "pt": "Molho picante",
+    "es": "Salsa picante"
+  },
+  "Hpnotiq": {
+    "en": "Hpnotiq",
+    "pt": "Hpnotiq",
+    "es": "Hpnotiq"
+  },
+  "Ice-Cream": {
+    "en": "Ice-Cream",
+    "pt": "Sorvete",
+    "es": "Helado"
+  },
+  "Ice": {
+    "en": "Ice",
+    "pt": "Gelo",
+    "es": "Hielo"
+  },
+  "Iced tea": {
+    "en": "Iced tea",
+    "pt": "Chá gelado",
+    "es": "Té helado"
+  },
+  "Irish cream": {
+    "en": "Irish cream",
+    "pt": "Creme irlandês",
+    "es": "Crema irlandesa"
+  },
+  "Irish Whiskey": {
+    "en": "Irish Whiskey",
+    "pt": "Uísque irlandês",
+    "es": "Whisky irlandés"
+  },
+  "Jack Daniels": {
+    "en": "Jack Daniels",
+    "pt": "Jack Daniels",
+    "es": "Jack Daniels"
+  },
+  "Jello": {
+    "en": "Jello",
+    "pt": "Jello",
+    "es": "Gelatina"
+  },
+  "Jelly": {
+    "en": "Jelly",
+    "pt": "Geléia",
+    "es": "Gelatina"
+  },
+  "Jagermeister": {
+    "en": "Jagermeister",
+    "pt": "Jagermeister",
+    "es": "Jagermeister"
+  },
+  "Jim Beam": {
+    "en": "Jim Beam",
+    "pt": "Jim Beam",
+    "es": "Beam Jim"
+  },
+  "Johnnie Walker": {
+    "en": "Johnnie Walker",
+    "pt": "Johnnie Walker",
+    "es": "Johnnie Walker"
+  },
+  "Kahlua": {
+    "en": "Kahlua",
+    "pt": "Kahlua",
+    "es": "Kahlua"
+  },
+  "Key Largo Schnapps": {
+    "en": "Key Largo Schnapps",
+    "pt": "Key Largo Schnapps",
+    "es": "Key Largo Schnapps"
+  },
+  "Kirschwasser": {
+    "en": "Kirschwasser",
+    "pt": "Kirschwasser",
+    "es": "Kirschwasser"
+  },
+  "Kiwi liqueur": {
+    "en": "Kiwi liqueur",
+    "pt": "Licor kiwi",
+    "es": "Licor kiwi"
+  },
+  "Kiwi": {
+    "en": "Kiwi",
+    "pt": "Kiwi",
+    "es": "Kiwi"
+  },
+  "Kool-Aid": {
+    "en": "Kool-Aid",
+    "pt": "Kool-Aid",
+    "es": "Kool-aidio"
+  },
+  "Kummel": {
+    "en": "Kummel",
+    "pt": "Kummel",
+    "es": "Kummel"
+  },
+  "Lager": {
+    "en": "Lager",
+    "pt": "Lager",
+    "es": "Cerveza"
+  },
+  "Lemon Juice": {
+    "en": "Lemon Juice",
+    "pt": "Suco de limão",
+    "es": "Zumo de limón"
+  },
+  "Lemon Peel": {
+    "en": "Lemon Peel",
+    "pt": "Casca de limão",
+    "es": "Cáscara de limón"
+  },
+  "Lemon soda": {
+    "en": "Lemon soda",
+    "pt": "Soda de limão",
+    "es": "Refresco de limón"
+  },
+  "Lemon vodka": {
+    "en": "Lemon vodka",
+    "pt": "Vodka de limão",
+    "es": "Vodka de limón"
+  },
+  "Lemon-lime soda": {
+    "en": "Lemon-lime soda",
+    "pt": "Refrigerante de limão-limão",
+    "es": "Refresco de lima de limón"
+  },
+  "lemon-lime": {
+    "en": "lemon-lime",
+    "pt": "limão-limão",
+    "es": "lima"
+  },
+  "lemon": {
+    "en": "lemon",
+    "pt": "limão",
+    "es": "limón"
+  },
+  "Lemonade": {
+    "en": "Lemonade",
+    "pt": "Limonada",
+    "es": "Limonada"
+  },
+  "Licorice Root": {
+    "en": "Licorice Root",
+    "pt": "Raiz de alcaçuz",
+    "es": "Raíz de regaliz"
+  },
+  "Light Cream": {
+    "en": "Light Cream",
+    "pt": "Creme leve",
+    "es": "Crema ligera"
+  },
+  "Light Rum": {
+    "en": "Light Rum",
+    "pt": "Rum leve",
+    "es": "Ron ligero"
+  },
+  "Lillet": {
+    "en": "Lillet",
+    "pt": "Lillet",
+    "es": "Lírica"
+  },
+  "Lime juice cordial": {
+    "en": "Lime juice cordial",
+    "pt": "Suco de limão cordial",
+    "es": "Jugo de lima cordial"
+  },
+  "Lime Juice": {
+    "en": "Lime Juice",
+    "pt": "Suco de limão",
+    "es": "Zumo de lima"
+  },
+  "Lime liqueur": {
+    "en": "Lime liqueur",
+    "pt": "Licor de limão",
+    "es": "Licor de lima"
+  },
+  "Lime Peel": {
+    "en": "Lime Peel",
+    "pt": "Casca de limão",
+    "es": "Cáscara de lima"
+  },
+  "Lime vodka": {
+    "en": "Lime vodka",
+    "pt": "Vodka de limão",
+    "es": "Vodka de lima"
+  },
+  "Lime": {
+    "en": "Lime",
+    "pt": "Lima",
+    "es": "Cal"
+  },
+  "Limeade": {
+    "en": "Limeade",
+    "pt": "Limada",
+    "es": "Lima"
+  },
+  "Madeira": {
+    "en": "Madeira",
+    "pt": "Madeira",
+    "es": "Madeira"
+  },
+  "Malibu Rum": {
+    "en": "Malibu Rum",
+    "pt": "Malibu Rum",
+    "es": "Ron de malibu"
+  },
+  "Mandarin": {
+    "en": "Mandarin",
+    "pt": "Mandarim",
+    "es": "mandarín"
+  },
+  "Mandarine napoleon": {
+    "en": "Mandarine napoleon",
+    "pt": "Mandarina Napoleão",
+    "es": "Mandarina napoleón"
+  },
+  "Mango": {
+    "en": "Mango",
+    "pt": "manga",
+    "es": "mango"
+  },
+  "Maple syrup": {
+    "en": "Maple syrup",
+    "pt": "Xarope de bordo",
+    "es": "Jarabe de arce"
+  },
+  "Maraschino cherry juice": {
+    "en": "Maraschino cherry juice",
+    "pt": "Suco de cereja Maraschino",
+    "es": "Jugo de cereza maraschino"
+  },
+  "Maraschino Cherry": {
+    "en": "Maraschino Cherry",
+    "pt": "Maraschino Cherry",
+    "es": "Cereza maraschino"
+  },
+  "Maraschino Liqueur": {
+    "en": "Maraschino Liqueur",
+    "pt": "LICEURO DE MARASCHINO",
+    "es": "Licor marásquino"
+  },
+  "Margarita mix": {
+    "en": "Margarita mix",
+    "pt": "Mix de margarita",
+    "es": "Mezcla de margarita"
+  },
+  "Marjoram leaves": {
+    "en": "Marjoram leaves",
+    "pt": "Marjoram sai",
+    "es": "Marjoram se va"
+  },
+  "Marshmallows": {
+    "en": "Marshmallows",
+    "pt": "Marshmallows",
+    "es": "Malvaviscos"
+  },
+  "Maui": {
+    "en": "Maui",
+    "pt": "Maui",
+    "es": "Maui"
+  },
+  "Melon Liqueur": {
+    "en": "Melon Liqueur",
+    "pt": "Licor de melão",
+    "es": "Licor de melón"
+  },
+  "Melon Vodka": {
+    "en": "Melon Vodka",
+    "pt": "Melon Vodka",
+    "es": "Vodka de melón"
+  },
+  "Mezcal": {
+    "en": "Mezcal",
+    "pt": "Mezcal",
+    "es": "Mezcal"
+  },
+  "Midori Melon Liqueur": {
+    "en": "Midori Melon Liqueur",
+    "pt": "Midori Melon Liqueur",
+    "es": "Licor de melón de Midori"
+  },
+  "Midori": {
+    "en": "Midori",
+    "pt": "Midori",
+    "es": "Midori"
+  },
+  "Milk": {
+    "en": "Milk",
+    "pt": "Leite",
+    "es": "Leche"
+  },
+  "Mint syrup": {
+    "en": "Mint syrup",
+    "pt": "Xarope de hortelã",
+    "es": "Jarabe de menta"
+  },
+  "Mint": {
+    "en": "Mint",
+    "pt": "Hortelã",
+    "es": "Menta"
+  },
+  "Mountain Dew": {
+    "en": "Mountain Dew",
+    "pt": "Mountain Dew",
+    "es": "Rocío de montaña"
+  },
+  "Nutmeg": {
+    "en": "Nutmeg",
+    "pt": "Noz -moscada",
+    "es": "Nuez moscada"
+  },
+  "Olive Oil": {
+    "en": "Olive Oil",
+    "pt": "Azeite",
+    "es": "Aceite de oliva"
+  },
+  "Olive": {
+    "en": "Olive",
+    "pt": "Azeitona",
+    "es": "Aceituna"
+  },
+  "Onion": {
+    "en": "Onion",
+    "pt": "Cebola",
+    "es": "Cebolla"
+  },
+  "Orange Bitters": {
+    "en": "Orange Bitters",
+    "pt": "Bitters laranja",
+    "es": "Amargos de naranja"
+  },
+  "Orange Curacao": {
+    "en": "Orange Curacao",
+    "pt": "Curaçao laranja",
+    "es": "Naranja curacao"
+  },
+  "Orange Juice": {
+    "en": "Orange Juice",
+    "pt": "Suco de laranja",
+    "es": "Zumo de naranja"
+  },
+  "Orange liqueur": {
+    "en": "Orange liqueur",
+    "pt": "Licor de laranja",
+    "es": "Licor naranja"
+  },
+  "Orange Peel": {
+    "en": "Orange Peel",
+    "pt": "Casca de laranja",
+    "es": "Cáscara de naranja"
+  },
+  "Orange rum": {
+    "en": "Orange rum",
+    "pt": "Rum laranja",
+    "es": "Ron naranja"
+  },
+  "Orange Soda": {
+    "en": "Orange Soda",
+    "pt": "Soda de laranja",
+    "es": "Refresco de naranja"
+  },
+  "Orange spiral": {
+    "en": "Orange spiral",
+    "pt": "Espiral laranja",
+    "es": "Espiral naranja"
+  },
+  "Orange vodka": {
+    "en": "Orange vodka",
+    "pt": "Vodka laranja",
+    "es": "Vodka naranja"
+  },
+  "Orange": {
+    "en": "Orange",
+    "pt": "Laranja",
+    "es": "Naranja"
+  },
+  "Oreo cookie": {
+    "en": "Oreo cookie",
+    "pt": "Oreo Cookie",
+    "es": "Oreo Cookie"
+  },
+  "Orgeat Syrup": {
+    "en": "Orgeat Syrup",
+    "pt": "Xarope de orgeat",
+    "es": "Jarabe"
+  },
+  "Ouzo": {
+    "en": "Ouzo",
+    "pt": "Ouzo",
+    "es": "Ouzo"
+  },
+  "Oyster Sauce": {
+    "en": "Oyster Sauce",
+    "pt": "Molho de ostra",
+    "es": "Salsa de ostras"
+  },
+  "Papaya juice": {
+    "en": "Papaya juice",
+    "pt": "Suco de mamão",
+    "es": "Jugo de papaya"
+  },
+  "Papaya": {
+    "en": "Papaya",
+    "pt": "Mamão",
+    "es": "Papaya"
+  },
+  "Parfait amour": {
+    "en": "Parfait amour",
+    "pt": "Parfait amour",
+    "es": "Parfait amour"
+  },
+  "Passion fruit juice": {
+    "en": "Passion fruit juice",
+    "pt": "Suco de maracujá",
+    "es": "Jugo de fruta de pasión"
+  },
+  "Passion fruit syrup": {
+    "en": "Passion fruit syrup",
+    "pt": "Xarope de maracujá",
+    "es": "Jarabe de fruta de pasión"
+  },
+  "Passoa": {
+    "en": "Passoa",
+    "pt": "Passoa",
+    "es": "Passoa"
+  },
+  "Peach brandy": {
+    "en": "Peach brandy",
+    "pt": "Brandy de pêssego",
+    "es": "Brandy de durazno"
+  },
+  "Peach juice": {
+    "en": "Peach juice",
+    "pt": "Suco de pêssego",
+    "es": "Jugo de durazno"
+  },
+  "Peach liqueur": {
+    "en": "Peach liqueur",
+    "pt": "Licor de pêssego",
+    "es": "Licor de durazno"
+  },
+  "Peach Nectar": {
+    "en": "Peach Nectar",
+    "pt": "Néctar de pêssego",
+    "es": "Néctar de durazno"
+  },
+  "Peach Schnapps": {
+    "en": "Peach Schnapps",
+    "pt": "Schnapps de pêssego",
+    "es": "Peach Schnapps"
+  },
+  "Peach Vodka": {
+    "en": "Peach Vodka",
+    "pt": "Vodka de pêssego",
+    "es": "Vodka de durazno"
+  },
+  "Peach": {
+    "en": "Peach",
+    "pt": "Pêssego",
+    "es": "Durazno"
+  },
+  "Peachtree schnapps": {
+    "en": "Peachtree schnapps",
+    "pt": "Peachtree Schnapps",
+    "es": "Peachtree Schnapps"
+  },
+  "Peanut Oil": {
+    "en": "Peanut Oil",
+    "pt": "Óleo de amendoim",
+    "es": "Aceite de cacahuete"
+  },
+  "Pepper": {
+    "en": "Pepper",
+    "pt": "Pimenta",
+    "es": "Pimienta"
+  },
+  "Peppermint extract": {
+    "en": "Peppermint extract",
+    "pt": "Extrato de hortelã -pimenta",
+    "es": "Extracto de menta"
+  },
+  "Peppermint Schnapps": {
+    "en": "Peppermint Schnapps",
+    "pt": "Schnapps de hortelã -pimenta",
+    "es": "Schnapps de menta"
+  },
+  "Pepsi Cola": {
+    "en": "Pepsi Cola",
+    "pt": "Pepsi Cola",
+    "es": "Pepsi cola"
+  },
+  "Pernod": {
+    "en": "Pernod",
+    "pt": "Pernod",
+    "es": "Pernod"
+  },
+  "Peychaud bitters": {
+    "en": "Peychaud bitters",
+    "pt": "Peychaud Bitters",
+    "es": "Amargos de peychaud"
+  },
+  "Pina colada mix": {
+    "en": "Pina colada mix",
+    "pt": "Mix Pina Colada",
+    "es": "Mezcla de piña colada"
+  },
+  "Pineapple Juice": {
+    "en": "Pineapple Juice",
+    "pt": "Suco de abacaxi",
+    "es": "Jugo de piña"
+  },
+  "Pineapple rum": {
+    "en": "Pineapple rum",
+    "pt": "Rum de abacaxi",
+    "es": "Ron de piña"
+  },
+  "Pineapple vodka": {
+    "en": "Pineapple vodka",
+    "pt": "Vodka de abacaxi",
+    "es": "Vodka de piña"
+  },
+  "Pineapple-orange-banana juice": {
+    "en": "Pineapple-orange-banana juice",
+    "pt": "Suco de abacaxi-abacaxi-laranja",
+    "es": "Jugo de piña-naranja-banana"
+  },
+  "Pineapple": {
+    "en": "Pineapple",
+    "pt": "Abacaxi",
+    "es": "Piña"
+  },
+  "Pink lemonade": {
+    "en": "Pink lemonade",
+    "pt": "Limonada rosa",
+    "es": "Limonada rosa"
+  },
+  "Pisang Ambon": {
+    "en": "Pisang Ambon",
+    "pt": "Pisang Ambon",
+    "es": "Pisang Ambon"
+  },
+  "Pisco": {
+    "en": "Pisco",
+    "pt": "Pisco",
+    "es": "Pisco"
+  },
+  "Plain Chocolate": {
+    "en": "Plain Chocolate",
+    "pt": "Chocolate simples",
+    "es": "Chocolate a la altura"
+  },
+  "Plain Flour": {
+    "en": "Plain Flour",
+    "pt": "Farinha simples",
+    "es": "Harina lisa"
+  },
+  "Plums": {
+    "en": "Plums",
+    "pt": "Ameixas",
+    "es": "Ciruelas"
+  },
+  "Port": {
+    "en": "Port",
+    "pt": "Porta",
+    "es": "Puerto"
+  },
+  "Powdered Sugar": {
+    "en": "Powdered Sugar",
+    "pt": "Açúcar em pó",
+    "es": "Azúcar en polvo"
+  },
+  "Purple passion": {
+    "en": "Purple passion",
+    "pt": "Paixão roxa",
+    "es": "Pasión Púrpura"
+  },
+  "Raisins": {
+    "en": "Raisins",
+    "pt": "Passas",
+    "es": "Pasas"
+  },
+  "Raspberry cordial": {
+    "en": "Raspberry cordial",
+    "pt": "Framboesa cordial",
+    "es": "Frambuesa cordial"
+  },
+  "Raspberry Jam": {
+    "en": "Raspberry Jam",
+    "pt": "Geléia de framboesa",
+    "es": "Mermelada de frambuesa"
+  },
+  "Raspberry Juice": {
+    "en": "Raspberry Juice",
+    "pt": "Suco de framboesa",
+    "es": "Jugo de frambuesa"
+  },
+  "Raspberry Liqueur": {
+    "en": "Raspberry Liqueur",
+    "pt": "Licor de framboesa",
+    "es": "Licor de frambuesa"
+  },
+  "Raspberry schnapps": {
+    "en": "Raspberry schnapps",
+    "pt": "Schnapps de framboesa",
+    "es": "Raspberry Schnapps"
+  },
+  "Raspberry syrup": {
+    "en": "Raspberry syrup",
+    "pt": "Xarope de framboesa",
+    "es": "Jarabe de frambuesa"
+  },
+  "Raspberry Vodka": {
+    "en": "Raspberry Vodka",
+    "pt": "Vodka de framboesa",
+    "es": "Vodka de frambuesa"
+  },
+  "Red Chile Flakes": {
+    "en": "Red Chile Flakes",
+    "pt": "Flocos vermelhos do chile",
+    "es": "Copos de chile rojo"
+  },
+  "Red Chili Flakes": {
+    "en": "Red Chili Flakes",
+    "pt": "Flocos de pimenta vermelha",
+    "es": "Copos de chile rojo"
+  },
+  "Red Hot Chili Flakes": {
+    "en": "Red Hot Chili Flakes",
+    "pt": "Flocos de pimenta vermelha",
+    "es": "Copos de chile rojo caliente"
+  },
+  "Red Wine": {
+    "en": "Red Wine",
+    "pt": "Vinho tinto",
+    "es": "Vino tinto"
+  },
+  "Rhubarb": {
+    "en": "Rhubarb",
+    "pt": "Ruibarbo",
+    "es": "Ruibarbo"
+  },
+  "Ricard": {
+    "en": "Ricard",
+    "pt": "Ricard",
+    "es": "Rico"
+  },
+  "Rock Salt": {
+    "en": "Rock Salt",
+    "pt": "Sal de balca",
+    "es": "Sal de roca"
+  },
+  "Root beer schnapps": {
+    "en": "Root beer schnapps",
+    "pt": "Schnapps de cerveja de raiz",
+    "es": "Root Beer Schnapps"
+  },
+  "Root beer": {
+    "en": "Root beer",
+    "pt": "Cerveja de raiz",
+    "es": "Cerveza de raíz"
+  },
+  "Roses sweetened lime juice": {
+    "en": "Roses sweetened lime juice",
+    "pt": "Rosas adoçadas suco de limão",
+    "es": "Rosas jugo de lima endulzada"
+  },
+  "Rosewater": {
+    "en": "Rosewater",
+    "pt": "Rosewater",
+    "es": "Agua de rosa"
+  },
+  "Rumple Minze": {
+    "en": "Rumple Minze",
+    "pt": "Rumple Minze",
+    "es": "Rumple Minze"
+  },
+  "Rye Whiskey": {
+    "en": "Rye Whiskey",
+    "pt": "Uísque de centeio",
+    "es": "Whisky de centeno"
+  },
+  "Sake": {
+    "en": "Sake",
+    "pt": "Interesse",
+    "es": "Beneficio"
+  },
+  "Salt": {
+    "en": "Salt",
+    "pt": "Sal",
+    "es": "Sal"
+  },
+  "Sambuca": {
+    "en": "Sambuca",
+    "pt": "Sambuca",
+    "es": "Sambuca"
+  },
+  "Sarsaparilla": {
+    "en": "Sarsaparilla",
+    "pt": "Sarsaparilla",
+    "es": "Zarzaparrilla"
+  },
+  "Schnapps": {
+    "en": "Schnapps",
+    "pt": "Schnapps",
+    "es": "Aguardiente"
+  },
+  "Schweppes Lemon": {
+    "en": "Schweppes Lemon",
+    "pt": "Schweppes limão",
+    "es": "Schweppes limón"
+  },
+  "Schweppes Russchian": {
+    "en": "Schweppes Russchian",
+    "pt": "Schweppes Russchian",
+    "es": "Schweppes Russchian"
+  },
+  "Sherbet": {
+    "en": "Sherbet",
+    "pt": "Sherbet",
+    "es": "Sorbete"
+  },
+  "Sherry": {
+    "en": "Sherry",
+    "pt": "Xerez",
+    "es": "Jerez"
+  },
+  "Sirup of roses": {
+    "en": "Sirup of roses",
+    "pt": "Sirp of Roses",
+    "es": "Jarabe de rosas"
+  },
+  "Sloe Gin": {
+    "en": "Sloe Gin",
+    "pt": "Gin sloe",
+    "es": "Ginebra de pico"
+  },
+  "Soda Water": {
+    "en": "Soda Water",
+    "pt": "Água de água",
+    "es": "Soda"
+  },
+  "Sour Apple Pucker": {
+    "en": "Sour Apple Pucker",
+    "pt": "Pucker de maçã azedo",
+    "es": "Fruncido de manzana agria"
+  },
+  "Sour Mix": {
+    "en": "Sour Mix",
+    "pt": "Mix azedo",
+    "es": "Mezcla agria"
+  },
+  "Southern Comfort": {
+    "en": "Southern Comfort",
+    "pt": "SULTERN CONFORT",
+    "es": "Comodidad del sur"
+  },
+  "Soy Milk": {
+    "en": "Soy Milk",
+    "pt": "Leite de soja",
+    "es": "Leche de soja"
+  },
+  "Soy Sauce": {
+    "en": "Soy Sauce",
+    "pt": "Molho de soja",
+    "es": "Salsa de soja"
+  },
+  "Soya Milk": {
+    "en": "Soya Milk",
+    "pt": "Leite de soja",
+    "es": "Leche de soja"
+  },
+  "Soya Sauce": {
+    "en": "Soya Sauce",
+    "pt": "Molho de soja",
+    "es": "Salsa de soja"
+  },
+  "Spiced Rum": {
+    "en": "Spiced Rum",
+    "pt": "Rum com especiarias",
+    "es": "Ron condimentado"
+  },
+  "Sprite": {
+    "en": "Sprite",
+    "pt": "Sprite",
+    "es": "Duende"
+  },
+  "Squeezed Orange": {
+    "en": "Squeezed Orange",
+    "pt": "Espremido laranja",
+    "es": "Naranja exprimida"
+  },
+  "Squirt": {
+    "en": "Squirt",
+    "pt": "Esguicho",
+    "es": "Chorro"
+  },
+  "Strawberries": {
+    "en": "Strawberries",
+    "pt": "Morangos",
+    "es": "Fresas"
+  },
+  "Strawberry juice": {
+    "en": "Strawberry juice",
+    "pt": "Suco de morango",
+    "es": "Jugo de fresa"
+  },
+  "Strawberry liqueur": {
+    "en": "Strawberry liqueur",
+    "pt": "Licor de morango",
+    "es": "Licor de fresa"
+  },
+  "Strawberry Schnapps": {
+    "en": "Strawberry Schnapps",
+    "pt": "Schnapps de morango",
+    "es": "Strawberry Schnapps"
+  },
+  "Strawberry syrup": {
+    "en": "Strawberry syrup",
+    "pt": "Xarope de morango",
+    "es": "Jarabe de fresa"
+  },
+  "Sugar Syrup": {
+    "en": "Sugar Syrup",
+    "pt": "Xarope de açúcar",
+    "es": "Jarabe de azúcar"
+  },
+  "Sugar": {
+    "en": "Sugar",
+    "pt": "Açúcar",
+    "es": "Azúcar"
+  },
+  "Sunny delight": {
+    "en": "Sunny delight",
+    "pt": "Sunny Delight",
+    "es": "Delicia soleada"
+  },
+  "Surge": {
+    "en": "Surge",
+    "pt": "Surto",
+    "es": "Aumento"
+  },
+  "Swedish punsch": {
+    "en": "Swedish punsch",
+    "pt": "PUNSCH SUECO",
+    "es": "Punsch sueco"
+  },
+  "Sweet and Sour": {
+    "en": "Sweet and Sour",
+    "pt": "Doce e azedo",
+    "es": "Dulce y agrio"
+  },
+  "Sweet Cream": {
+    "en": "Sweet Cream",
+    "pt": "Creme doce",
+    "es": "Crema dulce"
+  },
+  "Sweet Vermouth": {
+    "en": "Sweet Vermouth",
+    "pt": "Vermoura doce",
+    "es": "Dulce vermut"
+  },
+  "Tabasco Sauce": {
+    "en": "Tabasco Sauce",
+    "pt": "Molho Tabasco",
+    "es": "Salsa de Tabasco"
+  },
+  "Tang": {
+    "en": "Tang",
+    "pt": "Espiga",
+    "es": "Espiga"
+  },
+  "Tawny port": {
+    "en": "Tawny port",
+    "pt": "Porto Tawny",
+    "es": "Puerto tawny"
+  },
+  "Tea": {
+    "en": "Tea",
+    "pt": "Chá",
+    "es": "Té"
+  },
+  "Tennessee whiskey": {
+    "en": "Tennessee whiskey",
+    "pt": "Uísque do Tennessee",
+    "es": "Whisky de Tennessee"
+  },
+  "Tequila rose": {
+    "en": "Tequila rose",
+    "pt": "Tequila Rose",
+    "es": "Tequila rosa"
+  },
+  "Tia Maria": {
+    "en": "Tia Maria",
+    "pt": "Tia Maria",
+    "es": "Tia María"
+  },
+  "Tomato Juice": {
+    "en": "Tomato Juice",
+    "pt": "Suco de tomate",
+    "es": "Jugo de tomate"
+  },
+  "Tomato": {
+    "en": "Tomato",
+    "pt": "Tomate",
+    "es": "Tomate"
+  },
+  "Tonic Water": {
+    "en": "Tonic Water",
+    "pt": "Água tônica",
+    "es": "Agua tónica"
+  },
+  "Triple Sec": {
+    "en": "Triple Sec",
+    "pt": "Triple Sec",
+    "es": "Triple seg"
+  },
+  "Tropicana": {
+    "en": "Tropicana",
+    "pt": "Tropicana",
+    "es": "Tropicana"
+  },
+  "Tuaca": {
+    "en": "Tuaca",
+    "pt": "Tuaca",
+    "es": "Tuaca"
+  },
+  "Vanilla extract": {
+    "en": "Vanilla extract",
+    "pt": "Extrato de baunilha",
+    "es": "Extracto de vainilla"
+  },
+  "Vanilla Ice-Cream": {
+    "en": "Vanilla Ice-Cream",
+    "pt": "Cream de gelo de baunilha",
+    "es": "Helado de vainilla"
+  },
+  "Vanilla liqueur": {
+    "en": "Vanilla liqueur",
+    "pt": "Licor de baunilha",
+    "es": "Licor de vainilla"
+  },
+  "Vanilla schnapps": {
+    "en": "Vanilla schnapps",
+    "pt": "Schnapps de baunilha",
+    "es": "Vanilla Schnapps"
+  },
+  "Vanilla syrup": {
+    "en": "Vanilla syrup",
+    "pt": "Xarope de baunilha",
+    "es": "Jarabe de vainilla"
+  },
+  "Vanilla vodka": {
+    "en": "Vanilla vodka",
+    "pt": "Vodka de baunilha",
+    "es": "Vodka de vainilla"
+  },
+  "Vanilla": {
+    "en": "Vanilla",
+    "pt": "Baunilha",
+    "es": "Vainilla"
+  },
+  "Vermouth": {
+    "en": "Vermouth",
+    "pt": "Vermute",
+    "es": "Vermut"
+  },
+  "Vinegar": {
+    "en": "Vinegar",
+    "pt": "Vinagre",
+    "es": "Vinagre"
+  },
+  "Water": {
+    "en": "Water",
+    "pt": "Água",
+    "es": "Agua"
+  },
+  "Watermelon schnapps": {
+    "en": "Watermelon schnapps",
+    "pt": "Schnapps de melancia",
+    "es": "Sandía schnapps"
+  },
+  "Whipped Cream": {
+    "en": "Whipped Cream",
+    "pt": "Chantilly",
+    "es": "Crema batida"
+  },
+  "Whipping Cream": {
+    "en": "Whipping Cream",
+    "pt": "Creme de chicote",
+    "es": "Crema para batir"
+  },
+  "White chocolate liqueur": {
+    "en": "White chocolate liqueur",
+    "pt": "Licor de chocolate branco",
+    "es": "Licor de chocolate blanco"
+  },
+  "White Creme de Menthe": {
+    "en": "White Creme de Menthe",
+    "pt": "Creme de Menthe branco",
+    "es": "Crema blanca de menthe"
+  },
+  "White grape juice": {
+    "en": "White grape juice",
+    "pt": "Suco de uva branca",
+    "es": "Jugo de uva blanca"
+  },
+  "White port": {
+    "en": "White port",
+    "pt": "Porta branca",
+    "es": "Puerto blanco"
+  },
+  "White Rum": {
+    "en": "White Rum",
+    "pt": "Rum branco",
+    "es": "Ron blanco"
+  },
+  "White Vinegar": {
+    "en": "White Vinegar",
+    "pt": "Vinagre branco",
+    "es": "Vinagre blanco"
+  },
+  "White Wine": {
+    "en": "White Wine",
+    "pt": "Vinho branco",
+    "es": "Vino blanco"
+  },
+  "Wild Turkey": {
+    "en": "Wild Turkey",
+    "pt": "Turquia selvagem",
+    "es": "Pavo salvaje"
+  },
+  "Wildberry schnapps": {
+    "en": "Wildberry schnapps",
+    "pt": "Wildberry Schnapps",
+    "es": "Wildberry Schnapps"
+  },
+  "Wine": {
+    "en": "Wine",
+    "pt": "Vinho",
+    "es": "Vino"
+  },
+  "Worcestershire Sauce": {
+    "en": "Worcestershire Sauce",
+    "pt": "Molho Worcestershire",
+    "es": "Salsa de Worcestershire"
+  },
+  "Wormwood": {
+    "en": "Wormwood",
+    "pt": "Absinto",
+    "es": "Ajenjo"
+  },
+  "Yeast": {
+    "en": "Yeast",
+    "pt": "Levedura",
+    "es": "Levadura"
+  },
+  "Yellow Chartreuse": {
+    "en": "Yellow Chartreuse",
+    "pt": "Chartreuse amarelo",
+    "es": "Chartreuse amarillo"
+  },
+  "Yoghurt": {
+    "en": "Yoghurt",
+    "pt": "Iogurte",
+    "es": "Yogur"
+  },
+  "Yukon Jack": {
+    "en": "Yukon Jack",
+    "pt": "Yukon Jack",
+    "es": "Yukon Jack"
+  },
+  "Zima": {
+    "en": "Zima",
+    "pt": "Zima",
+    "es": "Zima"
+  },
+  "Caramel Sauce": {
+    "en": "Caramel Sauce",
+    "pt": "Molho de caramelo",
+    "es": "Dulce de leche"
+  },
+  "Chocolate Sauce": {
+    "en": "Chocolate Sauce",
+    "pt": "Molho de chocolate",
+    "es": "Salsa de chocolate"
+  },
+  "Lillet Blanc": {
+    "en": "Lillet Blanc",
+    "pt": "Lillet Blanc",
+    "es": "Lillet Blanc"
+  },
+  "Peach Bitters": {
+    "en": "Peach Bitters",
+    "pt": "Bitters de pêssego",
+    "es": "Amargos de durazno"
+  },
+  "Mini-snickers bars": {
+    "en": "Mini-snickers bars",
+    "pt": "Mini-Snickers",
+    "es": "Barras de mini-snickers"
+  },
+  "Prosecco": {
+    "en": "Prosecco",
+    "pt": "Prosecco",
+    "es": "Prosecco"
+  },
+  "Salted Chocolate": {
+    "en": "Salted Chocolate",
+    "pt": "Chocolate salgado",
+    "es": "Chocolate salado"
+  },
+  "Martini Rosso": {
+    "en": "Martini Rosso",
+    "pt": "Martini Rosso",
+    "es": "Martini Rosso"
+  },
+  "Martini Bianco": {
+    "en": "Martini Bianco",
+    "pt": "Martini Bianco",
+    "es": "Martini bianco"
+  },
+  "Martini Extra Dry": {
+    "en": "Martini Extra Dry",
+    "pt": "Martini extra seco",
+    "es": "Martini extra seco"
+  },
+  "Fresh Lime Juice": {
+    "en": "Fresh Lime Juice",
+    "pt": "Suco de limão fresco",
+    "es": "Jugo de lima fresca"
+  },
+  "Fresh Mint": {
+    "en": "Fresh Mint",
+    "pt": "Hortelã fresca",
+    "es": "Menta fresca"
+  },
+  "Rosemary": {
+    "en": "Rosemary",
+    "pt": "Alecrim",
+    "es": "Romero"
+  },
+  "Habanero Peppers": {
+    "en": "Habanero Peppers",
+    "pt": "Habanero pimenta",
+    "es": "Pimientos habanero"
+  },
+  "Ilegal Joven mezcal": {
+    "en": "Ilegal Joven mezcal",
+    "pt": "Ilegal Joven Mezcal",
+    "es": "Ilegal Joven Mezcal"
+  },
+  "Elderflower cordial": {
+    "en": "Elderflower cordial",
+    "pt": "Sabugueiro cordial",
+    "es": "Cordial de la flor de saúco"
+  },
+  "Rosso Vermouth": {
+    "en": "Rosso Vermouth",
+    "pt": "Rosso Vermouth",
+    "es": "Rosso Vermuth"
+  },
+  "Creme de Violette": {
+    "en": "Creme de Violette",
+    "pt": "Creme de Violette",
+    "es": "Creme de Violette"
+  },
+  "Cocchi Americano": {
+    "en": "Cocchi Americano",
+    "pt": "Cocchi Americano",
+    "es": "Coccchi americano"
+  },
+  "White Vermouth": {
+    "en": "White Vermouth",
+    "pt": "Vermute branco",
+    "es": "Vermut blanco"
+  },
+  "Dry Curacao": {
+    "en": "Dry Curacao",
+    "pt": "Curaçao seco",
+    "es": "Curacao seco"
+  },
+  "Nocino": {
+    "en": "Nocino",
+    "pt": "Nocino",
+    "es": "Nocino"
+  },
+  "Averna": {
+    "en": "Averna",
+    "pt": "Averna",
+    "es": "Averna"
+  },
+  "Ramazzotti": {
+    "en": "Ramazzotti",
+    "pt": "Ramazzotti",
+    "es": "Ramazzotti"
+  },
+  "Fernet-Branca": {
+    "en": "Fernet-Branca",
+    "pt": "Fernet-Branca",
+    "es": "Fernet-branca"
+  },
+  "Allspice Dram": {
+    "en": "Allspice Dram",
+    "pt": "DRAM da Jamaica Drama",
+    "es": "DRAMA DEL PICE"
+  },
+  "Falernum": {
+    "en": "Falernum",
+    "pt": "Falernum",
+    "es": "Falernón"
+  },
+  "Singani": {
+    "en": "Singani",
+    "pt": "Singani",
+    "es": "Singani"
+  },
+  "Arrack": {
+    "en": "Arrack",
+    "pt": "Araca",
+    "es": "Ardilla"
+  },
+  "Blackstrap rum": {
+    "en": "Blackstrap rum",
+    "pt": "Blackstrap Rum",
+    "es": "Ron de blackstrap"
+  },
+  "Ginger Syrup": {
+    "en": "Ginger Syrup",
+    "pt": "Xarope de gengibre",
+    "es": "Jarabe de jengibre"
+  },
+  "Honey syrup": {
+    "en": "Honey syrup",
+    "pt": "Xarope de mel",
+    "es": "Jarabe de miel"
+  },
+  "Blended Scotch": {
+    "en": "Blended Scotch",
+    "pt": "Scotch misturado",
+    "es": "Escocés mezclado"
+  },
+  "Islay single malt Scotch": {
+    "en": "Islay single malt Scotch",
+    "pt": "Islay Single Malt Scotch",
+    "es": "Islay Single Malt Scotch"
+  },
+  "151 proof rum": {
+    "en": "151 proof rum",
+    "pt": "151 Rum à prova",
+    "es": "151 ron de prueba"
+  },
+  "7-up": {
+    "en": "7-up",
+    "pt": "7-up",
+    "es": "7"
+  },
+  "Absinthe": {
+    "en": "Absinthe",
+    "pt": "Absinto",
+    "es": "Ajenjo"
+  },
+  "Absolut citron": {
+    "en": "Absolut citron",
+    "pt": "Absolut Citron",
+    "es": "Absolut Citron"
+  },
+  "Creme de Mure": {
+    "en": "Creme de Mure",
+    "pt": "Creme de Mure",
+    "es": "Creme de Mure"
+  },
+  "Olive Brine": {
+    "en": "Olive Brine",
+    "pt": "Seguria Olive",
+    "es": "Oliva"
+  },
+  "Pineapple Syrup": {
+    "en": "Pineapple Syrup",
+    "pt": "Xarope de abacaxi",
+    "es": "Jarabe de piña"
+  },
+  "St. Germain": {
+    "en": "St. Germain",
+    "pt": "St. Germain",
+    "es": "St. Germain"
+  },
+  "Lavender": {
+    "en": "Lavender",
+    "pt": "Lavanda",
+    "es": "Lavanda"
+  },
+  "Whiskey": {
+    "en": "Whiskey",
+    "pt": "Uísque",
+    "es": "Whisky"
+  },
+  "Whisky": {
+    "en": "Whisky",
+    "pt": "Uísque",
+    "es": "Whisky"
+  },
+  "Pomegranate juice": {
+    "en": "Pomegranate juice",
+    "pt": "Suco de romã",
+    "es": "Jugo de granada"
+  },
+  "Watermelon": {
+    "en": "Watermelon",
+    "pt": "Melancia",
+    "es": "Sandía"
+  },
+  "Chareau": {
+    "en": "Chareau",
+    "pt": "Chareau",
+    "es": "Charea"
+  },
+  "Cinnamon Whisky": {
+    "en": "Cinnamon Whisky",
+    "pt": "Uísque de canela",
+    "es": "Whisky de canela"
+  },
+  "Red Bull": {
+    "en": "Red Bull",
+    "pt": "Red Bull",
+    "es": "Bull Red"
+  },
+  "Diet Coke": {
+    "en": "Diet Coke",
+    "pt": "Diet Coke",
+    "es": "Coca -Coca -Coca"
+  },
+  "Rosemary Syrup": {
+    "en": "Rosemary Syrup",
+    "pt": "Sarope de alecrim",
+    "es": "Jarabe de romero"
+  },
+  "Figs": {
+    "en": "Figs",
+    "pt": "Figs",
+    "es": "Higos"
+  },
+  "Thyme": {
+    "en": "Thyme",
+    "pt": "Tomilho",
+    "es": "Tomillo"
+  },
+  "Orange Slice": {
+    "en": "Orange Slice",
+    "pt": "Fatia de laranja",
+    "es": "Rodaja de naranja"
+  },
+  "Blood Orange": {
+    "en": "Blood Orange",
+    "pt": "Laranja-de-sangue",
+    "es": "Naranja sanguina"
+  },
+  "Amaro Montenegro": {
+    "en": "Amaro Montenegro",
+    "pt": "Amaro Montenegro",
+    "es": "Amaro Montenegro"
+  },
+  "Ruby Port": {
+    "en": "Ruby Port",
+    "pt": "Porta rubi",
+    "es": "Puerto de rubí"
+  },
+  "Rose": {
+    "en": "Rose",
+    "pt": "Rosa",
+    "es": "Rosa"
+  },
+  "Tajin": {
+    "en": "Tajin",
+    "pt": "Tajin",
+    "es": "Tajin"
+  }
+}

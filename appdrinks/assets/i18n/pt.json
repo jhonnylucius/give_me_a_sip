@@ -1,0 +1,10 @@
+{
+    "verify": {
+      "title": "Verificar E-mail",
+      "email_sent": "Um e-mail de verificação foi enviado para {email}.",
+      "check_email": "Por favor, verifique seu e-mail e clique no link de verificação.",
+      "resend": "Reenviar E-mail de Verificação",
+      "resent": "E-mail de verificação reenviado com sucesso!",
+      "waiting": "Aguardando verificação de e-mail..."
+    }
+  }
