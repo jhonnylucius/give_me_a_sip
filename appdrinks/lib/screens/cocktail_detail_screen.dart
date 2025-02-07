@@ -40,6 +40,7 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
 
   final TextEditingController _myVersionController = TextEditingController();
 
+  // No initState, carregue a versão salva
   @override
   void initState() {
     super.initState();
@@ -318,8 +319,12 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
                               color: Colors.grey[800],
                               borderRadius: BorderRadius.circular(8),
                             ),
-                            child:
-                                Icon(Icons.no_drinks, color: Colors.redAccent),
+                            child: Icon(
+                              Icons
+                                  .local_bar_rounded, // Novo ícone mais amigável
+                              color: Colors.redAccent,
+                              size: 24, // Tamanho ajustado
+                            ),
                           );
                         },
                       ),
@@ -350,6 +355,8 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
             translatedInstructions ?? '',
             style: TextStyle(color: Colors.white),
           ),
+
+          // Substitua o Widget que mostra a "Minha Versão"
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -363,22 +370,47 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
               ),
               const SizedBox(height: 8),
               Obx(() {
-                final myVersion = controller.myVersion.value;
-                if (myVersion != null) {
-                  return Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          myVersion.text,
-                          style: TextStyle(color: Colors.white),
+                final version = controller.currentVersion.value;
+                if (version != null) {
+                  return Container(
+                    padding: EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.redAccent),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                version,
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.delete, color: Colors.redAccent),
+                              onPressed: () async {
+                                await controller
+                                    .deleteMyVersion(widget.cocktail.idDrink);
+                              },
+                            ),
+                          ],
                         ),
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.delete, color: Colors.redAccent),
-                        onPressed: () =>
-                            controller.deleteMyVersion(widget.cocktail.idDrink),
-                      ),
-                    ],
+                        TextButton.icon(
+                          icon: Icon(Icons.edit, color: Colors.redAccent),
+                          label: Text('Editar',
+                              style: TextStyle(color: Colors.redAccent)),
+                          onPressed: () {
+                            setState(() {
+                              _myVersionController.text = version;
+                              controller.currentVersion.value = null;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
                   );
                 } else {
                   return TextField(
@@ -387,6 +419,12 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
                     decoration: InputDecoration(
                       hintText: 'Adicione sua versão da receita...',
                       hintStyle: TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.redAccent),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.redAccent),
+                      ),
                       suffixIcon: IconButton(
                         icon: Icon(Icons.save, color: Colors.redAccent),
                         onPressed: () {
@@ -395,6 +433,7 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
                               widget.cocktail.idDrink,
                               _myVersionController.text,
                             );
+                            _myVersionController.clear();
                           }
                         },
                       ),
