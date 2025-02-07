@@ -1,8 +1,8 @@
 import 'package:app_netdrinks/models/cocktail.dart';
-import 'package:app_netdrinks/models/my_version.dart';
 import 'package:app_netdrinks/repository/cocktail_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,7 +22,7 @@ class CocktailController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchAllCocktails(); // Carrega todos os drinks
+    fetchAllCocktails();
     loadFavorites();
   }
 
@@ -67,65 +67,95 @@ class CocktailController extends GetxController {
     return _cocktails.where((c) => _favorites.contains(c.idDrink)).toList();
   }
 
-  final Rxn<MyVersion> myVersion = Rxn<MyVersion>();
+  // Atualize para usar um Rx<String?> para a versão atual
+  final Rx<String?> currentVersion = Rx<String?>(null);
 
-  Future<void> saveMyVersion(String drinkId, String text) async {
+  Future<void> saveMyVersion(String cocktailId, String version) async {
     try {
       final user = FirebaseAuth.instance.currentUser;
-      if (user == null) return;
+      if (user == null) throw Exception('Usuário não autenticado');
 
-      final docRef = FirebaseFirestore.instance
+      await FirebaseFirestore.instance
           .collection('myVersions')
-          .doc('${user.uid}_$drinkId');
+          .doc('${user.uid}_$cocktailId')
+          .set({
+        'userId': user.uid,
+        'cocktailId': cocktailId,
+        'version': version,
+        'createdAt': FieldValue.serverTimestamp(),
+      });
 
-      final version = MyVersion(
-        id: '${user.uid}_$drinkId',
-        drinkId: drinkId,
-        userId: user.uid,
-        text: text,
-        createdAt: DateTime.now(),
+      // Atualiza o estado local
+      currentVersion.value = version;
+
+      Get.snackbar(
+        'Sucesso',
+        'Sua versão foi salva!',
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+        snackPosition: SnackPosition.BOTTOM,
       );
-
-      await docRef.set(version.toMap());
-      myVersion.value = version;
     } catch (e) {
-      Logger().e('Error saving my version: $e');
+      Logger().e('Erro ao salvar versão: $e');
+      Get.snackbar(
+        'Erro',
+        'Não foi possível salvar sua versão',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+        snackPosition: SnackPosition.BOTTOM,
+      );
     }
   }
 
-  Future<void> loadMyVersion(String drinkId) async {
+  Future<void> loadMyVersion(String cocktailId) async {
     try {
       final user = FirebaseAuth.instance.currentUser;
       if (user == null) return;
 
-      final docRef = FirebaseFirestore.instance
+      final doc = await FirebaseFirestore.instance
           .collection('myVersions')
-          .doc('${user.uid}_$drinkId');
+          .doc('${user.uid}_$cocktailId')
+          .get();
 
-      final doc = await docRef.get();
-      if (doc.exists) {
-        myVersion.value = MyVersion.fromMap(doc.data()!);
+      if (doc.exists && doc.data() != null) {
+        currentVersion.value = doc.data()!['version'] as String;
       } else {
-        myVersion.value = null;
+        currentVersion.value = null;
       }
     } catch (e) {
-      Logger().e('Error loading my version: $e');
+      Logger().e('Erro ao carregar versão: $e');
+      currentVersion.value = null;
     }
   }
 
-  Future<void> deleteMyVersion(String drinkId) async {
+  Future<void> deleteMyVersion(String cocktailId) async {
     try {
       final user = FirebaseAuth.instance.currentUser;
       if (user == null) return;
 
       await FirebaseFirestore.instance
           .collection('myVersions')
-          .doc('${user.uid}_$drinkId')
+          .doc('${user.uid}_$cocktailId')
           .delete();
 
-      myVersion.value = null;
+      currentVersion.value = null;
+
+      Get.snackbar(
+        'Sucesso',
+        'Versão excluída com sucesso',
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+        snackPosition: SnackPosition.BOTTOM,
+      );
     } catch (e) {
-      Logger().e('Error deleting my version: $e');
+      Logger().e('Erro ao deletar versão: $e');
+      Get.snackbar(
+        'Erro',
+        'Não foi possível excluir a versão',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+        snackPosition: SnackPosition.BOTTOM,
+      );
     }
   }
 }
