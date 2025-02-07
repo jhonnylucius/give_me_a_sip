@@ -112,6 +112,8 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
       return {
         'ingredient': translatedIngredient ?? '',
         'measure': translatedMeasure ?? '',
+        'originalIngredient':
+            ingredient['ingredient'] ?? '', // Mantém o nome original em inglês
       };
     }));
     return translatedIngredients;
@@ -301,11 +303,33 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
                 padding: const EdgeInsets.symmetric(vertical: 4.0),
                 child: Row(
                   children: [
+                    // Imagem do ingrediente
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.network(
+                        'https://www.thecocktaildb.com/images/ingredients/${ingredient['originalIngredient']?.replaceAll(' ', '%20')}-Small.png',
+                        width: 40,
+                        height: 40,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Container(
+                            width: 40,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[800],
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child:
+                                Icon(Icons.no_drinks, color: Colors.redAccent),
+                          );
+                        },
+                      ),
+                    ),
+                    SizedBox(width: 8.0),
                     Icon(Icons.check, color: Colors.redAccent),
                     SizedBox(width: 8.0),
                     Expanded(
                       child: Text(
-                        '${ingredient['ingredient']} - ${ingredient['measure']}',
+                        '${ingredient['ingredient']} ${ingredient['measure']?.isNotEmpty == true ? '- ${ingredient['measure']}' : ''}',
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
