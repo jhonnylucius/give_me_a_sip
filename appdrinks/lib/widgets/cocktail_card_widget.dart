@@ -1,4 +1,4 @@
-import 'package:app_netdrinks/controller/cocktail_detail_controller.dart';
+import 'package:app_netdrinks/controller/cocktail_list_controller.dart';
 import 'package:app_netdrinks/models/cocktail.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,7 +11,7 @@ class CocktailCard extends StatelessWidget {
 
   CocktailCard({super.key, required this.cocktail, required this.user});
 
-  final CocktailController controller = Get.find<CocktailController>();
+  final CocktailListController controller = Get.find<CocktailListController>();
 
   @override
   Widget build(BuildContext context) {
