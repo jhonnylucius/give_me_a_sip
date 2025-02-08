@@ -3,8 +3,6 @@ import 'package:app_netdrinks/services/auth_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-// Importar VerifyEmailScreen
-
 class RegisterScreen extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _senhaController = TextEditingController();
@@ -13,25 +11,25 @@ class RegisterScreen extends StatelessWidget {
   final TextEditingController _nomeController = TextEditingController();
   final AuthService _authService = AuthService();
 
-  RegisterScreen({super.key});
+  RegisterScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/background_login.jpg"),
             fit: BoxFit.cover,
           ),
         ),
-        padding: EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8.0),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(16.0),
@@ -43,69 +41,101 @@ class RegisterScreen extends StatelessWidget {
                       width: 90,
                       height: 90,
                     ),
-                    SizedBox(height: 8.0),
+                    const SizedBox(height: 8.0),
                     TextField(
                       controller: _nomeController,
-                      style: TextStyle(color: Colors.black),
-                      decoration: InputDecoration(labelText: 'Nome'),
+                      style: const TextStyle(color: Colors.black),
+                      decoration: const InputDecoration(labelText: 'Nome'),
                     ),
-                    SizedBox(height: 8.0),
+                    const SizedBox(height: 8.0),
                     TextField(
                       controller: _emailController,
-                      style: TextStyle(color: Colors.black),
-                      decoration: InputDecoration(labelText: 'E-mail'),
+                      style: const TextStyle(color: Colors.black),
+                      decoration: const InputDecoration(labelText: 'E-mail'),
                     ),
-                    SizedBox(height: 8.0),
+                    const SizedBox(height: 8.0),
                     TextField(
                       obscureText: true,
                       controller: _senhaController,
-                      style: TextStyle(color: Colors.black),
-                      decoration: InputDecoration(labelText: 'Senha'),
+                      style: const TextStyle(color: Colors.black),
+                      decoration: const InputDecoration(labelText: 'Senha'),
                     ),
-                    SizedBox(height: 8.0),
+                    const SizedBox(height: 8.0),
                     TextField(
                       obscureText: true,
                       controller: _confirmarSenhaController,
-                      style: TextStyle(color: Colors.black),
-                      decoration: InputDecoration(labelText: 'Confirmar Senha'),
+                      style: const TextStyle(color: Colors.black),
+                      decoration:
+                          const InputDecoration(labelText: 'Confirmar Senha'),
                     ),
-                    SizedBox(height: 8.0),
+                    const SizedBox(height: 8.0),
                     ElevatedButton(
                       onPressed: () async {
                         if (_senhaController.text ==
                             _confirmarSenhaController.text) {
-                          User? user = (await _authService.cadastrarUsuario(
+                          final result = await _authService.cadastrarUsuario(
                             email: _emailController.text,
                             senha: _senhaController.text,
                             nome: _nomeController.text,
                             context: context,
-                          )) as User?;
-                          if (user != null) {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    VerifyEmailScreen(user: user),
+                          );
+
+                          if (result == null) {
+                            // Cadastro bem-sucedido. Obtém o usuário autenticado.
+                            final user = FirebaseAuth.instance.currentUser;
+
+                            if (user != null) {
+                              // Navega para a tela de verificação de e-mail, passando o usuário.
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      VerifyEmailScreen(user: user),
+                                ),
+                              );
+                            } else {
+                              // Lidar com o caso em que o usuário é nulo após o cadastro (improvável, mas possível)
+                              if (context.mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                        'Erro ao obter usuário após o cadastro.'),
+                                    backgroundColor: Colors.red,
+                                  ),
+                                );
+                              }
+                            }
+                          } else {
+                            // Houve um erro no cadastro.
+                            if (context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(result),
+                                  backgroundColor: Colors.red,
+                                ),
+                              );
+                            }
+                          }
+                        } else {
+                          // Senhas não coincidem.
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Senhas não conferem.'),
+                                backgroundColor: Colors.red,
                               ),
                             );
                           }
-                        } else {
-                          final snackBar = SnackBar(
-                            content: Text('Senhas não conferem.'),
-                            backgroundColor: Colors.red,
-                          );
-
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         }
                       },
-                      child: Text('Cadastrar'),
+                      child: const Text('Cadastrar'),
                     ),
-                    SizedBox(height: 8.0),
+                    const SizedBox(height: 8.0),
                     TextButton(
                       onPressed: () {
                         Navigator.pushNamed(context, '/login');
                       },
-                      child: Text('Já tenho uma conta!'),
+                      child: const Text('Já tenho uma conta!'),
                     ),
                   ],
                 ),
