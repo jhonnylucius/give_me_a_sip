@@ -9,6 +9,7 @@ import 'package:app_netdrinks/screens/login_screen.dart';
 import 'package:app_netdrinks/screens/search/search_results_screen.dart';
 import 'package:app_netdrinks/screens/search/search_screen.dart';
 import 'package:app_netdrinks/screens/verify_email_screen.dart';
+import 'package:app_netdrinks/services/locator_service.dart';
 import 'package:app_netdrinks/widgets/cocktail_card_widget.dart' as widget;
 import 'package:app_netdrinks/widgets/terms_of_service_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -23,11 +24,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  // Inicializar o Hive antes de usar o GetIt
   await Hive.initFlutter();
   Hive.registerAdapter(CocktailAdapter());
   await Hive.openBox<Cocktail>('cocktailBox');
+  await Hive.openBox<String>('favorites');
 
-  // Verificar salvos
+  // Inicializar GetIt
+  setupGetIt(); // Chame o setupGetIt *depois* de inicializar o Hive
+
   final prefs = await SharedPreferences.getInstance();
   prefs.getString('language');
 
