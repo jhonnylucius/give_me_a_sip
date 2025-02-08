@@ -1,7 +1,9 @@
+import 'package:app_netdrinks/screens/tips_screen.dart';
 import 'package:app_netdrinks/services/auth_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Menu extends StatelessWidget {
   final User user;
@@ -77,6 +79,16 @@ class Menu extends StatelessWidget {
             title: Text(FlutterI18n.translate(context, 'Favoritos')),
             onTap: () {
               Navigator.pushNamed(context, '/favorites');
+            },
+          ),
+          ListTile(
+            leading: const FaIcon(FontAwesomeIcons.lightbulb),
+            title: const Text('Dicas e Novidades'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const TipsScreen()),
+              );
             },
           ),
           ListTile(
