@@ -80,10 +80,14 @@ class MyApp extends StatelessWidget {
           name: '/home',
           page: () {
             final user = FirebaseAuth.instance.currentUser;
+            final showFavorites = Get.parameters['showFavorites'] == 'true';
             if (user == null) {
               return LoginScreen();
             }
-            return HomeScreen(user: user, showFavorites: false);
+            return HomeScreen(
+              user: user,
+              showFavorites: showFavorites,
+            );
           },
         ),
         GetPage(
@@ -240,21 +244,21 @@ class InitialScreenState extends State<InitialScreen> {
             physics: const NeverScrollableScrollPhysics(),
             children: [
               Container(
-                  color: const Color.fromARGB(255, 160, 4, 12),
+                  color: const Color.fromARGB(255, 94, 4, 8),
                   child: Center(
                       child: Text(
                     " ",
                     style: TextStyle(color: Colors.white),
                   ))),
               Container(
-                  color: const Color.fromARGB(255, 160, 4, 12),
+                  color: const Color.fromARGB(255, 94, 4, 8),
                   child: Center(
                       child: Text(
                     " ",
                     style: TextStyle(color: Colors.white),
                   ))),
               Container(
-                  color: const Color.fromARGB(255, 160, 4, 12),
+                  color: const Color.fromARGB(255, 94, 4, 8),
                   child: Center(
                       child: Text(
                     " ",
