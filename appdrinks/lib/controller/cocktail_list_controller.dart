@@ -1,65 +1,72 @@
-import 'dart:async';
-
 import 'package:app_netdrinks/models/cocktail.dart';
-import 'package:app_netdrinks/models/cocktail_api.dart';
-import 'package:app_netdrinks/services/locator_service.dart';
+import 'package:app_netdrinks/repository/cocktail_repository.dart';
+import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:logger/logger.dart';
 
-class CocktailListController {
-  final api = getIt<CocktailApi>();
+class CocktailListController extends GetxController {
+  final CocktailRepository repository;
   final Logger logger = Logger();
 
-  final _controller = StreamController<List<Cocktail>>();
-  Stream<List<Cocktail>> get stream => _controller.stream;
+  final _cocktails = <Cocktail>[].obs;
+  List<Cocktail> get cocktails => _cocktails;
 
-  void init() {
+  final _favorites = <String>[].obs;
+  List<String> get favorites => _favorites;
+
+  CocktailListController({required this.repository});
+
+  @override
+  void onInit() {
+    super.onInit();
+    loadFavorites(); // Carregar os favoritos do Hive
     getCocktail();
   }
 
   Future<void> getCocktail() async {
     try {
       logger.d('Fetching Cocktail...');
-      var result = await api.searchByName(' ');
+      final result = await repository.getAllCocktails();
       logger.d('Cocktail fetched: ${result.length}');
-      _controller.sink.add(result);
+      _cocktails.assignAll(result);
     } catch (error) {
       logger.e('Error fetching cocktail: $error');
-      _controller.sink.addError(error);
     }
   }
 
-  Future<void> searchCocktail(Map<String, String?> filters) async {
+  bool isFavorite(String cocktailId) {
+    return _favorites.contains(cocktailId);
+  }
+
+  void toggleFavorite(String cocktailId) {
+    if (isFavorite(cocktailId)) {
+      _favorites.remove(cocktailId);
+    } else {
+      _favorites.add(cocktailId);
+    }
+    saveFavorites(); // Salvar os favoritos no Hive
+  }
+
+  // Carregar os favoritos do Hive
+  Future<void> loadFavorites() async {
     try {
-      logger.d('Searching cocktail with filters: $filters');
-      var result =
-          await api.searchByName(''); // Ajustar para usar filtros na API
-      if (filters['name'] != null && filters['name']!.isNotEmpty) {
-        result = result
-            .where((cocktail) => cocktail.name
-                .toLowerCase()
-                .contains(filters['name']!.toLowerCase()))
-            .toList();
-      }
-      if (filters['ingredients'] != null &&
-          filters['ingredients']!.isNotEmpty) {
-        result = result
-            .where((cocktail) =>
-                cocktail.ingredients.toString().toLowerCase() ==
-                filters['ingredients']!.toLowerCase())
-            .toList();
-      }
-      if (filters['category'] != null && filters['category']!.isNotEmpty) {
-        result = result
-            .where((cocktail) =>
-                cocktail.category.toLowerCase() ==
-                filters['category']!.toLowerCase())
-            .toList();
-      }
-      logger.d('Cocktail found: ${result.length}');
-      _controller.sink.add(result);
-    } catch (error) {
-      logger.e('Error searching Cocktail: $error');
-      _controller.sink.addError(error);
+      final box = await Hive.openBox<String>('favorites');
+      _favorites.assignAll(box.values.toList());
+      logger.i('Favoritos carregados do Hive: ${_favorites.length}');
+    } catch (e) {
+      logger.e('Erro ao carregar favoritos do Hive: $e');
+    }
+  }
+
+  // Salvar os favoritos no Hive
+  Future<void> saveFavorites() async {
+    try {
+      final box = await Hive.openBox<String>('favorites');
+      await box.clear();
+      await box.addAll(_favorites);
+      logger.i('Favoritos salvos no Hive: ${_favorites.length}');
+    } catch (e) {
+      logger.e('Erro ao salvar favoritos no Hive: $e');
     }
   }
 }
