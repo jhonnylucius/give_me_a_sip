@@ -10,12 +10,17 @@ import 'package:hive/hive.dart';
 class AppBindings implements Bindings {
   @override
   void dependencies() {
+    // Primeiro registramos o repository
     Get.lazyPut(() => CocktailRepository(
           getIt<CocktailApi>(),
           Hive.box<Cocktail>('cocktailBox'),
         ));
+
+    // Depois registramos os controllers
     Get.lazyPut(() => CocktailListController(repository: Get.find()));
-    // Adicione esta linha
-    Get.lazyPut(() => CocktailController(Get.find()));
+    Get.lazyPut(
+      () => CocktailController(Get.find()),
+      fenix: true, // Isso faz o controller "renascer" quando destruído
+    );
   }
 }
