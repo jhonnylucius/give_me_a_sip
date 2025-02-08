@@ -121,7 +121,7 @@ class AuthService {
     return null;
   }
 
-  // Apenas adicionar este método na classe AuthService existente, mantendo todo resto
+  // Apenas adicionar este método na classe AuthService par o login com gmail
   Future<UserCredential?> signInWithGoogle() async {
     try {
       UserCredential userCredential;
