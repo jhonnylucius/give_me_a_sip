@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:app_netdrinks/models/cocktail.dart';
 import 'package:app_netdrinks/models/cocktail_api.dart';
 import 'package:hive/hive.dart';
@@ -8,29 +10,59 @@ class CocktailRepository {
   final Box<Cocktail> _cache;
   final Logger logger = Logger();
 
+  // Adicionar um flag para controle de cache
+  bool _isCacheLoading = false;
+
   CocktailRepository(this._api, this._cache);
 
   Future<List<Cocktail>> getAllCocktails() async {
     try {
-      // Verificar se há dados em cache
+      // Verificar cache primeiro
       if (_cache.isNotEmpty) {
-        logger.i('Carregando cocktails do cache');
         return _cache.values.toList();
       }
 
-      // 2. Se não tiver cache, buscar todos da API
-      logger.i('Buscando todos os cocktails da API');
-      final cocktails = await _api.getAllCocktails();
+      // Evitar múltiplas chamadas à API enquanto carrega
+      if (_isCacheLoading) {
+        await Future.delayed(const Duration(milliseconds: 100));
+        return getAllCocktails();
+      }
 
-      // 3. Salvar no cache
-      logger.i('Salvando cocktails no cache');
-      await _cache.clear();
-      await _cache.addAll(cocktails);
+      _isCacheLoading = true;
 
+      // Carregar da API em paralelo
+      final cocktails = await Future.wait([
+        _api.getPopularCocktails(),
+        _api.getAllCocktails(),
+      ]).then((results) {
+        // Mesclar resultados e remover duplicatas
+        final allCocktails = {...results[0], ...results[1]}.toList();
+        return allCocktails;
+      });
+
+      // Atualizar cache em background
+      updateCache(cocktails).then((_) => logger.i('Cache atualizado'));
+
+      _isCacheLoading = false;
       return cocktails;
     } catch (e) {
-      logger.e('Falha ao carregar cocktails: $e');
-      throw Exception('Falha ao carregar cocktails: $e');
+      _isCacheLoading = false;
+      rethrow;
+    }
+  }
+
+  Future<void> updateCache(List<Cocktail> cocktails) async {
+    try {
+      // Limpar cache antigo
+      await _cache.clear();
+
+      // Usar putAll ao invés de múltiplos puts
+      final Map<dynamic, Cocktail> entries = {
+        for (var cocktail in cocktails) cocktail.idDrink: cocktail
+      };
+      await _cache.putAll(entries);
+    } catch (e) {
+      logger.e('Erro ao atualizar cache: $e');
     }
   }
 
@@ -98,11 +130,6 @@ class CocktailRepository {
   // Métodos para gerenciar cache
   Future<void> clearCache() async {
     await _cache.clear();
-  }
-
-  Future<void> updateCache(List<Cocktail> cocktails) async {
-    await _cache.clear();
-    await _cache.addAll(cocktails);
   }
 
   bool get hasCachedData => _cache.isNotEmpty;
