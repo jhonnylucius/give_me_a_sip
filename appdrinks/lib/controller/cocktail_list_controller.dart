@@ -20,10 +20,10 @@ class CocktailListController extends GetxController {
   void onInit() {
     super.onInit();
     loadFavorites(); // Carregar os favoritos do Hive
-    getCocktail();
+    getAllCocktails(); // Adicionar esta chamada
   }
 
-  Future<void> getCocktail() async {
+  Future<void> getAllCocktails() async {
     try {
       logger.d('Fetching Cocktail...');
       final result = await repository.getAllCocktails();
