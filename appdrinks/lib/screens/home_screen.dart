@@ -1,5 +1,5 @@
 import 'package:app_netdrinks/components/menu.dart';
-import 'package:app_netdrinks/controller/cocktail_detail_controller.dart';
+import 'package:app_netdrinks/controller/cocktail_list_controller.dart';
 import 'package:app_netdrinks/models/cocktail.dart';
 import 'package:app_netdrinks/screens/cocktail_detail_screen.dart';
 import 'package:app_netdrinks/widgets/cocktail_card_widget.dart';
@@ -22,14 +22,13 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen> {
   late PageController pageController;
   final ValueNotifier<int> _currentPage = ValueNotifier<int>(0);
-  late final CocktailController controller;
-
+  late final CocktailListController controller =
+      Get.find<CocktailListController>();
   double _viewportFraction = 0.7;
 
   @override
   void initState() {
     super.initState();
-    controller = Get.find<CocktailController>();
     _initializePageController();
   }
 
@@ -93,12 +92,14 @@ class HomeScreenState extends State<HomeScreen> {
       ),
       drawer: Menu(user: widget.user),
       body: Obx(() {
-        if (controller.loading) {
+        if (controller.cocktails.isEmpty) {
           return const Center(child: CircularProgressIndicator());
         }
 
         final displayCocktails = widget.showFavorites
-            ? controller.getFavoriteCocktails()
+            ? controller.cocktails
+                .where((cocktail) => controller.isFavorite(cocktail.idDrink))
+                .toList()
             : controller.cocktails;
 
         if (displayCocktails.isEmpty && widget.showFavorites) {
