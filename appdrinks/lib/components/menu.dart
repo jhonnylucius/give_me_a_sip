@@ -1,3 +1,5 @@
+import 'package:app_netdrinks/controller/cocktail_list_controller.dart';
+import 'package:app_netdrinks/screens/home_screen.dart';
 import 'package:app_netdrinks/screens/tips_screen.dart';
 import 'package:app_netdrinks/services/auth_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,7 +11,7 @@ import 'package:get/get.dart';
 class Menu extends StatelessWidget {
   final User user;
 
-  const Menu({Key? key, required this.user}) : super(key: key);
+  const Menu({super.key, required this.user});
 
   void _confirmarExclusao(BuildContext context) {
     TextEditingController senhaController = TextEditingController();
@@ -78,8 +80,11 @@ class Menu extends StatelessWidget {
             leading: Icon(Icons.favorite_border),
             title: Text(FlutterI18n.translate(context, 'Favoritos')),
             onTap: () {
-              // Usar Get.toNamed para passar a lista de favoritos
-              Get.toNamed('/home', parameters: {'showFavorites': 'true'});
+              final controller = Get.find<CocktailListController>();
+              Get.to(() => HomeScreen(
+                    user: FirebaseAuth.instance.currentUser!,
+                    showFavorites: true,
+                  ));
             },
           ),
           ListTile(
