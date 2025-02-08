@@ -4,11 +4,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 
 class Menu extends StatelessWidget {
   final User user;
 
-  const Menu({super.key, required this.user});
+  const Menu({Key? key, required this.user}) : super(key: key);
 
   void _confirmarExclusao(BuildContext context) {
     TextEditingController senhaController = TextEditingController();
@@ -21,8 +22,7 @@ class Menu extends StatelessWidget {
           controller: senhaController,
           obscureText: true,
           decoration: InputDecoration(
-            labelText: FlutterI18n.translate(context, 'Digite sua senha'),
-          ),
+              labelText: FlutterI18n.translate(context, 'Digite sua senha')),
         ),
         actions: [
           TextButton(
@@ -78,7 +78,8 @@ class Menu extends StatelessWidget {
             leading: Icon(Icons.favorite_border),
             title: Text(FlutterI18n.translate(context, 'Favoritos')),
             onTap: () {
-              Navigator.pushNamed(context, '/favorites');
+              // Usar Get.toNamed para passar a lista de favoritos
+              Get.toNamed('/home', parameters: {'showFavorites': 'true'});
             },
           ),
           ListTile(
