@@ -444,30 +444,6 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
               }),
             ],
           ),
-          SizedBox(height: 16.0),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              IconButton(
-                icon: Icon(
-                  controller.isFavorite(widget.cocktail.idDrink)
-                      ? Icons.favorite
-                      : Icons.favorite_border,
-                  color: Colors.redAccent,
-                ),
-                onPressed: () async {
-                  await controller.toggleFavorite(widget.cocktail.idDrink);
-                  setState(() {});
-                },
-              ),
-              Text(
-                controller.isFavorite(widget.cocktail.idDrink)
-                    ? 'Favorito'
-                    : 'Adicionar aos Favoritos',
-                style: TextStyle(color: Colors.white),
-              ),
-            ],
-          ),
         ],
       ),
     );
