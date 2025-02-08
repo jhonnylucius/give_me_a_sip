@@ -10,6 +10,7 @@ import 'package:logger/logger.dart';
 
 class AuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final Logger logger = Logger();
 
   Future<String?> entrarUsuario(String email, String senha) async {
     try {
