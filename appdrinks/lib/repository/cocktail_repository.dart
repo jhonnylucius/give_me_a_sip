@@ -1,10 +1,12 @@
 import 'package:app_netdrinks/models/cocktail.dart';
 import 'package:app_netdrinks/models/cocktail_api.dart';
 import 'package:hive/hive.dart';
+import 'package:logger/logger.dart';
 
 class CocktailRepository {
   final CocktailApi _api;
   final Box<Cocktail> _cache;
+  final Logger logger = Logger();
 
   CocktailRepository(this._api, this._cache);
 
@@ -12,19 +14,23 @@ class CocktailRepository {
     try {
       // Verificar se há dados em cache
       if (_cache.isNotEmpty) {
+        logger.i('Carregando cocktails do cache');
         return _cache.values.toList();
       }
 
-      // Buscar todos os cocktails da API
+      // 2. Se não tiver cache, buscar todos da API
+      logger.i('Buscando todos os cocktails da API');
       final cocktails = await _api.getAllCocktails();
 
-      // Salvar no cache
+      // 3. Salvar no cache
+      logger.i('Salvando cocktails no cache');
       await _cache.clear();
       await _cache.addAll(cocktails);
 
       return cocktails;
     } catch (e) {
-      throw Exception('Falha ao carregar todos os cocktails: $e');
+      logger.e('Falha ao carregar cocktails: $e');
+      throw Exception('Falha ao carregar cocktails: $e');
     }
   }
 
