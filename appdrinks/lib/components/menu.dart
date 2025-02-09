@@ -15,16 +15,31 @@ class Menu extends StatelessWidget {
 
   void _confirmarExclusao(BuildContext context) {
     TextEditingController senhaController = TextEditingController();
+    bool isGoogleUser = user.providerData
+        .any((userInfo) => userInfo.providerId == 'google.com');
 
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(FlutterI18n.translate(context, 'Confirmar a exclusão')),
-        content: TextField(
-          controller: senhaController,
-          obscureText: true,
-          decoration: InputDecoration(
-              labelText: FlutterI18n.translate(context, 'Digite sua senha')),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              FlutterI18n.translate(context,
+                  'Esta ação não pode ser desfeita. Deseja continuar?'),
+            ),
+            if (!isGoogleUser) ...[
+              const SizedBox(height: 16),
+              TextField(
+                controller: senhaController,
+                obscureText: true,
+                decoration: InputDecoration(
+                    labelText:
+                        FlutterI18n.translate(context, 'Digite sua senha')),
+              ),
+            ],
+          ],
         ),
         actions: [
           TextButton(
@@ -33,14 +48,13 @@ class Menu extends StatelessWidget {
           ),
           TextButton(
             onPressed: () async {
-              String? erro =
-                  await AuthService().excluiConta(senha: senhaController.text);
+              String? erro = await AuthService().excluiConta(
+                  senha: isGoogleUser ? null : senhaController.text);
 
               if (!context.mounted) return;
               Navigator.pop(context);
 
               if (erro == null) {
-                // Sucesso na exclusão
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(FlutterI18n.translate(
@@ -48,11 +62,9 @@ class Menu extends StatelessWidget {
                     backgroundColor: Colors.green,
                   ),
                 );
-                // Navegar para tela de login
                 Navigator.pushNamedAndRemoveUntil(
                     context, '/login', (route) => false);
               } else {
-                // Erro na exclusão
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(FlutterI18n.translate(
@@ -62,7 +74,10 @@ class Menu extends StatelessWidget {
                 );
               }
             },
-            child: Text(FlutterI18n.translate(context, 'Excluir')),
+            child: Text(
+              FlutterI18n.translate(context, 'Excluir'),
+              style: const TextStyle(color: Colors.red),
+            ),
           ),
         ],
       ),
