@@ -4,24 +4,71 @@ import 'package:get/get.dart';
 
 class SearchController extends GetxController {
   final SearchService _searchService = SearchService();
-  final RxBool isLoading = false.obs;
-  final RxList<Cocktail> searchResults = <Cocktail>[].obs;
-  var popularResults = <Cocktail>[].obs;
-  var maisRecentesResults = <Cocktail>[].obs;
-  var dezAleatorioResults = <Cocktail>[].obs;
-  var multiIngredientsResults = <Cocktail>[].obs;
-  final RxList<Cocktail> noAlcoolResults = <Cocktail>[].obs;
+
+  // RxLists para armazenar os resultados
+  final searchResults = <Cocktail>[].obs;
+  final popularResults = <Cocktail>[].obs;
+  final maisRecentesResults = <Cocktail>[].obs;
+  final dezAleatorioResults = <Cocktail>[].obs;
+  final multiIngredientsResults = <Cocktail>[].obs;
+  final noAlcoolResults = <Cocktail>[].obs;
+
+  final isLoading = false.obs;
+
+  // Método para limpar todos os resultados
+  void _clearAllResults() {
+    searchResults.clear();
+    popularResults.clear();
+    maisRecentesResults.clear();
+    dezAleatorioResults.clear();
+    multiIngredientsResults.clear();
+    noAlcoolResults.clear();
+  }
+
+  // Método para busca sem álcool
+  Future<void> searchNoAlcool() async {
+    try {
+      isLoading.value = true;
+      _clearAllResults(); // Limpa todos os resultados anteriores
+      final results = await _searchService.searchNoAlcool();
+      noAlcoolResults.value = results;
+    } catch (e) {
+      print('Erro na busca sem álcool: $e');
+      rethrow;
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  // Método para busca aleatória
+  Future<void> searchDezAleatorio() async {
+    try {
+      isLoading.value = true;
+      _clearAllResults(); // Limpa todos os resultados anteriores
+      final results = await _searchService.searchDezAleatorio();
+      dezAleatorioResults.value = results;
+    } catch (e) {
+      print('Erro na busca aleatória: $e');
+      rethrow;
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  // Método para obter todos os resultados
+  List<Cocktail> get allResults {
+    if (noAlcoolResults.isNotEmpty) return noAlcoolResults;
+    if (dezAleatorioResults.isNotEmpty) return dezAleatorioResults;
+    if (popularResults.isNotEmpty) return popularResults;
+    if (maisRecentesResults.isNotEmpty) return maisRecentesResults;
+    if (multiIngredientsResults.isNotEmpty) return multiIngredientsResults;
+    return searchResults;
+  }
 
   Future<void> searchByFirstLetter(String letter) async {
     try {
       isLoading.value = true;
-      // Limpa os outros resultados
-      popularResults.clear();
-      maisRecentesResults.clear();
-      dezAleatorioResults.clear();
-      multiIngredientsResults.clear();
-      noAlcoolResults.clear();
-
+      _clearAllResults(); // Limpa todos os resultados
       searchResults.value = await _searchService.searchByFirstLetter(letter);
     } finally {
       isLoading.value = false;
@@ -31,9 +78,7 @@ class SearchController extends GetxController {
   Future<void> searchMultiIngredients(String ingredients) async {
     try {
       isLoading.value = true;
-
-      // Limpar outros resultados primeiro
-      searchResults.clear();
+      _clearAllResults(); // Limpa todos os resultados primeiro
 
       // Realizar pesquisa apenas em inglês
       searchResults.value =
@@ -46,13 +91,7 @@ class SearchController extends GetxController {
   Future<void> searchPopular() async {
     try {
       isLoading.value = true;
-      // Limpa os outros resultados
-      searchResults.clear();
-      maisRecentesResults.clear();
-      dezAleatorioResults.clear();
-      multiIngredientsResults.clear();
-      noAlcoolResults.clear();
-
+      _clearAllResults(); // Limpa todos os resultados
       popularResults.value = await _searchService.searchPopular();
     } finally {
       isLoading.value = false;
@@ -62,44 +101,8 @@ class SearchController extends GetxController {
   Future<void> searchMaisRecentes() async {
     try {
       isLoading.value = true;
-      // Limpa os outros resultados
-      searchResults.clear();
-      popularResults.clear();
-      dezAleatorioResults.clear();
-      multiIngredientsResults.clear();
-
+      _clearAllResults(); // Limpa todos os resultados
       maisRecentesResults.value = await _searchService.searchMaisRecentes();
-    } finally {
-      isLoading.value = false;
-    }
-  }
-
-  Future<void> searchDezAleatorio() async {
-    try {
-      isLoading.value = true;
-      // Limpa os outros resultados
-      searchResults.clear();
-      popularResults.clear();
-      maisRecentesResults.clear();
-      multiIngredientsResults.clear();
-      noAlcoolResults.clear();
-
-      dezAleatorioResults.value = await _searchService.searchDezAleatorio();
-    } finally {
-      isLoading.value = false;
-    }
-  }
-
-  Future<void> searchNoAlcool() async {
-    try {
-      isLoading.value = true;
-      // Limpa os outros resultados
-      searchResults.clear();
-      popularResults.clear();
-      maisRecentesResults.clear();
-      multiIngredientsResults.clear();
-
-      noAlcoolResults.value = await _searchService.searchNoAlcool();
     } finally {
       isLoading.value = false;
     }
