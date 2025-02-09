@@ -3,7 +3,7 @@ import 'package:app_netdrinks/controller/cocktail_list_controller.dart';
 import 'package:app_netdrinks/models/cocktail.dart';
 import 'package:app_netdrinks/screens/cocktail_detail_screen.dart';
 import 'package:app_netdrinks/widgets/cocktail_card_widget.dart';
-import 'package:app_netdrinks/widgets/retro_loading_Widget.dart';
+import 'package:app_netdrinks/widgets/retro_loading_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
