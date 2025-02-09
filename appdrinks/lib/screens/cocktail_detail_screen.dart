@@ -167,9 +167,11 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
           DropdownButtonHideUnderline(
             child: DropdownButton<String>(
               value: _selectedLanguage,
-              icon: Icon(Icons.language,
-                  color: const ui.Color.fromARGB(255, 151, 4, 4)),
-              dropdownColor: Colors.black,
+              icon: Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: Icon(Icons.language,
+                    color: const ui.Color.fromARGB(255, 151, 4, 4)),
+              ),
               items: [
                 DropdownMenuItem(
                   value: 'en',
