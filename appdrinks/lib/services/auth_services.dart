@@ -99,17 +99,23 @@ class AuthService {
 
   Future<String?> redefinicaoSenha({required String email}) async {
     try {
+      logger.i('Tentando enviar email de redefinição para: $email');
       await _firebaseAuth.sendPasswordResetEmail(email: email);
+      logger.i('Email de redefinição enviado com sucesso para: $email');
+      return null;
     } on FirebaseAuthException catch (e) {
+      logger.e('Erro ao enviar email de redefinição: ${e.code}', error: e);
       switch (e.code) {
-        case 'auth/invalid-email':
-          return 'Email inválido.';
+        case 'invalid-email':
+          return 'Email inválido';
         case 'user-not-found':
-          return 'Usuário não encontrado.';
+          return 'Usuário não encontrado';
+        case 'too-many-requests':
+          return 'Muitas tentativas. Tente novamente mais tarde';
+        default:
+          return 'Erro ao enviar email de redefinição';
       }
-      return e.code;
     }
-    return null;
   }
 
   Future<String?> deslogar() async {
@@ -121,15 +127,54 @@ class AuthService {
     return null;
   }
 
-  Future<String?> excluiConta({required senha}) async {
+  Future<String?> excluiConta({required String? senha}) async {
     try {
-      await _firebaseAuth.signInWithEmailAndPassword(
-          email: _firebaseAuth.currentUser!.email!, password: senha);
-      await _firebaseAuth.currentUser!.delete();
+      final user = _firebaseAuth.currentUser;
+      if (user == null) return 'Usuário não encontrado';
+
+      // Verifica se é login do Google
+      bool isGoogleUser = user.providerData
+          .any((userInfo) => userInfo.providerId == 'google.com');
+
+      if (isGoogleUser && senha == null) {
+        // Se for usuário Google sem senha, solicita reautenticação via Google
+        final googleUser = await GoogleSignIn().signIn();
+        if (googleUser == null) return 'Cancelado pelo usuário';
+
+        final googleAuth = await googleUser.authentication;
+        final credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
+
+        // Reautentica com Google
+        await user.reauthenticateWithCredential(credential);
+      } else {
+        // Reautentica com email/senha
+        if (senha == null) return 'Senha necessária';
+
+        final credential = EmailAuthProvider.credential(
+          email: user.email!,
+          password: senha,
+        );
+        await user.reauthenticateWithCredential(credential);
+      }
+
+      // Deleta a conta
+      await user.delete();
+      logger.i('Conta excluída com sucesso');
+      return null;
     } on FirebaseAuthException catch (e) {
-      return e.code;
+      logger.e('Erro ao excluir conta: ${e.code}', error: e);
+      switch (e.code) {
+        case 'requires-recent-login':
+          return 'Por favor, faça login novamente';
+        case 'wrong-password':
+          return 'Senha incorreta';
+        default:
+          return 'Erro ao excluir conta: ${e.message}';
+      }
     }
-    return null;
   }
 
   // Apenas adicionar este método na classe AuthService par o login com gmail
