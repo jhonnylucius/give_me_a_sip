@@ -42,7 +42,6 @@ class AuthService {
       }
       return e.code;
     }
-    return null;
   }
 
   Future<String?> cadastrarUsuario({
