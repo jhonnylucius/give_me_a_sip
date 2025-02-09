@@ -37,12 +37,30 @@ class Menu extends StatelessWidget {
                   await AuthService().excluiConta(senha: senhaController.text);
 
               if (!context.mounted) return;
-
               Navigator.pop(context);
 
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(erro!)),
-              );
+              if (erro == null) {
+                // Sucesso na exclusão
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(FlutterI18n.translate(
+                        context, 'Conta excluída com sucesso')),
+                    backgroundColor: Colors.green,
+                  ),
+                );
+                // Navegar para tela de login
+                Navigator.pushNamedAndRemoveUntil(
+                    context, '/login', (route) => false);
+              } else {
+                // Erro na exclusão
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(FlutterI18n.translate(
+                        context, 'Erro ao excluir conta: $erro')),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+              }
             },
             child: Text(FlutterI18n.translate(context, 'Excluir')),
           ),
