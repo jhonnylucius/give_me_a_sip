@@ -45,7 +45,7 @@ class TipsScreen extends StatelessWidget {
                 icon: FontAwesomeIcons.trophy,
                 title: 'Drinks oficiais do IBA (Em breve)',
                 content:
-                    'Em breve teremos as receitas oficiais da International Bartenders Association (IBA), com vídeos exclusivos e certificação profissional. Você terá acesso às versões originais e suas variações mais populares.',
+                    'Em breve teremos as receitas oficiais da International Bartenders Association (IBA), com vídeos exclusivos. Você terá acesso às versões originais e suas variações mais populares.',
               ),
             ],
           ),
@@ -69,7 +69,8 @@ class TipsScreen extends StatelessWidget {
           children: [
             Row(
               children: [
-                FaIcon(icon, size: 24, color: Colors.deepPurple),
+                FaIcon(icon,
+                    size: 24, color: const Color.fromARGB(255, 131, 4, 4)),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
