@@ -80,7 +80,7 @@ class Menu extends StatelessWidget {
             leading: Icon(Icons.favorite_border),
             title: Text(FlutterI18n.translate(context, 'Favoritos')),
             onTap: () {
-              final controller = Get.find<CocktailListController>();
+              Get.find<CocktailListController>();
               Get.to(() => HomeScreen(
                     user: FirebaseAuth.instance.currentUser!,
                     showFavorites: true,
