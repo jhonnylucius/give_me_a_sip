@@ -37,15 +37,7 @@ class RegisterScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(16.0),
                 ),
                 child: Obx(() => _isLoading.value
-                    ? Container(
-                        color: Colors
-                            .transparent, //fundo transparente para o conteiner do progressIndicator
-                        child: const Center(
-                          child: CircularProgressIndicator(
-                            color: Color.fromARGB(255, 204, 7, 17),
-                          ),
-                        ),
-                      )
+                    ? const SizedBox() // Removido o Container com CircularProgressIndicator
                     : Column(
                         children: [
                           Image.asset(
