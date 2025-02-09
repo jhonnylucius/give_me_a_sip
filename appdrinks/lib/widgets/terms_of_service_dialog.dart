@@ -23,7 +23,7 @@ class TermsOfServiceDialog extends StatelessWidget {
             SizedBox(height: 16),
             GestureDetector(
               onTap: () =>
-                  _launchURL('https://union.dev.br/termosNetDrink.html'),
+                  _launchURL('https://union.dev.br/termosNetDrinks.html'),
               child: Text(
                 'Leia os Termos de Serviço',
                 style: TextStyle(
