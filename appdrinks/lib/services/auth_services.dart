@@ -22,6 +22,17 @@ class AuthService {
         await _firebaseAuth.signOut();
         return 'Por favor, verifique seu email antes de fazer login.';
       }
+
+      // Atualizar lastLogin
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userCredential.user?.uid)
+          .set({
+        'lastLogin': FieldValue.serverTimestamp(),
+      }, SetOptions(merge: true));
+
+      logger.i('Login bem sucedido para: ${userCredential.user?.email}');
+      return null; // Retorna null para indicar sucesso
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case 'user-not-found':
