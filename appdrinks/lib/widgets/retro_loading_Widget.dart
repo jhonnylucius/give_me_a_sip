@@ -22,7 +22,7 @@ class _RetroLoadingWidgetState extends State<RetroLoadingWidget> {
   StreamSubscription? _progressSubscription;
   final int _speedFactor =
       2; // Fator de velocidade - ajuste conforme necessário
-  final int _baseInterval = 27; // Intervalo base em millisegundos
+  final int _baseInterval = 35; // Intervalo base em millisegundos
 
   @override
   void initState() {
