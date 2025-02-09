@@ -208,7 +208,10 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
 
   Widget _buildFullContent() {
     if (translatedInstructions == null) {
-      return Center(child: CircularProgressIndicator());
+      return SizedBox(
+        height: MediaQuery.of(context).size.height,
+        child: Center(child: CircularProgressIndicator()),
+      );
     }
 
     return Padding(
