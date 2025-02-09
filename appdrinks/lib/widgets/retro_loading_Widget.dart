@@ -1,9 +1,17 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 class RetroLoadingWidget extends StatefulWidget {
   final int totalDrinks;
-  const RetroLoadingWidget({Key? key, required this.totalDrinks})
-      : super(key: key);
+  final Stream<int>?
+      loadingProgress; // Novo parâmetro para receber o progresso real
+
+  const RetroLoadingWidget({
+    super.key,
+    required this.totalDrinks,
+    this.loadingProgress,
+  });
 
   @override
   State<RetroLoadingWidget> createState() => _RetroLoadingWidgetState();
@@ -11,23 +19,43 @@ class RetroLoadingWidget extends StatefulWidget {
 
 class _RetroLoadingWidgetState extends State<RetroLoadingWidget> {
   int _currentCount = 0;
-  late final AnimationController _controller;
+  StreamSubscription? _progressSubscription;
 
   @override
   void initState() {
     super.initState();
-    _startCounting();
+    _listenToProgress();
   }
 
-  Future<void> _startCounting() async {
-    while (_currentCount < widget.totalDrinks) {
-      await Future.delayed(const Duration(milliseconds: 50));
-      if (mounted) {
-        setState(() {
-          _currentCount++;
-        });
-      }
+  void _listenToProgress() {
+    if (widget.loadingProgress != null) {
+      _progressSubscription = widget.loadingProgress!.listen(
+        (count) {
+          if (mounted) {
+            setState(() {
+              _currentCount = count;
+            });
+          }
+        },
+      );
+    } else {
+      _startSimulatedCounting();
     }
+  }
+
+  Future<void> _startSimulatedCounting() async {
+    while (_currentCount < widget.totalDrinks && mounted) {
+      await Future.delayed(const Duration(milliseconds: 50));
+      setState(() {
+        _currentCount++;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _progressSubscription?.cancel();
+    super.dispose();
   }
 
   @override
@@ -39,7 +67,7 @@ class _RetroLoadingWidgetState extends State<RetroLoadingWidget> {
           style: const TextStyle(
             fontFamily: 'Courier',
             fontSize: 16,
-            color: Color(0xFF00FF00), // Verde MS-DOS
+            color: Color(0xFF00FF00),
             fontWeight: FontWeight.bold,
           ),
           child: Column(
@@ -49,7 +77,9 @@ class _RetroLoadingWidgetState extends State<RetroLoadingWidget> {
               const SizedBox(height: 8),
               Text('[$_currentCount/${widget.totalDrinks}]'),
               const SizedBox(height: 8),
-              const Text('Please wait...'),
+              Text(_currentCount >= widget.totalDrinks
+                  ? 'Starting app...'
+                  : 'Loading drinks from cache...'),
             ],
           ),
         ),
