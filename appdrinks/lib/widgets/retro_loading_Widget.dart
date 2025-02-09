@@ -1,11 +1,11 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
 class RetroLoadingWidget extends StatefulWidget {
   final int totalDrinks;
-  final Stream<int>?
-      loadingProgress; // Novo parâmetro para receber o progresso real
+  final Stream<int>? loadingProgress;
 
   const RetroLoadingWidget({
     super.key,
@@ -20,6 +20,9 @@ class RetroLoadingWidget extends StatefulWidget {
 class _RetroLoadingWidgetState extends State<RetroLoadingWidget> {
   int _currentCount = 0;
   StreamSubscription? _progressSubscription;
+  final int _speedFactor =
+      2; // Fator de velocidade - ajuste conforme necessário
+  final int _baseInterval = 27; // Intervalo base em millisegundos
 
   @override
   void initState() {
@@ -32,9 +35,7 @@ class _RetroLoadingWidgetState extends State<RetroLoadingWidget> {
       _progressSubscription = widget.loadingProgress!.listen(
         (count) {
           if (mounted) {
-            setState(() {
-              _currentCount = count;
-            });
+            setState(() => _currentCount = count);
           }
         },
       );
@@ -45,10 +46,13 @@ class _RetroLoadingWidgetState extends State<RetroLoadingWidget> {
 
   Future<void> _startSimulatedCounting() async {
     while (_currentCount < widget.totalDrinks && mounted) {
-      await Future.delayed(const Duration(milliseconds: 50));
-      setState(() {
-        _currentCount++;
-      });
+      await Future.delayed(Duration(milliseconds: _baseInterval));
+      if (mounted) {
+        setState(() {
+          _currentCount =
+              math.min(_currentCount + _speedFactor, widget.totalDrinks);
+        });
+      }
     }
   }
 
@@ -73,7 +77,7 @@ class _RetroLoadingWidgetState extends State<RetroLoadingWidget> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Loading Cocktails...'),
+              const Text('Loading Cocktails...'),
               const SizedBox(height: 8),
               Text('[$_currentCount/${widget.totalDrinks}]'),
               const SizedBox(height: 8),
