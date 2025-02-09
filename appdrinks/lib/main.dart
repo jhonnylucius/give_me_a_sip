@@ -244,26 +244,77 @@ class InitialScreenState extends State<InitialScreen> {
             physics: const NeverScrollableScrollPhysics(),
             children: [
               Container(
-                  color: const Color.fromARGB(255, 151, 4, 4),
-                  child: Center(
-                      child: Text(
-                    " ",
-                    style: TextStyle(color: Colors.white),
-                  ))),
+                color: Colors.black, // Alterado para preto
+                child: const Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image(
+                        image: AssetImage('assets/Icon-192.png'),
+                        width: 100,
+                        height: 100,
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                        "Bem-vindo ao NetDrinks",
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 204, 7, 17),
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
               Container(
-                  color: const Color.fromARGB(255, 151, 4, 4),
-                  child: Center(
-                      child: Text(
-                    " ",
-                    style: TextStyle(color: Colors.white),
-                  ))),
+                color: Colors.black,
+                child: const Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image(
+                        image: AssetImage('assets/Icon-192.png'),
+                        width: 100,
+                        height: 100,
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                        "Descubra novos drinks",
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 204, 7, 17),
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
               Container(
-                  color: const Color.fromARGB(255, 151, 4, 4),
-                  child: Center(
-                      child: Text(
-                    " ",
-                    style: TextStyle(color: Colors.white),
-                  ))),
+                color: Colors.black,
+                child: const Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image(
+                        image: AssetImage('assets/Icon-192.png'),
+                        width: 100,
+                        height: 100,
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                        "Aproveite!",
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 204, 7, 17),
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
         ],
