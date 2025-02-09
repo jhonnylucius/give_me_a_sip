@@ -167,7 +167,8 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
           DropdownButtonHideUnderline(
             child: DropdownButton<String>(
               value: _selectedLanguage,
-              icon: Icon(Icons.language, color: Colors.white),
+              icon: Icon(Icons.language,
+                  color: const ui.Color.fromARGB(255, 151, 4, 4)),
               dropdownColor: Colors.black,
               items: [
                 DropdownMenuItem(
@@ -296,7 +297,43 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
                   fontWeight: FontWeight.bold,
                 ),
           ),
-          SizedBox(height: 8.0),
+          SizedBox(height: 4.0),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+            decoration: BoxDecoration(
+              color: Theme.of(context)
+                  .colorScheme
+                  .primary
+                  .withAlpha((0.1 * 255).toInt()),
+              borderRadius: BorderRadius.circular(8.0),
+              border: Border.all(
+                color: Theme.of(context)
+                    .colorScheme
+                    .primary
+                    .withAlpha((0.3 * 255).toInt()),
+              ),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.liquor, // Ícone mais temático para drinks
+                  color: Theme.of(context).colorScheme.primary,
+                  size: 20,
+                ),
+                SizedBox(width: 8.0),
+                Text(
+                  'Conversão: 1 oz = 29,5 ml',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 12.0),
           if (translatedIngredients != null)
             ...translatedIngredients!
                 .where((ingredient) =>
@@ -371,7 +408,7 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
                       fontWeight: FontWeight.bold,
                     ),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 12),
               Obx(() {
                 final version = controller.currentVersion.value;
                 if (version != null) {
@@ -379,7 +416,7 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
                     padding: EdgeInsets.all(12),
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.redAccent),
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(12),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
