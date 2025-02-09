@@ -50,7 +50,7 @@ class VerifyEmailScreenState extends State<VerifyEmailScreen> {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      canPop: false, // prevent back
+      canPop: false,
       child: Scaffold(
         appBar: AppBar(
           title: Text(FlutterI18n.translate(context, 'Verificar E-mail')),
@@ -75,20 +75,40 @@ class VerifyEmailScreenState extends State<VerifyEmailScreen> {
               const SizedBox(height: 16.0),
               TextButton(
                 onPressed: () async {
-                  final context = this.context;
-                  await widget.user.sendEmailVerification();
-                  if (mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(FlutterI18n.translate(
-                            context, 'Reenviar E-mail de Verificação')),
-                        backgroundColor: Colors.green,
-                      ),
-                    );
+                  try {
+                    //final context = this.context;  Não precisa, o `context` do `build` já está no escopo.
+                    await widget.user.sendEmailVerification();
+                    if (mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(FlutterI18n.translate(context,
+                              'E-mail de verificação reenviado com sucesso!')), // Mensagem mais apropriada
+                          backgroundColor: Colors.green,
+                        ),
+                      );
+                    }
+                  } catch (e) {
+                    if (mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(FlutterI18n.translate(context,
+                              'Erro ao enviar email. Tente novamente.')),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                    }
                   }
                 },
-                child: Text(FlutterI18n.translate(
-                    context, 'E-mail de verificação enviado com sucesso!')),
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                ),
+                child: Text(
+                  FlutterI18n.translate(
+                      context, 'Reenviar E-mail de Verificação'),
+                  style: const TextStyle(color: Colors.white),
+                ),
               ),
             ],
           ),
