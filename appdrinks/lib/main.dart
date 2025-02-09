@@ -244,21 +244,21 @@ class InitialScreenState extends State<InitialScreen> {
             physics: const NeverScrollableScrollPhysics(),
             children: [
               Container(
-                  color: const Color.fromARGB(255, 94, 4, 8),
+                  color: const Color.fromARGB(255, 151, 4, 4),
                   child: Center(
                       child: Text(
                     " ",
                     style: TextStyle(color: Colors.white),
                   ))),
               Container(
-                  color: const Color.fromARGB(255, 94, 4, 8),
+                  color: const Color.fromARGB(255, 151, 4, 4),
                   child: Center(
                       child: Text(
                     " ",
                     style: TextStyle(color: Colors.white),
                   ))),
               Container(
-                  color: const Color.fromARGB(255, 94, 4, 8),
+                  color: const Color.fromARGB(255, 151, 4, 4),
                   child: Center(
                       child: Text(
                     " ",
