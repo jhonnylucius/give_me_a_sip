@@ -172,7 +172,7 @@ class AuthService {
         case 'wrong-password':
           return 'Senha incorreta';
         default:
-          return 'Erro ao excluir conta: ${e.message}';
+          return 'Dados incorretos, por favor, digite novamente!';
       }
     }
   }
