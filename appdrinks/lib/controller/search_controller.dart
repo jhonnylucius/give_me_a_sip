@@ -1,6 +1,7 @@
 import 'package:app_netdrinks/models/cocktail.dart';
 import 'package:app_netdrinks/services/search_service.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 
 class SearchController extends GetxController {
   final SearchService _searchService = SearchService();
@@ -33,7 +34,7 @@ class SearchController extends GetxController {
       final results = await _searchService.searchNoAlcool();
       noAlcoolResults.value = results;
     } catch (e) {
-      print('Erro na busca sem álcool: $e');
+      Logger().e('Erro na busca sem álcool: $e');
       rethrow;
     } finally {
       isLoading.value = false;
@@ -48,7 +49,7 @@ class SearchController extends GetxController {
       final results = await _searchService.searchDezAleatorio();
       dezAleatorioResults.value = results;
     } catch (e) {
-      print('Erro na busca aleatória: $e');
+      Logger().e('Erro na busca aleatória: $e');
       rethrow;
     } finally {
       isLoading.value = false;
