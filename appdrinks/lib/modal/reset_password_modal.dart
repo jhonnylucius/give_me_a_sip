@@ -16,16 +16,20 @@ class _ResetPasswordModalState extends State<ResetPasswordModal> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Redefinir Senha'),
+      title: Text(FlutterI18n.translate(context, 'reset_password_modal.title')),
       content: Form(
         key: _formKey,
         child: TextFormField(
           controller: _emailController,
           keyboardType: TextInputType.emailAddress,
-          decoration: InputDecoration(labelText: 'Endereço de E-mail'),
+          decoration: InputDecoration(
+            labelText: FlutterI18n.translate(
+                context, 'reset_password_modal.email_label'),
+          ),
           validator: (value) {
             if (value!.isEmpty) {
-              return 'Por favor, informe um email válido';
+              return FlutterI18n.translate(
+                  context, 'reset_password_modal.email_error');
             }
             return null;
           },
@@ -36,7 +40,8 @@ class _ResetPasswordModalState extends State<ResetPasswordModal> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Text('Cancelar'),
+          child: Text(
+              FlutterI18n.translate(context, 'reset_password_modal.cancel')),
         ),
         ElevatedButton(
           onPressed: () async {
@@ -49,8 +54,9 @@ class _ResetPasswordModalState extends State<ResetPasswordModal> {
 
               if (erro == null) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Email de redefinição enviado com sucesso'),
+                  SnackBar(
+                    content: Text(FlutterI18n.translate(
+                        context, 'reset_password_modal.success')),
                     backgroundColor: Colors.green,
                   ),
                 );
@@ -65,7 +71,8 @@ class _ResetPasswordModalState extends State<ResetPasswordModal> {
               }
             }
           },
-          child: Text(FlutterI18n.translate(context, 'Enviar')),
+          child:
+              Text(FlutterI18n.translate(context, 'reset_password_modal.send')),
         ),
       ],
     );
