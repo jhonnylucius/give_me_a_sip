@@ -1,5 +1,6 @@
 import 'package:app_netdrinks/controller/search_controller.dart' as netdrink;
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
@@ -66,7 +67,7 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pesquisar Drinks'),
+        title: Text(FlutterI18n.translate(context, 'search_screen.title')),
         actions: [
           IconButton(
             icon: Icon(Icons.home),
@@ -82,7 +83,8 @@ class _SearchScreenState extends State<SearchScreen> {
               controller: searchController,
               focusNode: _focusNodeFirstLetter,
               decoration: InputDecoration(
-                hintText: 'Buscar por primeira letra...',
+                hintText: FlutterI18n.translate(
+                    context, 'search_screen.hint_first_letter'),
                 suffixIcon: IconButton(
                   icon: Icon(Icons.search),
                   onPressed: _handleSearch,
@@ -96,7 +98,8 @@ class _SearchScreenState extends State<SearchScreen> {
               controller: multiIngredientsController,
               focusNode: _focusNodeMultiIngredients,
               decoration: InputDecoration(
-                hintText: 'Buscar por vários ingredientes...',
+                hintText: FlutterI18n.translate(
+                    context, 'search_screen.hint_multi_ingredients'),
                 suffixIcon: IconButton(
                   icon: Icon(Icons.search),
                   onPressed: _handleMultiIngredientsSearch,
@@ -104,10 +107,10 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.all(8.0),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
             child: Text(
-              'Para melhores resultados, faça sua pesquisa em inglês.\nEstamos trabalhando para adicionar suporte a mais idiomas.',
+              FlutterI18n.translate(context, 'search_screen.note'),
               style: TextStyle(
                 color: Colors.grey,
                 fontSize: 12,
@@ -117,19 +120,23 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
           ElevatedButton(
             onPressed: _handleMaisRecentesSearch,
-            child: Text('Pesquisar os Drinks mais recentes'),
+            child: Text(
+                FlutterI18n.translate(context, 'search_screen.recent_drinks')),
           ),
           ElevatedButton(
             onPressed: _handleDezAleatorio,
-            child: Text('Pesquisar 10 Drinks Aleatórios'),
+            child: Text(
+                FlutterI18n.translate(context, 'search_screen.random_drinks')),
           ),
           ElevatedButton(
             onPressed: _handleNoAlcool,
-            child: Text('Pesquisar Drinks Sem Álcool'),
+            child: Text(FlutterI18n.translate(
+                context, 'search_screen.non_alcoholic_drinks')),
           ),
           ElevatedButton(
             onPressed: _handlePopularSearch,
-            child: Text('Pesquisar Drinks Populares'),
+            child: Text(
+                FlutterI18n.translate(context, 'search_screen.popular_drinks')),
           ),
           Expanded(
             child: Obx(() {
