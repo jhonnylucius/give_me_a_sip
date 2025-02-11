@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 
 class SearchDialog extends StatelessWidget {
   final String initialText;
@@ -11,11 +12,11 @@ class SearchDialog extends StatelessWidget {
         TextEditingController(text: initialText);
 
     return AlertDialog(
-      title: Text('Pesquisar'),
+      title: Text(FlutterI18n.translate(context, 'search_dialog.title')),
       content: TextField(
         controller: controller,
         decoration: InputDecoration(
-          hintText: 'Digite sua pesquisa',
+          hintText: FlutterI18n.translate(context, 'search_dialog.hint'),
         ),
         autofocus: true,
         textInputAction: TextInputAction.search,
@@ -25,13 +26,13 @@ class SearchDialog extends StatelessWidget {
       ),
       actions: <Widget>[
         TextButton(
-          child: Text('Cancelar'),
+          child: Text(FlutterI18n.translate(context, 'search_dialog.cancel')),
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
         TextButton(
-          child: Text('Pesquisar'),
+          child: Text(FlutterI18n.translate(context, 'search_dialog.search')),
           onPressed: () {
             Navigator.of(context).pop(controller.text);
           },
