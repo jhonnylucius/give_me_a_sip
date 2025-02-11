@@ -4,6 +4,7 @@ import 'dart:ui' as ui;
 
 import 'package:app_netdrinks/controller/cocktail_detail_controller.dart';
 import 'package:app_netdrinks/models/cocktail.dart';
+import 'package:app_netdrinks/services/translation_service.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -40,7 +41,6 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
 
   final TextEditingController _myVersionController = TextEditingController();
 
-  // No initState, carregue a versão salva
   @override
   void initState() {
     super.initState();
@@ -84,6 +84,14 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
     if (text == null || text.isEmpty) return text;
     if (RegExp(r'^\d+$').hasMatch(text)) return text;
 
+    // Tenta primeiro usar o JSON
+    final translationService = Get.find<TranslationService>();
+    final jsonTranslation = translationService.translateIngredient(text);
+    if (jsonTranslation != text) {
+      return jsonTranslation;
+    }
+
+    // Se não encontrar no JSON, usa o Google Translator
     try {
       final translation =
           await translator.translate(text, to: _selectedLanguage);
