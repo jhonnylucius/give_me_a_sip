@@ -1,3 +1,4 @@
+import 'package:app_netdrinks/widgets/retro_loading_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,6 +15,7 @@ class SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
+  bool _animationCompleted = false;
 
   @override
   void initState() {
@@ -21,7 +23,7 @@ class SplashScreenState extends State<SplashScreen>
 
     // Configuração da animação
     _controller = AnimationController(
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 3),
       vsync: this,
     );
 
@@ -30,26 +32,41 @@ class SplashScreenState extends State<SplashScreen>
       curve: Curves.easeInOut,
     );
 
-    _controller.forward();
-
-    // Lógica de inicialização
-    _initializeApp();
+    _controller.forward().whenComplete(() {
+      setState(() {
+        _animationCompleted = true;
+      });
+      _initializeApp(); // Chame _initializeApp após a conclusão da animação
+    });
   }
 
   Future<void> _initializeApp() async {
-    await Future.delayed(const Duration(seconds: 3));
-    final user = FirebaseAuth.instance.currentUser;
-    final prefs = await SharedPreferences.getInstance();
-    final hasSelectedLanguage = prefs.containsKey('selected_language');
+    try {
+      print('Iniciando _initializeApp');
+      final user = FirebaseAuth.instance.currentUser;
+      final prefs = await SharedPreferences.getInstance();
+      final hasSelectedLanguage =
+          prefs.getBool('selected_language') ?? false; // Mudança aqui
 
-    if (user == null) {
-      Get.offNamed('/login');
-    } else if (!user.emailVerified) {
-      Get.offNamed('/verify-email');
-    } else if (!hasSelectedLanguage) {
-      Get.offNamed('/language-settings');
-    } else {
-      Get.offNamed('/home');
+      print('hasSelectedLanguage: $hasSelectedLanguage');
+      print('user: ${user?.email}');
+      print('emailVerified: ${user?.emailVerified}');
+
+      if (!hasSelectedLanguage) {
+        print('Redirecionando para seleção de idioma');
+        Get.offAllNamed('/language-settings');
+      } else if (user == null) {
+        print('Redirecionando para login');
+        Get.offAllNamed('/login');
+      } else if (!user.emailVerified) {
+        print('Redirecionando para verificação de email');
+        Get.offAllNamed('/verify-email');
+      } else {
+        print('Redirecionando para home');
+        Get.offAllNamed('/home');
+      }
+    } catch (e) {
+      print('Erro em _initializeApp: $e');
     }
   }
 
@@ -85,9 +102,9 @@ class SplashScreenState extends State<SplashScreen>
               // Título animado
               FadeTransition(
                 opacity: _animation,
-                child: const Text(
+                child: Text(
                   'NetDrinks',
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Color.fromARGB(255, 204, 7, 17),
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
@@ -99,14 +116,15 @@ class SplashScreenState extends State<SplashScreen>
               const SizedBox(height: 50),
 
               // Loading indicator estilizado
-              SizedBox(
-                width: 40,
-                height: 40,
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    Color.fromARGB(255, 204, 7, 17),
+              AnimatedOpacity(
+                opacity: _animationCompleted ? 0.0 : 1.0,
+                duration: const Duration(milliseconds: 1000),
+                child: SizedBox(
+                  width: 220.0, // Aumentar o tamanho para melhor visualização
+                  height: 180.0, // Aumentar o tamanho para melhor visualização
+                  child: RetroLoadingWidget(
+                    totalDrinks: 636, // Example total drinks count
                   ),
-                  strokeWidth: 3,
                 ),
               ),
             ],
