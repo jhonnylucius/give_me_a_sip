@@ -1,33 +1,29 @@
 import 'package:app_netdrinks/controller/cocktail_detail_controller.dart';
 import 'package:app_netdrinks/controller/cocktail_list_controller.dart';
-import 'package:app_netdrinks/models/cocktail.dart';
-import 'package:app_netdrinks/models/cocktail_api.dart';
 import 'package:app_netdrinks/repository/cocktail_repository.dart';
 import 'package:app_netdrinks/services/locator_service.dart';
+import 'package:app_netdrinks/services/translation_service.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 
 class AppBindings implements Bindings {
   @override
   void dependencies() {
-    // Registrar o repository
-    Get.lazyPut(
-        () => CocktailRepository(
-              getIt<CocktailApi>(),
-              Hive.box<Cocktail>('cocktailBox'),
-            ),
-        fenix: true);
+    // Translation Service
+    Get.put(TranslationService(), permanent: true);
 
-    // Registrar o CocktailListController com fenix: true
-    Get.lazyPut(
-      () => CocktailListController(repository: Get.find()),
-      fenix: true, // Isso faz o controller persistir entre navegações
+    // Repository - usando o já configurado no GetIt
+    final repository = getIt<CocktailRepository>();
+    Get.put(repository, permanent: true);
+
+    // Controllers principais
+    Get.put(
+      CocktailListController(repository: repository),
+      permanent: true,
     );
 
-    // Registrar o CocktailController
-    Get.lazyPut(
-      () => CocktailController(Get.find()),
-      fenix: true,
+    Get.put(
+      CocktailController(repository),
+      permanent: true,
     );
   }
 }
