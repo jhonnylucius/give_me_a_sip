@@ -215,5 +215,8 @@
     "title": "NetDrinks",
     "favorites": "My Favorites",
     "no_favorites": "No favorites yet"
+  },
+  "cocktail_datail_screen": {
+    "conversion": "conversion rate"
   }
 }

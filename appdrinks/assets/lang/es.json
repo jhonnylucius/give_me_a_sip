@@ -225,5 +225,8 @@
     "random_drinks": "Buscar 10 bebidas aleatorias",
     "non_alcoholic_drinks": "Buscar bebidas sin alcohol",
     "popular_drinks": "Buscar bebidas populares"
+  },
+  "cocktail_datail_screen": {
+    "conversion": "tasa de conversión"
   }
 }
