@@ -5,6 +5,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logger/logger.dart';
 
@@ -20,7 +22,8 @@ class AuthService {
       // Verificar se o email foi confirmado
       if (!userCredential.user!.emailVerified) {
         await _firebaseAuth.signOut();
-        return 'Por favor, verifique seu email antes de fazer login.';
+        return FlutterI18n.translate(
+            Get.context!, 'auth_services.verify_email_before_login');
       }
 
       // Atualizar lastLogin
@@ -36,9 +39,11 @@ class AuthService {
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case 'user-not-found':
-          return 'Usuário não encontrado.';
+          return FlutterI18n.translate(
+              Get.context!, 'auth_services.user_not_found');
         case 'wrong-password':
-          return 'Falha no login.';
+          return FlutterI18n.translate(
+              Get.context!, 'auth_services.login_failed');
       }
       return e.code;
     }
@@ -86,11 +91,14 @@ class AuthService {
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case 'email-already-in-use':
-          return 'Email já está em uso.';
+          return FlutterI18n.translate(
+              Get.context!, 'auth_services.email_already_in_use');
         case 'invalid-email':
-          return 'Dados incorretos.';
+          return FlutterI18n.translate(
+              Get.context!, 'auth_services.invalid_data');
         case 'weak-password':
-          return 'Dados Incorretos.';
+          return FlutterI18n.translate(
+              Get.context!, 'auth_services.invalid_data');
       }
       return e.code;
     }
@@ -107,13 +115,17 @@ class AuthService {
       logger.e('Erro ao enviar email de redefinição: ${e.code}', error: e);
       switch (e.code) {
         case 'invalid-email':
-          return 'Email inválido';
+          return FlutterI18n.translate(
+              Get.context!, 'auth_services.invalid_email');
         case 'user-not-found':
-          return 'Usuário não encontrado';
+          return FlutterI18n.translate(
+              Get.context!, 'auth_services.user_not_found');
         case 'too-many-requests':
-          return 'Muitas tentativas. Tente novamente mais tarde';
+          return FlutterI18n.translate(
+              Get.context!, 'auth_services.too_many_requests');
         default:
-          return 'Erro ao enviar email de redefinição';
+          return FlutterI18n.translate(
+              Get.context!, 'auth_services.reset_email_error');
       }
     }
   }
@@ -130,7 +142,10 @@ class AuthService {
   Future<String?> excluiConta({required String? senha}) async {
     try {
       final user = _firebaseAuth.currentUser;
-      if (user == null) return 'Usuário não encontrado';
+      if (user == null) {
+        return FlutterI18n.translate(
+            Get.context!, 'auth_services.user_not_found');
+      }
 
       // Verifica se é login do Google
       bool isGoogleUser = user.providerData
@@ -139,7 +154,10 @@ class AuthService {
       if (isGoogleUser && senha == null) {
         // Se for usuário Google sem senha, solicita reautenticação via Google
         final googleUser = await GoogleSignIn().signIn();
-        if (googleUser == null) return 'Cancelado pelo usuário';
+        if (googleUser == null) {
+          return FlutterI18n.translate(
+              Get.context!, 'auth_services.user_cancelled');
+        }
 
         final googleAuth = await googleUser.authentication;
         final credential = GoogleAuthProvider.credential(
@@ -151,7 +169,10 @@ class AuthService {
         await user.reauthenticateWithCredential(credential);
       } else {
         // Reautentica com email/senha
-        if (senha == null) return 'Senha necessária';
+        if (senha == null) {
+          return FlutterI18n.translate(
+              Get.context!, 'auth_services.password_required');
+        }
 
         final credential = EmailAuthProvider.credential(
           email: user.email!,
@@ -168,16 +189,18 @@ class AuthService {
       logger.e('Erro ao excluir conta: ${e.code}', error: e);
       switch (e.code) {
         case 'requires-recent-login':
-          return 'Por favor, faça login novamente';
+          return FlutterI18n.translate(
+              Get.context!, 'auth_services.recent_login_required');
         case 'wrong-password':
-          return 'Senha incorreta';
+          return FlutterI18n.translate(
+              Get.context!, 'auth_services.wrong_password');
         default:
-          return 'Dados incorretos, por favor, digite novamente!';
+          return FlutterI18n.translate(
+              Get.context!, 'auth_services.incorrect_data');
       }
     }
   }
 
-  // Apenas adicionar este método na classe AuthService par o login com gmail
   Future<UserCredential?> signInWithGoogle() async {
     try {
       UserCredential userCredential;
