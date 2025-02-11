@@ -1,16 +1,15 @@
-import 'package:app_netdrinks/adapters/cocktail_adapter.dart';
 import 'package:app_netdrinks/bindings/app_bindings.dart';
 import 'package:app_netdrinks/bindings/search_binding.dart';
 import 'package:app_netdrinks/firebase_options.dart';
-import 'package:app_netdrinks/models/cocktail.dart';
 import 'package:app_netdrinks/screens/cocktail_detail_screen.dart';
 import 'package:app_netdrinks/screens/home_screen.dart';
+import 'package:app_netdrinks/screens/language_selections_screen.dart';
 import 'package:app_netdrinks/screens/login_screen.dart';
 import 'package:app_netdrinks/screens/search/search_results_screen.dart';
 import 'package:app_netdrinks/screens/search/search_screen.dart';
+import 'package:app_netdrinks/screens/splash_screen.dart';
 import 'package:app_netdrinks/screens/verify_email_screen.dart';
 import 'package:app_netdrinks/services/locator_service.dart';
-import 'package:app_netdrinks/widgets/cocktail_card_widget.dart' as widget;
 import 'package:app_netdrinks/widgets/terms_of_service_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -18,30 +17,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  // Inicializar o Hive antes de usar o GetIt
-  await Hive.initFlutter();
-  Hive.registerAdapter(CocktailAdapter());
-  await Hive.openBox<Cocktail>('cocktailBox');
-  await Hive.openBox<String>('favorites');
-
-  // Inicializar GetIt
-  setupGetIt(); // Chame o setupGetIt *depois* de inicializar o Hive
+  // Configurar o GetIt
+  await setupLocator();
 
   final prefs = await SharedPreferences.getInstance();
-  prefs.getString('language');
+  final languageCode = prefs.getString('language') ?? 'en';
+  final locale = Locale(languageCode);
 
-  runApp(const MyApp());
+  runApp(MyApp(locale: locale));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final Locale locale;
+
+  const MyApp({super.key, required this.locale});
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +44,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialBinding: AppBindings(),
       title: 'NetDrinks',
+      locale: locale, // Define o locale inicial
       localizationsDelegates: [
         FlutterI18nDelegate(
           translationLoader: FileTranslationLoader(
@@ -75,7 +71,30 @@ class MyApp extends StatelessWidget {
       },
       initialRoute: '/',
       getPages: [
-        GetPage(name: '/', page: () => const InitialScreen()),
+        GetPage(name: '/', page: () => const SplashScreen()),
+        GetPage(
+            name: '/language-settings',
+            page: () => const LanguageSelectionScreen()),
+        GetPage(
+            name: '/terms',
+            page: () => TermsOfServiceDialog(onAccepted: () {
+                  if (true) {
+                    Get.to(() => LoginScreen());
+                  }
+                }, onDeclined: () {
+                  Get.back();
+                })), // Adicionar esta linha
+        GetPage(name: '/login', page: () => LoginScreen()),
+        GetPage(
+          name: '/verify-email',
+          page: () {
+            final user = FirebaseAuth.instance.currentUser;
+            if (user == null) {
+              return LoginScreen();
+            }
+            return VerifyEmailScreen(user: user);
+          },
+        ),
         GetPage(
           name: '/home',
           page: () {
@@ -99,30 +118,6 @@ class MyApp extends StatelessWidget {
             }
             return HomeScreen(user: user, showFavorites: true);
           },
-        ),
-        GetPage(
-          name: '/verify-email',
-          page: () {
-            final user = FirebaseAuth.instance.currentUser;
-            if (user == null) {
-              return LoginScreen();
-            }
-            return VerifyEmailScreen(user: user);
-          },
-        ),
-        GetPage(name: '/login', page: () => LoginScreen()),
-        GetPage(
-          name: '/cocktail',
-          page: () => widget.CocktailCard(
-            user: FirebaseAuth.instance.currentUser?.uid ?? '',
-            cocktail: Cocktail(
-              idDrink: '1',
-              strDrink: 'Example Drink',
-              strInstructions: 'Mix ingredients',
-              ingredients: ['Ingredient1', 'Ingredient2'],
-              measures: ['1 oz', '2 oz'],
-            ),
-          ),
         ),
         GetPage(
           name: '/search',
@@ -184,11 +179,14 @@ class InitialScreen extends StatefulWidget {
 class InitialScreenState extends State<InitialScreen> {
   final bool termsAccepted = false;
   late PageController _pageController;
+
   @override
   void initState() {
     super.initState();
     _pageController = PageController();
-    _checkTermsAccepted();
+    Future.delayed(const Duration(seconds: 3), () {
+      _checkTermsAccepted();
+    });
   }
 
   Future<void> _checkTermsAccepted() async {
@@ -222,7 +220,15 @@ class InitialScreenState extends State<InitialScreen> {
     );
   }
 
-  void _navigateToNextScreen() {
+  void _navigateToNextScreen() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? selectedLanguage = prefs.getString('selected_language');
+
+    if (selectedLanguage == null) {
+      Navigator.of(context).pushReplacementNamed('/language-settings');
+      return;
+    }
+
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) {
       Navigator.of(context).pushReplacementNamed('/login');
