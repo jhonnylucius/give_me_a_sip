@@ -333,7 +333,7 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
                 ),
                 SizedBox(width: 8.0),
                 Text(
-                  'Conversão: 1 oz = 29,5 ml',
+                  '${FlutterI18n.translate(context, "cocktail_datail_screen.conversion")} 1 oz = 29,5 ml',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 14,
