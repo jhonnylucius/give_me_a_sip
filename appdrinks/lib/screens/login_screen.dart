@@ -118,8 +118,9 @@ class LoginScreen extends StatelessWidget {
                       if (email.isEmpty || senha.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                              content:
-                                  Text('Por favor, preencha todos os campos')),
+                            content: Text(FlutterI18n.translate(
+                                context, 'login.fill_all_fields')),
+                          ),
                         );
                         return;
                       }
@@ -131,25 +132,30 @@ class LoginScreen extends StatelessWidget {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => HomeScreen(
-                                      user: user,
-                                      showFavorites: false,
-                                    )),
+                              builder: (context) => HomeScreen(
+                                user: user,
+                                showFavorites: false,
+                              ),
+                            ),
                           );
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                                content: Text(
-                                    'Erro ao fazer login: Usuário não encontrado')),
+                              content: Text(FlutterI18n.translate(
+                                  context, 'login.user_not_found')),
+                            ),
                           );
                         }
                       } catch (e) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Erro ao fazer login: $e')),
+                          SnackBar(
+                            content: Text(
+                                '${FlutterI18n.translate(context, 'login.login_error')}: $e'),
+                          ),
                         );
                       }
                     },
-                    child: Text(FlutterI18n.translate(context, "Entrar")),
+                    child: Text(FlutterI18n.translate(context, "login.login")),
                   ),
                   SizedBox(height: 10),
                   ElevatedButton(
@@ -173,23 +179,26 @@ class LoginScreen extends StatelessWidget {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => HomeScreen(
-                                      user: user,
-                                      showFavorites: false,
-                                    )),
+                              builder: (context) => HomeScreen(
+                                user: user,
+                                showFavorites: false,
+                              ),
+                            ),
                           );
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                                content: Text(
-                                    'Erro ao fazer login com Google: Usuário não encontrado')),
+                              content: Text(FlutterI18n.translate(
+                                  context, 'login.google_user_not_found')),
+                            ),
                           );
                         }
                       } catch (e) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                              content:
-                                  Text('Erro ao fazer login com Google: $e')),
+                            content: Text(
+                                '${FlutterI18n.translate(context, 'login.google_login_error')}: $e'),
+                          ),
                         );
                       }
                     },
@@ -200,10 +209,12 @@ class LoginScreen extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => RegisterScreen()),
+                          builder: (context) => RegisterScreen(),
+                        ),
                       );
                     },
-                    child: Text(FlutterI18n.translate(context, "Criar Conta")),
+                    child: Text(
+                        FlutterI18n.translate(context, "login.create_account")),
                   ),
                 ],
               ),
