@@ -112,7 +112,7 @@ flutter:
     - assets/i18n/en.json
     - assets/i18n/pt.json
     - assets/flags/br.svg
-    
+    - assets/data/drinks_data.json
   
 
   # An image asset can refer to one or more resolution-specific "variants", see

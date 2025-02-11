@@ -226,7 +226,12 @@
     "non_alcoholic_drinks": "Pesquisar drinks não alcoólicos",
     "popular_drinks": "Pesquisar drinks populares"
   },
-  "cocktail_datail_screen": {
-    "conversion": "conversão"
+  "cocktail_detail": {
+    "ingredients": "Ingredientes",
+    "instructions": "Instruções",
+    "my_version": "Minha Versão",
+    "add_your_version": "Adicione sua versão da receita...",
+    "edit": "Editar",
+    "conversion": "Conversão: 1 oz = 29,5 ml"
   }
 }

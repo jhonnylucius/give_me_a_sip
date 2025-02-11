@@ -216,7 +216,12 @@
     "favorites": "My Favorites",
     "no_favorites": "No favorites yet"
   },
-  "cocktail_datail_screen": {
-    "conversion": "conversion rate"
+"cocktail_detail": {
+    "ingredients": "Ingredients",
+    "instructions": "Instructions",
+    "my_version": "My Version",
+    "add_your_version": "Add your version of the recipe...",
+    "edit": "Edit",
+    "conversion": "Conversion: 1 oz = 29.5 ml"
   }
 }
