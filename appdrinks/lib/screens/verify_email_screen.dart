@@ -49,11 +49,12 @@ class VerifyEmailScreenState extends State<VerifyEmailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: false,
+    return WillPopScope(
+      onWillPop: () async => false,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(FlutterI18n.translate(context, 'Verificar E-mail')),
+          title:
+              Text(FlutterI18n.translate(context, 'verify_email_screen.title')),
           automaticallyImplyLeading: false,
         ),
         body: Center(
@@ -61,28 +62,29 @@ class VerifyEmailScreenState extends State<VerifyEmailScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                FlutterI18n.translate(context,
-                    'Um e-mail de verificação foi enviado para {email}',
-                    translationParams: {'email': widget.user.email!}),
+                FlutterI18n.translate(
+                  context,
+                  'verify_email_screen.verification_email_sent',
+                  translationParams: {'email': widget.user.email!},
+                ),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 16.0),
               Text(
-                FlutterI18n.translate(context,
-                    'Por favor, verifique seu e-mail e clique no link de verificação.'),
+                FlutterI18n.translate(
+                    context, 'verify_email_screen.check_email'),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 16.0),
               TextButton(
                 onPressed: () async {
                   try {
-                    //final context = this.context;  Não precisa, o `context` do `build` já está no escopo.
                     await widget.user.sendEmailVerification();
                     if (mounted) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text(FlutterI18n.translate(context,
-                              'E-mail de verificação reenviado com sucesso!')), // Mensagem mais apropriada
+                              'verify_email_screen.verification_email_resent')),
                           backgroundColor: Colors.green,
                         ),
                       );
@@ -92,7 +94,7 @@ class VerifyEmailScreenState extends State<VerifyEmailScreen> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text(FlutterI18n.translate(context,
-                              'Erro ao enviar email. Tente novamente.')),
+                              'verify_email_screen.error_sending_email')),
                           backgroundColor: Colors.red,
                         ),
                       );
@@ -106,7 +108,7 @@ class VerifyEmailScreenState extends State<VerifyEmailScreen> {
                 ),
                 child: Text(
                   FlutterI18n.translate(
-                      context, 'Reenviar E-mail de Verificação'),
+                      context, 'verify_email_screen.resend_verification_email'),
                   style: const TextStyle(color: Colors.white),
                 ),
               ),
