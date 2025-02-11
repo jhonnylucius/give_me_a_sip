@@ -2,7 +2,8 @@ import 'package:app_netdrinks/screens/verify_email_screen.dart';
 import 'package:app_netdrinks/services/auth_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart'; // Importe o GetX
+import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:get/get.dart';
 
 class RegisterScreen extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
@@ -11,7 +12,7 @@ class RegisterScreen extends StatelessWidget {
       TextEditingController();
   final TextEditingController _nomeController = TextEditingController();
   final AuthService _authService = AuthService();
-  final _isLoading = false.obs; // Adicionar esta linha
+  final _isLoading = false.obs;
 
   RegisterScreen({super.key});
 
@@ -37,7 +38,7 @@ class RegisterScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(16.0),
                 ),
                 child: Obx(() => _isLoading.value
-                    ? const SizedBox() // Removido o Container com CircularProgressIndicator
+                    ? const SizedBox()
                     : Column(
                         children: [
                           Image.asset(
@@ -49,38 +50,46 @@ class RegisterScreen extends StatelessWidget {
                           TextField(
                             controller: _nomeController,
                             style: const TextStyle(color: Colors.black),
-                            decoration:
-                                const InputDecoration(labelText: 'Nome'),
+                            decoration: InputDecoration(
+                              labelText: FlutterI18n.translate(
+                                  context, 'register.name'),
+                            ),
                           ),
                           const SizedBox(height: 8.0),
                           TextField(
                             controller: _emailController,
                             style: const TextStyle(color: Colors.black),
-                            decoration:
-                                const InputDecoration(labelText: 'E-mail'),
+                            decoration: InputDecoration(
+                              labelText: FlutterI18n.translate(
+                                  context, 'register.email'),
+                            ),
                           ),
                           const SizedBox(height: 8.0),
                           TextField(
                             obscureText: true,
                             controller: _senhaController,
                             style: const TextStyle(color: Colors.black),
-                            decoration:
-                                const InputDecoration(labelText: 'Senha'),
+                            decoration: InputDecoration(
+                              labelText: FlutterI18n.translate(
+                                  context, 'register.password'),
+                            ),
                           ),
                           const SizedBox(height: 8.0),
                           TextField(
                             obscureText: true,
                             controller: _confirmarSenhaController,
                             style: const TextStyle(color: Colors.black),
-                            decoration: const InputDecoration(
-                                labelText: 'Confirmar Senha'),
+                            decoration: InputDecoration(
+                              labelText: FlutterI18n.translate(
+                                  context, 'register.confirm_password'),
+                            ),
                           ),
                           const SizedBox(height: 8.0),
                           ElevatedButton(
                             onPressed: () async {
                               if (_senhaController.text ==
                                   _confirmarSenhaController.text) {
-                                _isLoading.value = true; // Ativar loading
+                                _isLoading.value = true;
 
                                 try {
                                   final result =
@@ -92,12 +101,10 @@ class RegisterScreen extends StatelessWidget {
                                   );
 
                                   if (result == null) {
-                                    // Cadastro bem-sucedido. Obtém o usuário autenticado.
                                     final user =
                                         FirebaseAuth.instance.currentUser;
 
                                     if (user != null) {
-                                      // Navega para a tela de verificação de e-mail, passando o usuário.
                                       if (context.mounted) {
                                         Navigator.pushReplacement(
                                           context,
@@ -108,20 +115,19 @@ class RegisterScreen extends StatelessWidget {
                                         );
                                       }
                                     } else {
-                                      // Lidar com o caso em que o usuário é nulo após o cadastro (improvável, mas possível)
                                       if (context.mounted) {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
-                                          const SnackBar(
-                                            content: Text(
-                                                'Erro ao obter usuário após o cadastro.'),
+                                          SnackBar(
+                                            content: Text(FlutterI18n.translate(
+                                                context,
+                                                'register.error_fetching_user')),
                                             backgroundColor: Colors.red,
                                           ),
                                         );
                                       }
                                     }
                                   } else {
-                                    // Houve um erro no cadastro.
                                     if (context.mounted) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
@@ -133,28 +139,31 @@ class RegisterScreen extends StatelessWidget {
                                     }
                                   }
                                 } finally {
-                                  _isLoading.value = false; // Desativar loading
+                                  _isLoading.value = false;
                                 }
                               } else {
-                                // Senhas não coincidem.
                                 if (context.mounted) {
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text('Senhas não conferem.'),
+                                    SnackBar(
+                                      content: Text(FlutterI18n.translate(
+                                          context,
+                                          'register.passwords_do_not_match')),
                                       backgroundColor: Colors.red,
                                     ),
                                   );
                                 }
                               }
                             },
-                            child: const Text('Cadastrar'),
+                            child: Text(FlutterI18n.translate(
+                                context, 'register.register')),
                           ),
                           const SizedBox(height: 8.0),
                           TextButton(
                             onPressed: () {
                               Navigator.pushNamed(context, '/login');
                             },
-                            child: const Text('Já tenho uma conta!'),
+                            child: Text(FlutterI18n.translate(
+                                context, 'register.already_have_account')),
                           ),
                         ],
                       )),
