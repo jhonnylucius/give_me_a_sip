@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TermsOfServiceDialog extends StatelessWidget {
@@ -14,19 +15,21 @@ class TermsOfServiceDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Termos de Serviço'),
+      title:
+          Text(FlutterI18n.translate(context, 'terms_of_service_dialog.title')),
       content: SingleChildScrollView(
         child: ListBody(
           children: <Widget>[
-            Text(
-                'Por favor, leia e aceite os termos de serviço para continuar.'),
-            SizedBox(height: 16),
+            Text(FlutterI18n.translate(
+                context, 'terms_of_service_dialog.content')),
+            const SizedBox(height: 16),
             GestureDetector(
               onTap: () =>
                   _launchURL('https://union.dev.br/termosNetDrinks.html'),
               child: Text(
-                'Leia os Termos de Serviço',
-                style: TextStyle(
+                FlutterI18n.translate(
+                    context, 'terms_of_service_dialog.read_terms'),
+                style: const TextStyle(
                     color: Colors.blue, decoration: TextDecoration.underline),
               ),
             ),
@@ -35,14 +38,16 @@ class TermsOfServiceDialog extends StatelessWidget {
       ),
       actions: <Widget>[
         TextButton(
-          child: Text('Aceitar'),
+          child: Text(
+              FlutterI18n.translate(context, 'terms_of_service_dialog.accept')),
           onPressed: () {
             Navigator.of(context).pop(); // Fechar o diálogo
             onAccepted();
           },
         ),
         TextButton(
-          child: Text('Recusar'),
+          child: Text(FlutterI18n.translate(
+              context, 'terms_of_service_dialog.decline')),
           onPressed: () {
             Navigator.of(context).pop(); // Fechar o diálogo
             onDeclined();
