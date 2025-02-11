@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 
 class SearchFilterDialog extends StatelessWidget {
   final Function(String) onFilterSelected;
@@ -8,31 +9,36 @@ class SearchFilterDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Selecione o Filtro de Pesquisa'),
+      title: Text(FlutterI18n.translate(context, 'search_filter_dialog.title')),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           ListTile(
-            title: Text('Buscar por Primeira Letra'),
+            title: Text(FlutterI18n.translate(
+                context, 'search_filter_dialog.first_letter')),
             onTap: () => onFilterSelected('firstLetter'),
           ),
           ListTile(
-            title: Text('Buscar por Categoria'),
+            title: Text(FlutterI18n.translate(
+                context, 'search_filter_dialog.category')),
             onTap: () => onFilterSelected('category'),
           ),
           ListTile(
-            title: Text('Buscar por Ingrediente'),
+            title: Text(FlutterI18n.translate(
+                context, 'search_filter_dialog.ingredient')),
             onTap: () => onFilterSelected('ingredient'),
           ),
           ListTile(
-            title: Text('Buscar por Tipo de Bebida'),
+            title: Text(FlutterI18n.translate(
+                context, 'search_filter_dialog.alcoholic')),
             onTap: () => onFilterSelected('alcoholic'),
           ),
         ],
       ),
       actions: [
         TextButton(
-          child: Text('Cancelar'),
+          child: Text(
+              FlutterI18n.translate(context, 'search_filter_dialog.cancel')),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ],
