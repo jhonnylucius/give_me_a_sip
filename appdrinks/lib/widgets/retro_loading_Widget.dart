@@ -21,7 +21,7 @@ class _RetroLoadingWidgetState extends State<RetroLoadingWidget> {
   int _currentCount = 0;
   StreamSubscription? _progressSubscription;
   final int _speedFactor =
-      2; // Fator de velocidade - ajuste conforme necessário
+      12; // Fator de velocidade - ajuste conforme necessário
   final int _baseInterval = 40; // Intervalo base em millisegundos
 
   @override
@@ -70,7 +70,7 @@ class _RetroLoadingWidgetState extends State<RetroLoadingWidget> {
         child: DefaultTextStyle(
           style: const TextStyle(
             fontFamily: 'Courier',
-            fontSize: 16,
+            fontSize: 14,
             color: Color(0xFF00FF00),
             fontWeight: FontWeight.bold,
           ),
