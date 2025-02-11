@@ -70,8 +70,8 @@ class HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.black.withAlpha(179),
         elevation: 0,
         title: Text(widget.showFavorites
-            ? FlutterI18n.translate(context, 'Favoritos')
-            : FlutterI18n.translate(context, 'NetDrinks')),
+            ? FlutterI18n.translate(context, 'home_screen.favorites')
+            : FlutterI18n.translate(context, 'home_screen.title')),
         leading: Builder(
           builder: (context) => IconButton(
             icon: const Icon(Icons.menu),
@@ -108,8 +108,7 @@ class HomeScreenState extends State<HomeScreen> {
         if (displayCocktails.isEmpty && widget.showFavorites) {
           return Center(
             child: Text(
-              FlutterI18n.translate(context,
-                  'Você não tem Drinks Salvos,\n clique no coração ao lado da foto do Drink pra salvá-lo como favorito!'),
+              FlutterI18n.translate(context, 'home_screen.no_favorites'),
               style: const TextStyle(color: Colors.white),
               textAlign: TextAlign.center,
             ),
