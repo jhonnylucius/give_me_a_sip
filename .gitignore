@@ -211,3 +211,4 @@ appdrinks/lib/data2/ingredients_images/yeast.png
 appdrinks/lib/data2/ingredients_images/yoghurt.png
 appdrinks/lib/data2/ingredients_images/zima.png
 appdrinks/lib/utils/generate_ingredients_images.dart
+appdrinks/devtools_options.yaml

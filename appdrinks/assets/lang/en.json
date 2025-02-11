@@ -1,30 +1,219 @@
 {
-    "app_name": "NetDrinks",
-    "category": "Category",
-    "type": "Type",
-    "glass": "Glass",
+  "app": {
+    "name": "NetDrinks",
+    "version": "1.0.0"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "email": "Email",
+    "password": "Password",
+    "confirm_password": "Confirm Password",
+    "forgot_password": "Forgot password?",
+    "reset_password": "Reset Password",
+    "google_sign_in": "Sign in with Google",
+    "create_account": "Create account",
+    "already_have_account": "Already have an account?",
+    "dont_have_account": "Don't have an account?"
+  },
+  "cocktails": {
+    "categories": "Categories",
     "ingredients": "Ingredients",
     "instructions": "Instructions",
-    "login": {
-      "email": "Email",
-      "password": "Password",
-      "sign_in": "Sign In",
-      "sign_in_google": "Sign in with Google",
-      "create_account": "Create an Account",
-      "forgot_password": "Forgot Password"
-    },
-    "menu": {
-      "home": "Home",
-      "logout": "Logout",
-      "delete_account": "Delete Account"
-    },
-    "search": {
-      "title": "Search Cocktail",
-      "name": "Cocktail Name",
-      "category": "Category"
-    },
-    "verify": {
-      "title": "Verify Your Email",
-      "resent": "Verification email resent"
-    }
+    "glass_type": "Glass Type",
+    "alcoholic": "Alcoholic",
+    "non_alcoholic": "Non-Alcoholic",
+    "favorite": "Favorite",
+    "unfavorite": "Remove from Favorites",
+    "share": "Share",
+    "preparation": "Preparation",
+    "search_placeholder": "Search drinks...",
+    "no_results": "No results found",
+    "loading": "Loading drinks..."
+  },
+  "categories": {
+    "ordinary_drink": "Ordinary Drinks",
+    "cocktail": "Cocktails",
+    "shake": "Shakes",
+    "other": "Other",
+    "cocoa": "Cocoa",
+    "shot": "Shots",
+    "coffee_tea": "Coffee / Tea",
+    "homemade_liqueur": "Homemade Liqueur",
+    "punch_party_drink": "Punch / Party Drink",
+    "beer": "Beer",
+    "soft_drink": "Soft Drink"
+  },
+  "profile": {
+    "edit": "Edit Profile",
+    "save": "Save",
+    "cancel": "Cancel",
+    "name": "Name",
+    "photo": "Photo",
+    "change_photo": "Change Photo",
+    "remove_photo": "Remove Photo",
+    "preferences": "Preferences"
+  },
+  "settings": {
+    "app_settings": "App Settings",
+    "notifications": "Notifications",
+    "dark_mode": "Dark Mode",
+    "language_settings": "Language Settings",
+    "privacy": "Privacy",
+    "terms": "Terms of Use",
+    "help": "Help",
+    "about": "About App"
+  },
+  "errors": {
+    "generic_error": "Something went wrong. Please try again.",
+    "connection_error": "Connection error",
+    "login_error": "Error logging in",
+    "register_error": "Error creating account",
+    "invalid_email": "Invalid email",
+    "invalid_password": "Invalid password",
+    "passwords_dont_match": "Passwords don't match",
+    "required_field": "Required field"
+  },
+  "success": {
+    "login_success": "Login successful",
+    "register_success": "Account created successfully",
+    "profile_updated": "Profile updated successfully",
+    "password_reset": "Password reset email sent"
+  },
+  "buttons": {
+    "ok": "OK",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "next": "Next",
+    "back": "Back",
+    "try_again": "Try Again",
+    "confirm": "Confirm"
+  },
+  "alerts": {
+    "confirm_delete": "Are you sure you want to delete?",
+    "confirm_logout": "Are you sure you want to logout?",
+    "unsaved_changes": "There are unsaved changes"
+  },
+  "loading": {
+    "please_wait": "Please wait...",
+    "loading_data": "Loading data...",
+    "processing": "Processing..."
+  },
+  "language_selection_screen": {
+    "title": "Selecione o Idioma",
+    "english": "Inglês",
+    "portuguese": "Português",
+    "spanish": "Espanhol"
+  },
+  "login": {
+    "email": "Email",
+    "password": "Password",
+    "fill_all_fields": "Please fill all fields",
+    "user_not_found": "Login error: User not found",
+    "login_error": "Login error",
+    "login": "Login",
+    "forgot_password": "Forgot password?",
+    "google_user_not_found": "Google login error: User not found",
+    "google_login_error": "Google login error",
+    "create_account": "Create Account"
+  },
+  "register": {
+    "name": "Name",
+    "email": "Email",
+    "password": "Password",
+    "confirm_password": "Confirm Password",
+    "error_fetching_user": "Error fetching user after registration.",
+    "passwords_do_not_match": "Passwords do not match.",
+    "register": "Register",
+    "already_have_account": "Already have an account!"
+  },
+  "search_dialog": {
+    "title": "Search",
+    "hint": "Enter your search",
+    "cancel": "Cancel",
+    "search": "Search"
+  },
+  "splash_screen": {
+    "title": "NetDrinks"
+  },
+  "tips_screen": {
+    "title": "Tips and News",
+    "tip1_title": "Drinks with what you have at home",
+    "tip1_content": "Use our ingredient search to discover amazing drinks with what you already have at home! Just type the ingredients in English and explore the possibilities.",
+    "tip2_title": "Family Fun",
+    "tip2_content": "Take advantage of our non-alcoholic drink filters to create special moments with the kids. Turn drink preparation into a fun and safe activity for the whole family.",
+    "tip3_title": "Multi-language Support (Coming Soon)",
+    "tip3_content": "We are developing our own API to bring full support in Portuguese, English, and Spanish. Soon you will be able to search in your preferred language!",
+    "tip4_title": "Original Community Drinks (Coming Soon)",
+    "tip4_content": "Soon you will be able to share your original creations with the NetDrinks community! Your drink could become the next favorite of thousands of people.",
+    "tip5_title": "Official IBA Drinks (Coming Soon)",
+    "tip5_content": "Soon we will have the official recipes from the International Bartenders Association (IBA), with exclusive videos. You will have access to the original versions and their most popular variations."
+  },
+  "verify_email_screen": {
+    "title": "Verify Email",
+    "verification_email_sent": "A verification email has been sent to {email}",
+    "check_email": "Please check your email and click the verification link.",
+    "verification_email_resent": "Verification email resent successfully!",
+    "error_sending_email": "Error sending email. Please try again.",
+    "resend_verification_email": "Resend Verification Email"
+  },
+  "auth_services": {
+    "verify_email_before_login": "Please verify your email before logging in.",
+    "user_not_found": "User not found.",
+    "login_failed": "Login failed.",
+    "email_already_in_use": "Email is already in use.",
+    "invalid_data": "Invalid data.",
+    "invalid_email": "Invalid email",
+    "too_many_requests": "Too many attempts. Please try again later",
+    "reset_email_error": "Error sending reset email",
+    "user_cancelled": "Cancelled by user",
+    "password_required": "Password required",
+    "recent_login_required": "Please log in again",
+    "wrong_password": "Wrong password",
+    "incorrect_data": "Incorrect data, please try again!"
+  },
+  "terms_of_service_dialog": {
+    "title": "Terms of Service",
+    "content": "Please read and accept the terms of service to continue.",
+    "read_terms": "Read the Terms of Service",
+    "accept": "Accept",
+    "decline": "Decline"
+  },
+  "menu": {
+    "confirm_deletion": "Confirm Deletion",
+    "deletion_warning": "This action cannot be undone. Do you want to continue?",
+    "enter_password": "Enter your password",
+    "cancel": "Cancel",
+    "account_deleted": "Account deleted successfully",
+    "deletion_error": "Error deleting account",
+    "delete": "Delete",
+    "user": "User",
+    "home": "Home",
+    "favorites": "Favorites",
+    "tips_and_news": "Tips and News",
+    "language_settings": "Language Settings",
+    "logout": "Logout",
+    "delete_account": "Delete Account"
+  },
+  "reset_password_modal": {
+    "title": "Reset Password",
+    "email_label": "Email Address",
+    "email_error": "Please enter a valid email",
+    "cancel": "Cancel",
+    "send": "Send",
+    "success": "Password reset email sent successfully"
+  },
+  "initial_screen": {
+    "welcome": "Welcome to NetDrinks",
+    "discover_new_drinks": "Discover new drinks",
+    "enjoy": "Enjoy!"
+  },
+  "home_screen": {
+    "title": "NetDrinks",
+    "favorites": "My Favorites",
+    "no_favorites": "No favorites yet"
   }
+}

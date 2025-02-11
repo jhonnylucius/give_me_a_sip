@@ -1,10 +1,138 @@
 {
-    "verify": {
-      "title": "Verificar E-mail",
-      "email_sent": "Um e-mail de verificação foi enviado para {email}.",
-      "check_email": "Por favor, verifique seu e-mail e clique no link de verificação.",
-      "resend": "Reenviar E-mail de Verificação",
-      "resent": "E-mail de verificação reenviado com sucesso!",
-      "waiting": "Aguardando verificação de e-mail..."
-    }
+  "app": {
+    "name": "NetDrinks",
+    "version": "1.0.0"
+  },
+  "auth": {
+    "login": "Entrar",
+    "register": "Cadastrar",
+    "logout": "Sair",
+    "email": "E-mail",
+    "password": "Senha",
+    "confirm_password": "Confirmar Senha",
+    "forgot_password": "Esqueceu a senha?",
+    "reset_password": "Redefinir Senha",
+    "google_sign_in": "Entrar com Google",
+    "create_account": "Criar conta",
+    "already_have_account": "Já tem uma conta?",
+    "dont_have_account": "Não tem uma conta?"
+  },
+  "menu": {
+    "home": "Início",
+    "search": "Pesquisar",
+    "favorites": "Favoritos",
+    "my_drinks": "Meus Drinks",
+    "settings": "Configurações",
+    "profile": "Perfil",
+    "language": "Idioma",
+    "about": "Sobre"
+  },
+  "cocktails": {
+    "categories": "Categorias",
+    "ingredients": "Ingredientes",
+    "instructions": "Instruções",
+    "glass_type": "Tipo de Copo",
+    "alcoholic": "Alcoólico",
+    "non_alcoholic": "Não Alcoólico",
+    "favorite": "Favorito",
+    "unfavorite": "Remover dos Favoritos",
+    "share": "Compartilhar",
+    "preparation": "Modo de Preparo",
+    "search_placeholder": "Buscar drinks...",
+    "no_results": "Nenhum resultado encontrado",
+    "loading": "Carregando drinks..."
+  },
+  "categories": {
+    "ordinary_drink": "Drinks Comuns",
+    "cocktail": "Coquetéis",
+    "shake": "Batidas",
+    "other": "Outros",
+    "cocoa": "Chocolate",
+    "shot": "Doses",
+    "coffee_tea": "Café e Chá",
+    "homemade_liqueur": "Licores Caseiros",
+    "punch_party_drink": "Drinks para Festa",
+    "beer": "Cerveja",
+    "soft_drink": "Refrigerante"
+  },
+  "profile": {
+    "edit": "Editar Perfil",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "name": "Nome",
+    "photo": "Foto",
+    "change_photo": "Alterar Foto",
+    "remove_photo": "Remover Foto",
+    "preferences": "Preferências"
+  },
+  "settings": {
+    "app_settings": "Configurações do App",
+    "notifications": "Notificações",
+    "dark_mode": "Modo Escuro",
+    "language_settings": "Configurações de Idioma",
+    "privacy": "Privacidade",
+    "terms": "Termos de Uso",
+    "help": "Ajuda",
+    "about": "Sobre o App"
+  },
+  "errors": {
+    "generic_error": "Algo deu errado. Tente novamente.",
+    "connection_error": "Erro de conexão",
+    "login_error": "Erro ao fazer login",
+    "register_error": "Erro ao criar conta",
+    "invalid_email": "E-mail inválido",
+    "invalid_password": "Senha inválida",
+    "passwords_dont_match": "As senhas não conferem",
+    "required_field": "Campo obrigatório"
+  },
+  "search_results_screen": {
+    "title": "Resultados da Pesquisa",
+    "no_results": "Nenhum resultado encontrado"
+  },
+  "success": {
+    "login_success": "Login realizado com sucesso",
+    "register_success": "Conta criada com sucesso",
+    "profile_updated": "Perfil atualizado com sucesso",
+    "password_reset": "E-mail de redefinição enviado"
+  },
+  "buttons": {
+    "ok": "OK",
+    "cancel": "Cancelar",
+    "save": "Salvar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "next": "Próximo",
+    "back": "Voltar",
+    "try_again": "Tentar Novamente",
+    "confirm": "Confirmar"
+  },
+  "alerts": {
+    "confirm_delete": "Tem certeza que deseja excluir?",
+    "confirm_logout": "Tem certeza que deseja sair?",
+    "unsaved_changes": "Existem alterações não salvas"
+  },
+  "loading": {
+    "please_wait": "Por favor, aguarde...",
+    "loading_data": "Carregando dados...",
+    "processing": "Processando..."
+  },
+  "search_filter_dialog": {
+    "title": "Selecione o Filtro de Pesquisa",
+    "first_letter": "Busca Pela Primeira Letra",
+    "category": "Buscar por Categoria",
+    "ingredient": "Buscar por Ingrediente",
+    "alcoholic": "Buscar por Tipo de Bebida",
+    "cancel": "Cancelar"
+  },
+    "alternative_name": "Alternative Name",
+    "category": "Category",
+    "type": "Type",
+    "glass": "Glass",
+    "ingredients": "Ingredients",
+    "instructions": "Instructions",
+    "home_screen": {
+    "title": "NetDrinks",
+    "favorites": "Favoritos",
+    "no_favorites": "Você não tem Drinks Salvos,\n clique no coração ao lado da foto do Drink pra salvá-lo como favorito!"
   }
+}

@@ -65,6 +65,8 @@ dependencies:
   path_provider: ^2.1.5
   http: ^1.3.0
   diacritic: ^0.1.6
+  flutter_svg: ^2.0.17
+  
   
 
 dev_dependencies:
@@ -103,6 +105,15 @@ flutter:
     - assets/lang/es.json
     - assets/legal.json
     - assets/data/ingredients_map.json
+    - assets/flags/es.svg
+    - assets/flags/us.svg
+    - assets/i18n/es.json
+    - assets/i18n/pt.json
+    - assets/i18n/en.json
+    - assets/i18n/pt.json
+    - assets/flags/br.svg
+    
+  
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

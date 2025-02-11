@@ -1,30 +1,229 @@
 {
-    "app_name": "NetDrinks",
-    "category": "Categoria",
-    "type": "Tipo",
-    "glass": "Copo",
+  "app": {
+    "name": "NetDrinks",
+    "version": "1.0.0"
+  },
+  "auth": {
+    "login": "Entrar",
+    "register": "Cadastrar",
+    "logout": "Sair",
+    "email": "E-mail",
+    "password": "Senha",
+    "confirm_password": "Confirmar Senha",
+    "forgot_password": "Esqueceu a senha?",
+    "reset_password": "Redefinir Senha",
+    "google_sign_in": "Entrar com Google",
+    "create_account": "Criar conta",
+    "already_have_account": "Já tem uma conta?",
+    "dont_have_account": "Não tem uma conta?"
+  },
+  "cocktails": {
+    "categories": "Categorias",
     "ingredients": "Ingredientes",
     "instructions": "Instruções",
-    "login": {
-      "email": "E-mail",
-      "password": "Senha",
-      "sign_in": "Entrar",
-      "sign_in_google": "Entrar com Google",
-      "create_account": "Criar uma conta",
-      "forgot_password": "Esqueci minha senha"
-    },
-    "menu": {
-      "home": "Início",
-      "logout": "Sair",
-      "delete_account": "Excluir Conta"
-    },
-    "search": {
-      "title": "Pesquisar Cocktail",
-      "name": "Nome do Cocktail",
-      "category": "Categoria"
-    },
-    "verify": {
-      "title": "Verifique seu Email",
-      "resent": "Email de verificação reenviado"
-    }
+    "glass_type": "Tipo de Copo",
+    "alcoholic": "Alcoólico",
+    "non_alcoholic": "Não Alcoólico",
+    "favorite": "Favorito",
+    "unfavorite": "Remover dos Favoritos",
+    "share": "Compartilhar",
+    "preparation": "Modo de Preparo",
+    "search_placeholder": "Buscar drinks...",
+    "no_results": "Nenhum resultado encontrado",
+    "loading": "Carregando drinks..."
+  },
+  "categories": {
+    "ordinary_drink": "Drinks Comuns",
+    "cocktail": "Coquetéis",
+    "shake": "Batidas",
+    "other": "Outros",
+    "cocoa": "Chocolate",
+    "shot": "Doses",
+    "coffee_tea": "Café e Chá",
+    "homemade_liqueur": "Licores Caseiros",
+    "punch_party_drink": "Drinks para Festa",
+    "beer": "Cerveja",
+    "soft_drink": "Refrigerante"
+  },
+  "profile": {
+    "edit": "Editar Perfil",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "name": "Nome",
+    "photo": "Foto",
+    "change_photo": "Alterar Foto",
+    "remove_photo": "Remover Foto",
+    "preferences": "Preferências"
+  },
+  "settings": {
+    "app_settings": "Configurações do App",
+    "notifications": "Notificações",
+    "dark_mode": "Modo Escuro",
+    "language_settings": "Configurações de Idioma",
+    "privacy": "Privacidade",
+    "terms": "Termos de Uso",
+    "help": "Ajuda",
+    "about": "Sobre o App"
+  },
+  "errors": {
+    "generic_error": "Algo deu errado. Tente novamente.",
+    "connection_error": "Erro de conexão",
+    "login_error": "Erro ao fazer login",
+    "register_error": "Erro ao criar conta",
+    "invalid_email": "E-mail inválido",
+    "invalid_password": "Senha inválida",
+    "passwords_dont_match": "As senhas não conferem",
+    "required_field": "Campo obrigatório"
+  },
+  "success": {
+    "login_success": "Login realizado com sucesso",
+    "register_success": "Conta criada com sucesso",
+    "profile_updated": "Perfil atualizado com sucesso",
+    "password_reset": "E-mail de redefinição enviado"
+  },
+  "buttons": {
+    "ok": "OK",
+    "cancel": "Cancelar",
+    "save": "Salvar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "next": "Próximo",
+    "back": "Voltar",
+    "try_again": "Tentar Novamente",
+    "confirm": "Confirmar"
+  },
+  "alerts": {
+    "confirm_delete": "Tem certeza que deseja excluir?",
+    "confirm_logout": "Tem certeza que deseja sair?",
+    "unsaved_changes": "Existem alterações não salvas"
+  },
+  "loading": {
+    "please_wait": "Por favor, aguarde...",
+    "loading_data": "Carregando dados...",
+    "processing": "Processando..."
+  },
+  "language_selection_screen": {
+    "title": "Selecione o Idioma",
+    "english": "Inglês",
+    "portuguese": "Português",
+    "spanish": "Espanhol"
+  },
+  "login": {
+    "email": "Email",
+    "password": "Senha",
+    "fill_all_fields": "Por favor, preencha todos os campos",
+    "user_not_found": "Erro ao fazer login: Usuário não encontrado",
+    "login_error": "Erro ao fazer login",
+    "login": "Entrar",
+    "forgot_password": "Esqueceu a senha?",
+    "google_user_not_found": "Erro ao fazer login com Google: Usuário não encontrado",
+    "google_login_error": "Erro ao fazer login com Google",
+    "create_account": "Criar Conta"
+  },
+  "register": {
+    "name": "Nome",
+    "email": "E-mail",
+    "password": "Senha",
+    "confirm_password": "Confirmar Senha",
+    "error_fetching_user": "Erro ao obter usuário após o cadastro.",
+    "passwords_do_not_match": "Senhas não conferem.",
+    "register": "Cadastrar",
+    "already_have_account": "Já tenho uma conta!"
+  },
+  "search_dialog": {
+    "title": "Pesquisar",
+    "hint": "Digite sua pesquisa",
+    "cancel": "Cancelar",
+    "search": "Pesquisar"
+  },
+  "splash_screen": {
+    "title": "NetDrinks"
+  },
+  "tips_screen": {
+    "title": "Dicas e Novidades",
+    "tip1_title": "Drinks com o que você tem em casa",
+    "tip1_content": "Use nossa busca por ingredientes para descobrir drinks incríveis com o que você já tem em casa! Basta digitar os ingredientes em inglês e explorar as possibilidades.",
+    "tip2_title": "Diversão em Família",
+    "tip2_content": "Aproveite nossos filtros de drinks sem álcool para criar momentos especiais com as crianças. Transforme a preparação de drinks em uma atividade divertida e segura para toda família.",
+    "tip3_title": "Suporte Multi-idiomas (Em breve)",
+    "tip3_content": "Estamos desenvolvendo nossa própria API para trazer suporte completo em português, inglês e espanhol. Em breve você poderá pesquisar no seu idioma preferido!",
+    "tip4_title": "Drinks Originais da Comunidade (Em breve)",
+    "tip4_content": "Logo você poderá compartilhar suas criações originais com a comunidade NetDrinks! Seu drink pode se tornar o próximo favorito de milhares de pessoas.",
+    "tip5_title": "Drinks oficiais do IBA (Em breve)",
+    "tip5_content": "Em breve teremos as receitas oficiais da International Bartenders Association (IBA), com vídeos exclusivos. Você terá acesso às versões originais e suas variações mais populares."
+  },
+  "verify_email_screen": {
+    "title": "Verificar E-mail",
+    "verification_email_sent": "Um e-mail de verificação foi enviado para {email}",
+    "check_email": "Por favor, verifique seu e-mail e clique no link de verificação.",
+    "verification_email_resent": "E-mail de verificação reenviado com sucesso!",
+    "error_sending_email": "Erro ao enviar email. Tente novamente.",
+    "resend_verification_email": "Reenviar E-mail de Verificação"
+  },
+  "auth_services": {
+    "verify_email_before_login": "Por favor, verifique seu email antes de fazer login.",
+    "user_not_found": "Usuário não encontrado.",
+    "login_failed": "Falha no login.",
+    "email_already_in_use": "Email já está em uso.",
+    "invalid_data": "Dados incorretos.",
+    "invalid_email": "Email inválido",
+    "too_many_requests": "Muitas tentativas. Tente novamente mais tarde",
+    "reset_email_error": "Erro ao enviar email de redefinição",
+    "user_cancelled": "Cancelado pelo usuário",
+    "password_required": "Senha necessária",
+    "recent_login_required": "Por favor, faça login novamente",
+    "wrong_password": "Senha incorreta",
+    "incorrect_data": "Dados incorretos, por favor, digite novamente!"
+  },
+  "terms_of_service_dialog": {
+    "title": "Termos de Serviço",
+    "content": "Por favor, leia e aceite os termos de serviço para continuar.",
+    "read_terms": "Leia os Termos de Serviço",
+    "accept": "Aceitar",
+    "decline": "Recusar"
+  },
+  "menu": {
+    "confirm_deletion": "Confirmar a exclusão",
+    "deletion_warning": "Esta ação não pode ser desfeita. Deseja continuar?",
+    "enter_password": "Digite sua senha",
+    "cancel": "Cancelar",
+    "account_deleted": "Conta excluída com sucesso",
+    "deletion_error": "Erro ao excluir conta",
+    "delete": "Excluir",
+    "user": "Usuário",
+    "home": "Home",
+    "favorites": "Favoritos",
+    "tips_and_news": "Dicas e Novidades",
+    "language_settings": "Configurações de Idioma",
+    "logout": "Sair",
+    "delete_account": "Excluir Conta"
+  },
+  "reset_password_modal": {
+    "title": "Redefinir Senha",
+    "email_label": "Endereço de E-mail",
+    "email_error": "Por favor, informe um email válido",
+    "cancel": "Cancelar",
+    "send": "Enviar",
+    "success": "Email de redefinição enviado com sucesso"
+  },
+  "initial_screen": {
+    "welcome": "Bem-vindo ao NetDrinks",
+    "discover_new_drinks": "Descubra novos drinks",
+    "enjoy": "Aproveite!"
+  },
+  "home_screen": {
+    "title": "NetDrinks",
+    "favorites": "Meus Favoritos",
+    "no_favorites": "Nenhum favorito ainda"
+  },
+  "search_screen": {
+    "title": "Pesquisar Drinks",
+    "hint_first_letter": "Pesquisar pela primeira letra...",
+    "hint_multi_ingredients": "Pesquisar por múltiplos ingredientes...",
+    "note": "Para melhores resultados, por favor pesquise em inglês.\nEstamos trabalhando para adicionar suporte a mais idiomas.",
+    "recent_drinks": "Pesquisar os drinks mais recentes",
+    "random_drinks": "Pesquisar 10 drinks aleatórios",
+    "non_alcoholic_drinks": "Pesquisar drinks não alcoólicos",
+    "popular_drinks": "Pesquisar drinks populares"
   }
+}
