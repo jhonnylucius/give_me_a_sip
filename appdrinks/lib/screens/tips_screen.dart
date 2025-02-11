@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class TipsScreen extends StatelessWidget {
@@ -8,7 +9,7 @@ class TipsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Dicas e Novidades'),
+        title: Text(FlutterI18n.translate(context, 'tips_screen.title')),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -18,34 +19,39 @@ class TipsScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildTipCard(
+                context,
                 icon: FontAwesomeIcons.magic,
-                title: 'Drinks com o que você tem em casa',
+                title: FlutterI18n.translate(context, 'tips_screen.tip1_title'),
                 content:
-                    'Use nossa busca por ingredientes para descobrir drinks incríveis com o que você já tem em casa! Basta digitar os ingredientes em inglês e explorar as possibilidades.',
+                    FlutterI18n.translate(context, 'tips_screen.tip1_content'),
               ),
               _buildTipCard(
+                context,
                 icon: FontAwesomeIcons.child,
-                title: 'Diversão em Família',
+                title: FlutterI18n.translate(context, 'tips_screen.tip2_title'),
                 content:
-                    'Aproveite nossos filtros de drinks sem álcool para criar momentos especiais com as crianças. Transforme a preparação de drinks em uma atividade divertida e segura para toda família.',
+                    FlutterI18n.translate(context, 'tips_screen.tip2_content'),
               ),
               _buildTipCard(
+                context,
                 icon: FontAwesomeIcons.language,
-                title: 'Suporte Multi-idiomas (Em breve)',
+                title: FlutterI18n.translate(context, 'tips_screen.tip3_title'),
                 content:
-                    'Estamos desenvolvendo nossa própria API para trazer suporte completo em português, inglês e espanhol. Em breve você poderá pesquisar no seu idioma preferido!',
+                    FlutterI18n.translate(context, 'tips_screen.tip3_content'),
               ),
               _buildTipCard(
+                context,
                 icon: FontAwesomeIcons.starHalfAlt,
-                title: 'Drinks Originais da Comunidade (Em breve)',
+                title: FlutterI18n.translate(context, 'tips_screen.tip4_title'),
                 content:
-                    'Logo você poderá compartilhar suas criações originais com a comunidade NetDrinks! Seu drink pode se tornar o próximo favorito de milhares de pessoas.',
+                    FlutterI18n.translate(context, 'tips_screen.tip4_content'),
               ),
               _buildTipCard(
+                context,
                 icon: FontAwesomeIcons.trophy,
-                title: 'Drinks oficiais do IBA (Em breve)',
+                title: FlutterI18n.translate(context, 'tips_screen.tip5_title'),
                 content:
-                    'Em breve teremos as receitas oficiais da International Bartenders Association (IBA), com vídeos exclusivos. Você terá acesso às versões originais e suas variações mais populares.',
+                    FlutterI18n.translate(context, 'tips_screen.tip5_content'),
               ),
             ],
           ),
@@ -54,7 +60,8 @@ class TipsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTipCard({
+  Widget _buildTipCard(
+    BuildContext context, {
     required IconData icon,
     required String title,
     required String content,
