@@ -1,5 +1,6 @@
 import 'package:app_netdrinks/controller/search_controller.dart' as custom;
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:get/get.dart';
 
 class SearchResultsScreen extends StatelessWidget {
@@ -9,7 +10,8 @@ class SearchResultsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Resultados da Pesquisa'),
+        title:
+            Text(FlutterI18n.translate(context, 'search_results_screen.title')),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () => Get.back(),
@@ -22,7 +24,8 @@ class SearchResultsScreen extends StatelessWidget {
         if (controller.searchResults.isEmpty) {
           return Center(
             child: Text(
-              'Nenhum resultado encontrado',
+              FlutterI18n.translate(
+                  context, 'search_results_screen.no_results'),
               style: TextStyle(fontSize: 18),
             ),
           );
