@@ -233,5 +233,8 @@
     "add_your_version": "Adicione sua versão da receita...",
     "edit": "Editar",
     "conversion": "Conversão: 1 oz = 29,5 ml"
+  },
+  "share": {
+    "message": "Confira essa receita incrível de {name}!"
   }
 }

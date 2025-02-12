@@ -223,5 +223,18 @@
     "add_your_version": "Add your version of the recipe...",
     "edit": "Edit",
     "conversion": "Conversion: 1 oz = 29.5 ml"
+  },
+  "search_screen": {
+  "title": "Search Drinks",
+  "hint_first_letter": "Search by first letter...",
+  "hint_multi_ingredients": "Search by multiple ingredients...",
+  "note": "For best results, please search in English.\nWe are working to add support for more languages.",
+  "recent_drinks": "Search recent drinks",
+  "random_drinks": "Search 10 random drinks",
+  "non_alcoholic_drinks": "Search non-alcoholic drinks",
+  "popular_drinks": "Search popular drinks"
+  },
+  "share": {
+    "message": "Check out this amazing {name} recipe!"
   }
 }
