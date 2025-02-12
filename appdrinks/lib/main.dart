@@ -83,7 +83,7 @@ class MyApp extends StatelessWidget {
                   }
                 }, onDeclined: () {
                   Get.back();
-                })), // Adicionar esta linha
+                })),
         GetPage(name: '/login', page: () => LoginScreen()),
         GetPage(
           name: '/verify-email',
@@ -184,7 +184,7 @@ class InitialScreenState extends State<InitialScreen> {
   void initState() {
     super.initState();
     _pageController = PageController();
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(microseconds: 500), () {
       _checkTermsAccepted();
     });
   }
