@@ -44,8 +44,10 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
   @override
   void initState() {
     super.initState();
-    controller.loadMyVersion(widget.cocktail.idDrink);
+    // Inicializa com o idioma global
+    _selectedLanguage = Get.locale?.languageCode ?? 'pt';
     _translateContent();
+    controller.loadMyVersion(widget.cocktail.idDrink);
   }
 
   @override
@@ -151,9 +153,15 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
           final file = await File('${tempDir.path}/drink.png').create();
           await file.writeAsBytes(bytes);
 
+          final shareMessage = FlutterI18n.translate(
+            context,
+            'share.message',
+            translationParams: {'name': widget.cocktail.name},
+          );
+
           await Share.shareXFiles(
             [XFile(file.path)],
-            text: 'Confira essa receita incrível de ${widget.cocktail.name}!',
+            text: shareMessage,
           );
         }
       }
@@ -169,41 +177,52 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
         title: Text(widget.cocktail.name),
         actions: [
           IconButton(
-            icon: Icon(Icons.share),
+            icon: const Icon(Icons.share),
             onPressed: _shareScreen,
           ),
           DropdownButtonHideUnderline(
             child: DropdownButton<String>(
-              value: _selectedLanguage,
-              icon: Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: Icon(Icons.language,
-                    color: const ui.Color.fromARGB(255, 151, 4, 4)),
+              value: _selectedLanguage, // Usa o idioma atual do app
+              icon: const Padding(
+                padding: EdgeInsets.only(right: 8.0),
+                child: Icon(
+                  Icons.language,
+                  color: Color.fromARGB(255, 151, 4, 4),
+                ),
               ),
-              items: [
-                DropdownMenuItem(
+              items: const [
+                DropdownMenuItem<String>(
                   value: 'en',
-                  child: Text('English', style: TextStyle(color: Colors.white)),
+                  child: Text(
+                    'English',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
-                DropdownMenuItem(
+                DropdownMenuItem<String>(
                   value: 'pt',
-                  child:
-                      Text('Português', style: TextStyle(color: Colors.white)),
+                  child: Text(
+                    'Português',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
-                DropdownMenuItem(
+                DropdownMenuItem<String>(
                   value: 'es',
-                  child: Text('Español', style: TextStyle(color: Colors.white)),
+                  child: Text(
+                    'Español',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ],
-              onChanged: (String? newValue) {
+              onChanged: (String? newValue) async {
                 if (newValue != null) {
                   setState(() {
                     _selectedLanguage = newValue;
-                    _translateContent();
                   });
+
+                  // Atualiza o conteúdo da tela
+                  await _translateContent();
                 }
               },
-              hint: Text('Idioma', style: TextStyle(color: Colors.white)),
             ),
           ),
         ],
@@ -301,7 +320,7 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
             ),
           SizedBox(height: 8.0),
           Text(
-            '${FlutterI18n.translate(context, "ingredients")}:',
+            FlutterI18n.translate(context, 'cocktail_detail.ingredients'),
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   color: Colors.redAccent,
                   fontWeight: FontWeight.bold,
@@ -333,7 +352,7 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
                 ),
                 SizedBox(width: 8.0),
                 Text(
-                  '${FlutterI18n.translate(context, "cocktail_datail_screen.conversion")}: 1 oz = 29,5 ml',
+                  FlutterI18n.translate(context, "cocktail_detail.conversion"),
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 14,
@@ -394,7 +413,7 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
             }),
           SizedBox(height: 8.0),
           Text(
-            '${FlutterI18n.translate(context, "instructions")}:',
+            FlutterI18n.translate(context, 'cocktail_detail.instructions'),
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   color: Colors.redAccent,
                   fontWeight: FontWeight.bold,
@@ -412,7 +431,7 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
             children: [
               const SizedBox(height: 24),
               Text(
-                'Minha Versão',
+                FlutterI18n.translate(context, 'cocktail_detail.my_version'),
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                       color: Colors.redAccent,
                       fontWeight: FontWeight.bold,
@@ -450,7 +469,7 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
                         ),
                         TextButton.icon(
                           icon: Icon(Icons.edit, color: Colors.redAccent),
-                          label: Text('Editar',
+                          label: Text('',
                               style: TextStyle(color: Colors.redAccent)),
                           onPressed: () {
                             setState(() {
@@ -467,7 +486,8 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
                     controller: _myVersionController,
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(
-                      hintText: 'Adicione sua versão da receita...',
+                      hintText: FlutterI18n.translate(
+                          context, 'cocktail_detail.add_your_version'),
                       hintStyle: TextStyle(color: Colors.grey),
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.redAccent),
