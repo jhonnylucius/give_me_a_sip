@@ -1,3 +1,4 @@
+import 'package:app_netdrinks/widgets/retro_loading_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,7 +21,6 @@ class SplashScreenState extends State<SplashScreen>
   void initState() {
     super.initState();
 
-    // Configuração da animação
     _controller = AnimationController(
       duration: const Duration(seconds: 3),
       vsync: this,
@@ -31,37 +31,29 @@ class SplashScreenState extends State<SplashScreen>
       curve: Curves.easeInOut,
     );
 
+    // Inicia a animação e configura o timer para mudar de tela
     _controller.forward().whenComplete(() {
       setState(() {
         _animationCompleted = true;
       });
-      _initializeApp(); // Chame _initializeApp após a conclusão da animação
+      // Remove o delay extra e usa apenas o tempo da animação
+      _initializeApp();
     });
   }
 
   Future<void> _initializeApp() async {
     try {
-      print('Iniciando _initializeApp');
       final user = FirebaseAuth.instance.currentUser;
       final prefs = await SharedPreferences.getInstance();
-      final hasSelectedLanguage =
-          prefs.getBool('selected_language') ?? false; // Mudança aqui
-
-      print('hasSelectedLanguage: $hasSelectedLanguage');
-      print('user: ${user?.email}');
-      print('emailVerified: ${user?.emailVerified}');
+      final hasSelectedLanguage = prefs.getBool('selected_language') ?? false;
 
       if (!hasSelectedLanguage) {
-        print('Redirecionando para seleção de idioma');
         Get.offAllNamed('/language-settings');
       } else if (user == null) {
-        print('Redirecionando para login');
         Get.offAllNamed('/login');
       } else if (!user.emailVerified) {
-        print('Redirecionando para verificação de email');
         Get.offAllNamed('/verify-email');
       } else {
-        print('Redirecionando para home');
         Get.offAllNamed('/home');
       }
     } catch (e) {
@@ -101,25 +93,31 @@ class SplashScreenState extends State<SplashScreen>
               // Título animado
               FadeTransition(
                 opacity: _animation,
-                child: ScaleTransition(
-                  scale: _animation,
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Image.asset(
-                        'assets/Icon-192.png',
-                        width: 180,
-                        height: 180,
-                      ),
-                      if (!_animationCompleted)
-                        const LinearProgressIndicator(
-                          color: Color.fromARGB(255, 204, 7, 17),
-                        ),
-                    ],
+                child: Text(
+                  'NetDrinks',
+                  style: const TextStyle(
+                    color: Color.fromARGB(255, 204, 7, 17),
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.5,
                   ),
                 ),
               ),
+
               const SizedBox(height: 50),
+
+              // Loading indicator estilizado
+              AnimatedOpacity(
+                opacity: _animationCompleted ? 0.0 : 1.0,
+                duration: const Duration(milliseconds: 1000),
+                child: SizedBox(
+                  width: 220.0, // Aumentar o tamanho para melhor visualização
+                  height: 180.0, // Aumentar o tamanho para melhor visualização
+                  child: RetroLoadingWidget(
+                    totalDrinks: 636, // Example total drinks count
+                  ),
+                ),
+              ),
             ],
           ),
         ),
