@@ -52,6 +52,11 @@ class _RetroLoadingWidgetState extends State<RetroLoadingWidget> {
           _currentCount =
               math.min(_currentCount + _speedFactor, widget.totalDrinks);
         });
+
+        // Aguarda um pouco quando chegar ao final para mostrar a mensagem
+        if (_currentCount >= widget.totalDrinks) {
+          await Future.delayed(const Duration(milliseconds: 500));
+        }
       }
     }
   }
@@ -81,9 +86,8 @@ class _RetroLoadingWidgetState extends State<RetroLoadingWidget> {
               const SizedBox(height: 8),
               Text('[$_currentCount/${widget.totalDrinks}]'),
               const SizedBox(height: 8),
-              Text(_currentCount >= widget.totalDrinks
-                  ? 'Starting app...'
-                  : 'Loading drinks from cache...'),
+              Text(
+                  _currentCount >= widget.totalDrinks ? 'Starting app...' : ''),
             ],
           ),
         ),
