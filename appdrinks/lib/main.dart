@@ -71,7 +71,11 @@ class MyApp extends StatelessWidget {
       },
       initialRoute: '/',
       getPages: [
-        GetPage(name: '/', page: () => const SplashScreen()),
+        GetPage(
+            name: '/',
+            page: () => const SplashScreen(
+                  afterVerify: true,
+                )),
         GetPage(
             name: '/language-settings',
             page: () => const LanguageSelectionScreen()),
@@ -94,6 +98,11 @@ class MyApp extends StatelessWidget {
             }
             return VerifyEmailScreen(user: user);
           },
+        ),
+        // Nova rota para splash após verificação
+        GetPage(
+          name: '/splash-after-verify',
+          page: () => const SplashScreen(afterVerify: true),
         ),
         GetPage(
           name: '/home',
@@ -184,9 +193,7 @@ class InitialScreenState extends State<InitialScreen> {
   void initState() {
     super.initState();
     _pageController = PageController();
-    Future.delayed(const Duration(microseconds: 500), () {
-      _checkTermsAccepted();
-    });
+    _checkTermsAccepted();
   }
 
   Future<void> _checkTermsAccepted() async {
