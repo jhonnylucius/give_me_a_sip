@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+  const SplashScreen({super.key, required bool afterVerify});
 
   @override
   SplashScreenState createState() => SplashScreenState();
@@ -15,7 +15,7 @@ class SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
-  bool _animationCompleted = false;
+  bool _animationCompleted = true;
 
   @override
   void initState() {
@@ -83,8 +83,8 @@ class SplashScreenState extends State<SplashScreen>
                   scale: _animation,
                   child: Image.asset(
                     'assets/Icon-192.png',
-                    width: 180,
-                    height: 180,
+                    width: 150,
+                    height: 150,
                   ),
                 ),
               ),
@@ -97,9 +97,9 @@ class SplashScreenState extends State<SplashScreen>
                   'NetDrinks',
                   style: const TextStyle(
                     color: Color.fromARGB(255, 204, 7, 17),
-                    fontSize: 32,
+                    fontSize: 48,
                     fontWeight: FontWeight.bold,
-                    letterSpacing: 1.5,
+                    letterSpacing: 2,
                   ),
                 ),
               ),
@@ -114,7 +114,8 @@ class SplashScreenState extends State<SplashScreen>
                   width: 220.0, // Aumentar o tamanho para melhor visualização
                   height: 180.0, // Aumentar o tamanho para melhor visualização
                   child: RetroLoadingWidget(
-                    totalDrinks: 636, // Example total drinks count
+                    totalDrinks: 636,
+                    showCounter: false, // Example total drinks count
                   ),
                 ),
               ),
