@@ -24,14 +24,15 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen> {
   late PageController pageController;
   final ValueNotifier<int> _currentPage = ValueNotifier<int>(0);
-  late final CocktailListController controller =
-      Get.find<CocktailListController>();
-  late final LikesController likesController = Get.find<LikesController>();
+  late final CocktailListController controller;
+  late final LikesController likesController;
   double _viewportFraction = 0.7;
 
   @override
   void initState() {
     super.initState();
+    controller = Get.find<CocktailListController>();
+    likesController = Get.find<LikesController>();
     _initializePageController();
     if (widget.showFavorites) {
       // Carrega os drinks favoritados quando necessário
@@ -100,7 +101,7 @@ class HomeScreenState extends State<HomeScreen> {
       drawer: Menu(user: widget.user),
       body: Obx(() {
         if (controller.cocktails.isEmpty) {
-          return RetroLoadingWidget(
+          return const RetroLoadingWidget(
             totalDrinks: 636,
             showCounter: true, // Número total de drinks disponíveis
           );
@@ -109,8 +110,8 @@ class HomeScreenState extends State<HomeScreen> {
         // Nova lógica para filtrar favoritos usando o LikesController
         final displayCocktails = widget.showFavorites
             ? controller.cocktails
-                .where(
-                    (cocktail) => likesController.isLikedRx(cocktail.idDrink))
+                .where((cocktail) =>
+                    likesController.userLikedDrinks.contains(cocktail.idDrink))
                 .toList()
             : controller.cocktails;
 

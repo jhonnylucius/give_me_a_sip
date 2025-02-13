@@ -154,7 +154,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  Container(
+                  SizedBox(
                     width: double.infinity, // Mesma largura dos outros botões
                     child: SignInButton(
                       Buttons.Google,

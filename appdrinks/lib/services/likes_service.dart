@@ -9,44 +9,18 @@ class LikesService extends GetxService {
   final _auth = FirebaseAuth.instance;
   final _logger = Logger();
 
-  // Stream para obter likes em tempo real
-  Stream<DrinkLikes> getLikesStream(String drinkId) {
-    final userId = _auth.currentUser?.uid;
-
-    return _firestore
-        .collection('drinks_likes')
-        .doc(drinkId)
-        .snapshots()
-        .map((doc) {
-      final data = doc.data() ?? {};
-      return DrinkLikes(
-          drinkId: data['drinkId'] ?? '',
-          totalLikes: data['total_likes'] ?? 0, // Mantém contagem global
-          // Filtra users_liked apenas para o usuário atual
-          usersLiked: userId != null &&
-                  (data['users_liked'] as List<dynamic>? ?? []).contains(userId)
-              ? [userId]
-              : []);
-    });
-  }
-
-  // Verifica se usuário deu like
-  Future<bool> isLiked(String drinkId, String userId) async {
+  // Remova a primeira declaração duplicada do método e mantenha apenas esta versão
+  Future<List<String>> getUserLikedDrinks(String userId) async {
     try {
-      if (drinkId.isEmpty || userId.isEmpty) {
-        throw ArgumentError('drinkId e userId não podem estar vazios');
-      }
+      final querySnapshot = await _firestore
+          .collection('drinks_likes')
+          .where('users_liked', arrayContains: userId)
+          .get();
 
-      final doc =
-          await _firestore.collection('drinks_likes').doc(drinkId).get();
-
-      if (!doc.exists) return false;
-
-      final drinkLikes = DrinkLikes.fromJson(doc.data()!);
-      return drinkLikes.usersLiked.contains(userId);
+      return querySnapshot.docs.map((doc) => doc.id).toList();
     } catch (e) {
-      _logger.e('Erro ao verificar like: $e');
-      return false;
+      _logger.e('Erro ao buscar drinks curtidos: $e');
+      return [];
     }
   }
 
@@ -73,20 +47,21 @@ class LikesService extends GetxService {
             'users_liked': [userId]
           });
         } else {
-          final currentLikes = DrinkLikes.fromJson(doc.data()!);
+          final data = doc.data()!;
+          final currentUsers = List<String>.from(data['users_liked'] ?? []);
 
-          if (currentLikes.usersLiked.contains(userId)) {
+          if (currentUsers.contains(userId)) {
             // Usuário já deu like, vai remover
             _logger.d('Removendo like do drink: $drinkId');
             transaction.update(docRef, {
-              'total_likes': FieldValue.increment(-1), // Decrementa 1
+              'total_likes': (data['total_likes'] ?? 1) - 1, // Decrementa 1
               'users_liked': FieldValue.arrayRemove([userId])
             });
           } else {
             // Usuário não deu like, vai adicionar
             _logger.d('Adicionando like ao drink: $drinkId');
             transaction.update(docRef, {
-              'total_likes': FieldValue.increment(1), // Incrementa 1
+              'total_likes': (data['total_likes'] ?? 0) + 1, // Incrementa 1
               'users_liked': FieldValue.arrayUnion([userId])
             });
           }
@@ -114,17 +89,29 @@ class LikesService extends GetxService {
     }
   }
 
-  Future<List<String>> getUserLikedDrinks(String userId) async {
+  Stream<DrinkLikes> getLikesStream(String drinkId) {
     try {
-      final querySnapshot = await _firestore
+      return _firestore
           .collection('drinks_likes')
-          .where('users_liked', arrayContains: userId)
-          .get();
+          .doc(drinkId)
+          .snapshots()
+          .map((snapshot) {
+        if (!snapshot.exists) {
+          return DrinkLikes(drinkId: drinkId, totalLikes: 0, usersLiked: []);
+        }
 
-      return querySnapshot.docs.map((doc) => doc.id).toList();
+        final data = snapshot.data()!;
+        return DrinkLikes(
+          drinkId: drinkId,
+          totalLikes: data['total_likes'] ?? 0,
+          usersLiked: List<String>.from(data['users_liked'] ?? []),
+        );
+      });
     } catch (e) {
-      _logger.e('Erro ao buscar drinks curtidos: $e');
-      return [];
+      _logger.e('Erro ao obter stream de likes: $e');
+      // Retorna um stream com valor zero em caso de erro
+      return Stream.value(
+          DrinkLikes(drinkId: drinkId, totalLikes: 0, usersLiked: []));
     }
   }
 
