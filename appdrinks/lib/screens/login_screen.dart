@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key, this.showFavorites = false});
@@ -21,96 +22,76 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: const EdgeInsets.all(16.0),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/background_login.jpg"),
             fit: BoxFit.cover,
           ),
-          border: Border.all(color: Colors.black, width: 2.0),
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black54,
-              offset: Offset(4, 4),
-              blurRadius: 4,
-            ),
-            BoxShadow(
-              color: Colors.black,
-              offset: Offset(2, 2),
-              blurRadius: 2,
-              spreadRadius: 1,
-            ),
-            BoxShadow(
-              color: Colors.grey.withAlpha((0.5 * 255).toInt()),
-              offset: Offset(-2, -2),
-              blurRadius: 2,
-              spreadRadius: 1,
-            ),
-          ],
         ),
         child: Center(
           child: SingleChildScrollView(
             child: Container(
-              width: kIsWeb ? 400 : null, // Ajuste a largura para a versão web
-              margin: EdgeInsets.symmetric(horizontal: 24),
-              padding: EdgeInsets.all(24),
+              width: kIsWeb ? 400 : null,
+              margin: const EdgeInsets.symmetric(horizontal: 24),
+              padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: Color.fromRGBO(255, 255, 255, 1),
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.black12),
+                color: Colors.black.withAlpha((0.8 * 255).toInt()),
+                borderRadius: BorderRadius.circular(16.0),
+                border: Border.all(
+                  color: Colors.redAccent,
+                  width: 1.0,
+                ),
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black, width: 2.0),
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black,
-                          offset: Offset(2, 2),
-                          blurRadius: 2,
-                          spreadRadius: 1,
-                        ),
-                        BoxShadow(
-                          color: Colors.grey.withAlpha((0.5 * 255).toInt()),
-                          offset: Offset(-2, -2),
-                          blurRadius: 2,
-                          spreadRadius: 1,
-                        ),
-                      ],
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: Image.asset(
-                        'assets/Icon-192.png',
-                        width: 100,
-                        height: 100,
+                  Image.asset(
+                    'assets/Icon-192.png',
+                    width: 90,
+                    height: 90,
+                  ),
+                  const SizedBox(height: 16.0),
+                  TextField(
+                    controller: _emailController,
+                    style: const TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      labelText: FlutterI18n.translate(context, "login.email"),
+                      labelStyle: const TextStyle(color: Colors.white70),
+                      enabledBorder: const UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.redAccent),
+                      ),
+                      focusedBorder: const UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red),
                       ),
                     ),
                   ),
-                  SizedBox(height: 16.0),
-                  TextField(
-                    controller: _emailController,
-                    style: TextStyle(color: Colors.black),
-                    decoration: InputDecoration(
-                      labelText: FlutterI18n.translate(context, "login.email"),
-                    ),
-                  ),
-                  SizedBox(height: 16.0),
+                  const SizedBox(height: 16.0),
                   TextField(
                     obscureText: true,
                     controller: _senhaController,
-                    style: TextStyle(color: Colors.black),
+                    style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
-                      hintText:
+                      labelText:
                           FlutterI18n.translate(context, "login.password"),
+                      labelStyle: const TextStyle(color: Colors.white70),
+                      enabledBorder: const UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.redAccent),
+                      ),
+                      focusedBorder: const UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red),
+                      ),
                     ),
                   ),
-                  SizedBox(height: 16.0),
+                  const SizedBox(height: 24.0),
                   ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.redAccent,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 32,
+                        vertical: 12,
+                      ),
+                    ),
                     onPressed: () async {
                       final email = _emailController.text;
                       final senha = _senhaController.text;
@@ -157,54 +138,65 @@ class LoginScreen extends StatelessWidget {
                     },
                     child: Text(FlutterI18n.translate(context, "login.login")),
                   ),
-                  SizedBox(height: 10),
-                  ElevatedButton(
+                  const SizedBox(height: 16),
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      foregroundColor: Colors.white70,
+                    ),
                     onPressed: () {
                       showDialog(
                         context: context,
                         builder: (context) => ResetPasswordModal(),
                       );
                     },
-                    child: Text(FlutterI18n.translate(
-                        context, "login.forgot_password")),
+                    child: Text(
+                      FlutterI18n.translate(context, "login.forgot_password"),
+                    ),
                   ),
-                  SizedBox(height: 10),
-                  SignInButton(
-                    Buttons.Google,
-                    onPressed: () async {
-                      try {
-                        await _authService.signInWithGoogle();
-                        final user = FirebaseAuth.instance.currentUser;
-                        if (user != null) {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => HomeScreen(
-                                user: user,
-                                showFavorites: false,
+                  const SizedBox(height: 16),
+                  Container(
+                    width: double.infinity, // Mesma largura dos outros botões
+                    child: SignInButton(
+                      Buttons.Google,
+                      text: FlutterI18n.translate(
+                          context, "login.sign_in_with_google"),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(36),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 12,
+                      ),
+                      onPressed: () async {
+                        try {
+                          await _authService.signInWithGoogle();
+                          final user = FirebaseAuth.instance.currentUser;
+                          if (user != null) {
+                            Get.offAllNamed('/splash-after-google');
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(FlutterI18n.translate(
+                                    context, 'login.google_user_not_found')),
                               ),
-                            ),
-                          );
-                        } else {
+                            );
+                          }
+                        } catch (e) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: Text(FlutterI18n.translate(
-                                  context, 'login.google_user_not_found')),
+                              content: Text(
+                                  '${FlutterI18n.translate(context, 'login.google_login_error')}: $e'),
                             ),
                           );
                         }
-                      } catch (e) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                                '${FlutterI18n.translate(context, 'login.google_login_error')}: $e'),
-                          ),
-                        );
-                      }
-                    },
+                      },
+                    ),
                   ),
-                  SizedBox(height: 10),
-                  ElevatedButton(
+                  const SizedBox(height: 16),
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      foregroundColor: Colors.white70,
+                    ),
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -214,7 +206,8 @@ class LoginScreen extends StatelessWidget {
                       );
                     },
                     child: Text(
-                        FlutterI18n.translate(context, "login.create_account")),
+                      FlutterI18n.translate(context, "login.create_account"),
+                    ),
                   ),
                 ],
               ),
