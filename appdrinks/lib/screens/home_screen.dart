@@ -95,7 +95,8 @@ class HomeScreenState extends State<HomeScreen> {
       body: Obx(() {
         if (controller.cocktails.isEmpty) {
           return RetroLoadingWidget(
-            totalDrinks: 636, // Número total de drinks disponíveis
+            totalDrinks: 636,
+            showCounter: true, // Número total de drinks disponíveis
           );
         }
 
