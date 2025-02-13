@@ -197,8 +197,13 @@
     "tips_and_news": "Dicas e Novidades",
     "language_settings": "Configurações de Idioma",
     "logout": "Sair",
-    "delete_account": "Excluir Conta"
-    
+    "delete_account": "Excluir Conta",
+    "ranking": "Top 100 Drinks"
+  },
+  "ranking": {
+    "title": "Ranking de Drinks",
+    "no_drinks": "Nenhum drink foi curtido ainda",
+    "position": "#{position}º lugar"
   },
   "reset_password_modal": {
     "title": "Redefinir Senha",

@@ -197,7 +197,13 @@
     "tips_and_news": "Consejos y Novedades",
     "language_settings": "Configuraciones de Idioma",
     "logout": "Cerrar sesión",
-    "delete_account": "Eliminar Cuenta"
+    "delete_account": "Eliminar Cuenta",
+    "ranking": "Top 100 Bebidas"
+  },
+  "ranking": {
+    "title": "Ranking de Bebidas",
+    "no_drinks": "Aún no se han dado me gusta a las bebidas",
+    "position": "#{position}º lugar"
   },
   "reset_password_modal": {
     "title": "Restablecer Contraseña",

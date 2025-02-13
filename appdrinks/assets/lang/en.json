@@ -197,9 +197,15 @@
     "tips_and_news": "Tips and News",
     "language_settings": "Language Settings",
     "logout": "Logout",
-    "delete_account": "Delete Account"
+    "delete_account": "Delete Account",
+    "ranking": "Top 100 Drinks"
   },
-  "reset_password_modal": {
+  "ranking": {
+    "title": "Drinks Ranking",
+    "no_drinks": "No drinks have been liked yet",
+    "position": "#{position}th place"
+  },
+    "reset_password_modal": {
     "title": "Reset Password",
     "email_label": "Email Address",
     "email_error": "Please enter a valid email",
