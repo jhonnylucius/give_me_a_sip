@@ -2,15 +2,18 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RetroLoadingWidget extends StatefulWidget {
   final int totalDrinks;
   final Stream<int>? loadingProgress;
+  final bool showCounter;
 
   const RetroLoadingWidget({
     super.key,
     required this.totalDrinks,
     this.loadingProgress,
+    required this.showCounter,
   });
 
   @override
@@ -20,14 +23,44 @@ class RetroLoadingWidget extends StatefulWidget {
 class _RetroLoadingWidgetState extends State<RetroLoadingWidget> {
   int _currentCount = 0;
   StreamSubscription? _progressSubscription;
-  final int _speedFactor =
-      12; // Fator de velocidade - ajuste conforme necessário
-  final int _baseInterval = 40; // Intervalo base em millisegundos
+  final int _speedFactor = 5;
+  final int _baseInterval = 30;
+  bool _showRetro = true;
 
   @override
   void initState() {
     super.initState();
-    _listenToProgress();
+    _checkIfFirstRun();
+  }
+
+  Future<void> _checkIfFirstRun() async {
+    final prefs = await SharedPreferences.getInstance();
+    final isFirstRun = prefs.getBool('first_run') ?? true;
+
+    setState(() {
+      _showRetro = isFirstRun;
+    });
+
+    if (isFirstRun) {
+      await prefs.setBool('first_run', false);
+      _listenToProgress();
+    } else {
+      // Simula o loading sem o efeito retro
+      _simulateLoadingWithoutRetro();
+    }
+  }
+
+  Future<void> _simulateLoadingWithoutRetro() async {
+    while (_currentCount < widget.totalDrinks && mounted) {
+      await Future.delayed(
+          const Duration(milliseconds: 2000)); // Intervalo mais curto
+      if (mounted) {
+        setState(() {
+          _currentCount = math.min(
+              _currentCount, widget.totalDrinks); // Aumenta mais rápido
+        });
+      }
+    }
   }
 
   void _listenToProgress() {
@@ -53,9 +86,8 @@ class _RetroLoadingWidgetState extends State<RetroLoadingWidget> {
               math.min(_currentCount + _speedFactor, widget.totalDrinks);
         });
 
-        // Aguarda um pouco quando chegar ao final para mostrar a mensagem
         if (_currentCount >= widget.totalDrinks) {
-          await Future.delayed(const Duration(milliseconds: 500));
+          await Future.delayed(const Duration(milliseconds: 2000));
         }
       }
     }
@@ -86,8 +118,10 @@ class _RetroLoadingWidgetState extends State<RetroLoadingWidget> {
               const SizedBox(height: 8),
               Text('[$_currentCount/${widget.totalDrinks}]'),
               const SizedBox(height: 8),
-              Text(
-                  _currentCount >= widget.totalDrinks ? 'Starting app...' : ''),
+              if (_showRetro)
+                Text(_currentCount >= widget.totalDrinks
+                    ? 'Starting app...'
+                    : '')
             ],
           ),
         ),
