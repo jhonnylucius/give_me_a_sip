@@ -118,7 +118,8 @@
     "forgot_password": "Forgot password?",
     "google_user_not_found": "Google login error: User not found",
     "google_login_error": "Google login error",
-    "create_account": "Create Account"
+    "create_account": "Create Account!",
+    "sign_in_with_google": "Sign in with Google"
   },
   "register": {
     "name": "Name",
@@ -217,12 +218,12 @@
     "no_favorites": "No favorites yet"
   },
 "cocktail_detail": {
-    "ingredients": "Ingredients",
-    "instructions": "Instructions",
+    "ingredients": "Ingredients:",
+    "instructions": "Instructions:",
     "my_version": "My Version",
     "add_your_version": "Add your version of the recipe...",
     "edit": "Edit",
-    "conversion": "Conversion: 1 oz = 29.5 ml"
+    "conversion": "Conversion: 1 oz/onça = 29.5 ml"
   },
   "search_screen": {
   "title": "Search Drinks",
