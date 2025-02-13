@@ -1,3 +1,4 @@
+import 'package:app_netdrinks/controller/likes_controller.dart';
 import 'package:app_netdrinks/models/cocktail.dart';
 import 'package:app_netdrinks/repository/cocktail_repository.dart';
 import 'package:get/get.dart';
@@ -19,7 +20,6 @@ class CocktailListController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    loadFavorites(); // Carregar os favoritos do Hive
     getAllCocktails(); // Adicionar esta chamada
   }
 
@@ -38,13 +38,17 @@ class CocktailListController extends GetxController {
     return _favorites.contains(cocktailId);
   }
 
-  void toggleFavorite(String cocktailId) {
+  Future<void> toggleFavorite(String cocktailId) async {
     if (isFavorite(cocktailId)) {
       _favorites.remove(cocktailId);
     } else {
       _favorites.add(cocktailId);
     }
-    saveFavorites(); // Salvar os favoritos no Hive
+    saveFavorites();
+
+    final likesController = Get.find<LikesController>();
+    await likesController.toggleLike(cocktailId); // Salvar no Firestore
+    // Salvar os favoritos no Hive
   }
 
   // Carregar os favoritos do Hive

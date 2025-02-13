@@ -1,5 +1,6 @@
 import 'package:app_netdrinks/components/menu.dart';
 import 'package:app_netdrinks/controller/cocktail_list_controller.dart';
+import 'package:app_netdrinks/controller/likes_controller.dart';
 import 'package:app_netdrinks/models/cocktail.dart';
 import 'package:app_netdrinks/screens/cocktail_detail_screen.dart';
 import 'package:app_netdrinks/widgets/cocktail_card_widget.dart';
@@ -25,12 +26,17 @@ class HomeScreenState extends State<HomeScreen> {
   final ValueNotifier<int> _currentPage = ValueNotifier<int>(0);
   late final CocktailListController controller =
       Get.find<CocktailListController>();
+  late final LikesController likesController = Get.find<LikesController>();
   double _viewportFraction = 0.7;
 
   @override
   void initState() {
     super.initState();
     _initializePageController();
+    if (widget.showFavorites) {
+      // Carrega os drinks favoritados quando necessário
+      likesController.loadUserLikedDrinks();
+    }
   }
 
   void _initializePageController() {
@@ -100,9 +106,11 @@ class HomeScreenState extends State<HomeScreen> {
           );
         }
 
+        // Nova lógica para filtrar favoritos usando o LikesController
         final displayCocktails = widget.showFavorites
             ? controller.cocktails
-                .where((cocktail) => controller.isFavorite(cocktail.idDrink))
+                .where(
+                    (cocktail) => likesController.isLikedRx(cocktail.idDrink))
                 .toList()
             : controller.cocktails;
 

@@ -192,12 +192,13 @@
     "deletion_error": "Erro ao excluir conta",
     "delete": "Excluir",
     "user": "Usuário",
-    "home": "Home",
+    "home": "Tela Inicial",
     "favorites": "Favoritos",
     "tips_and_news": "Dicas e Novidades",
     "language_settings": "Configurações de Idioma",
     "logout": "Sair",
     "delete_account": "Excluir Conta"
+    
   },
   "reset_password_modal": {
     "title": "Redefinir Senha",
