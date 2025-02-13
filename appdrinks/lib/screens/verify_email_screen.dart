@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:get/get.dart';
 
 class VerifyEmailScreen extends StatefulWidget {
   final User user;
@@ -34,23 +35,24 @@ class VerifyEmailScreenState extends State<VerifyEmailScreen> {
       if (user != null) {
         await user.reload();
         if (user.emailVerified) {
-          _navigateToHome();
+          _navigateToSplash(); // Alterado aqui
           timer.cancel();
         }
       }
     });
   }
 
-  void _navigateToHome() {
+  // Alterado o método de navegação
+  void _navigateToSplash() {
     if (mounted) {
-      Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+      Get.offAllNamed('/splash-after-verify');
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => false,
+    return PopScope(
+      canPop: false,
       child: Scaffold(
         appBar: AppBar(
           title:
