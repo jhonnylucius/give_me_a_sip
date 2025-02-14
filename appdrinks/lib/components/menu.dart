@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 
 class Menu extends StatelessWidget {
   final User user;
@@ -129,6 +130,14 @@ class Menu extends StatelessWidget {
                 context,
                 MaterialPageRoute(builder: (context) => const TipsScreen()),
               );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.star),
+            title: Text(FlutterI18n.translate(context, 'menu.ranking')),
+            onTap: () {
+              Navigator.pop(context); // Fecha o drawer
+              Get.toNamed('/ranking');
             },
           ),
           ListTile(
