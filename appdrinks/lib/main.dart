@@ -2,6 +2,7 @@ import 'package:app_netdrinks/bindings/app_bindings.dart';
 import 'package:app_netdrinks/bindings/search_binding.dart';
 import 'package:app_netdrinks/firebase_options.dart';
 import 'package:app_netdrinks/screens/cocktail_detail_screen.dart';
+import 'package:app_netdrinks/screens/drink_ranking_screen.dart';
 import 'package:app_netdrinks/screens/home_screen.dart';
 import 'package:app_netdrinks/screens/language_selections_screen.dart';
 import 'package:app_netdrinks/screens/login_screen.dart';
@@ -140,6 +141,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/cocktail-detail',
           page: () => CocktailDetailScreen(cocktail: Get.arguments),
+        ),
+        GetPage(
+          name: '/ranking',
+          page: () => const RankingScreen(),
         ),
       ],
       theme: ThemeData(
