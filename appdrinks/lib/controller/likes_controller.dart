@@ -10,6 +10,8 @@ class LikesController extends GetxController {
   final _likedDrinks = <String, bool>{}.obs;
   final RxList<String> userLikedDrinks = <String>[].obs;
 
+  LikesController(LikesService likesService);
+
   @override
   void onInit() {
     super.onInit();
