@@ -16,7 +16,11 @@ class LikesController extends GetxController {
   void onInit() {
     super.onInit();
     _logger.d('LikesController inicializado');
-    loadUserLikedDrinks(); // Carrega likes ao inicializar
+    // Adicionar listener para mudanças de auth
+    FirebaseAuth.instance.authStateChanges().listen((user) {
+      _logger.d('Estado de autenticação mudou: ${user?.uid ?? 'deslogado'}');
+      loadUserLikedDrinks(); // Recarrega quando muda o usuário
+    });
   }
 
   Stream<DrinkLikes> getLikesStream(String drinkId) {
