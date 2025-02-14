@@ -142,16 +142,18 @@
   },
   "tips_screen": {
     "title": "Tips and News",
-    "tip1_title": "Drinks with what you have at home",
-    "tip1_content": "Use our ingredient search to discover amazing drinks with what you already have at home! Just type the ingredients in English and explore the possibilities.",
+    "multilanguage_title": "Search in Any Language!",
+    "multilanguage_content": "Now you can search for ingredients in Portuguese or Spanish! The system automatically translates to find your drinks.",
+    "likes_title": "Top Drinks Ranking",
+    "likes_content": "Discover the most popular drinks! Use the likes system to see which drinks are the community's favorites.",
+    "tip1_title": "Drinks with What You Have at Home",
+    "tip1_content": "Use our ingredient search to discover amazing drinks with what you already have at home!",
     "tip2_title": "Family Fun",
-    "tip2_content": "Take advantage of our non-alcoholic drink filters to create special moments with the kids. Turn drink preparation into a fun and safe activity for the whole family.",
-    "tip3_title": "Multi-language Support (Coming Soon)",
-    "tip3_content": "We are developing our own API to bring full support in Portuguese, English, and Spanish. Soon you will be able to search in your preferred language!",
-    "tip4_title": "Original Community Drinks (Coming Soon)",
-    "tip4_content": "Soon you will be able to share your original creations with the NetDrinks community! Your drink could become the next favorite of thousands of people.",
-    "tip5_title": "Official IBA Drinks (Coming Soon)",
-    "tip5_content": "Soon we will have the official recipes from the International Bartenders Association (IBA), with exclusive videos. You will have access to the original versions and their most popular variations."
+    "tip2_content": "Enjoy our alcohol-free drink filters to create special moments with the kids.",
+    "tip4_title": "Community Original Drinks (Coming Soon)",
+    "tip4_content": "Soon you'll be able to share your original creations with the NetDrinks community!",
+    "tip5_title": "IBA Official Drinks (Coming Soon)",
+    "tip5_content": "Soon we'll have the official recipes from the International Bartenders Association (IBA), with exclusive videos."
   },
   "verify_email_screen": {
     "title": "Verify Email",

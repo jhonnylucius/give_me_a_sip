@@ -142,16 +142,18 @@
   },
   "tips_screen": {
     "title": "Consejos y Novedades",
-    "tip1_title": "Bebidas con lo que tienes en casa",
-    "tip1_content": "¡Usa nuestra búsqueda de ingredientes para descubrir bebidas increíbles con lo que ya tienes en casa! Solo escribe los ingredientes en inglés y explora las posibilidades.",
+    "multilanguage_title": "¡Búsqueda en Cualquier Idioma!",
+    "multilanguage_content": "¡Ahora puedes buscar ingredientes en portugués o español! El sistema traduce automáticamente para encontrar tus bebidas.",
+    "likes_title": "Ranking de Tragos Favoritos",
+    "likes_content": "¡Descubre los tragos más populares! Usa el sistema de likes para ver cuáles bebidas son las preferidas de la comunidad.",
+    "tip1_title": "Tragos con lo que tienes en casa",
+    "tip1_content": "¡Usa nuestra búsqueda por ingredientes para descubrir tragos increíbles con lo que ya tienes en casa!",
     "tip2_title": "Diversión en Familia",
-    "tip2_content": "Aprovecha nuestros filtros de bebidas sin alcohol para crear momentos especiales con los niños. Convierte la preparación de bebidas en una actividad divertida y segura para toda la familia.",
-    "tip3_title": "Soporte Multilingüe (Próximamente)",
-    "tip3_content": "Estamos desarrollando nuestra propia API para brindar soporte completo en portugués, inglés y español. ¡Pronto podrás buscar en tu idioma preferido!",
-    "tip4_title": "Bebidas Originales de la Comunidad (Próximamente)",
-    "tip4_content": "¡Pronto podrás compartir tus creaciones originales con la comunidad de NetDrinks! Tu bebida podría convertirse en la próxima favorita de miles de personas.",
-    "tip5_title": "Bebidas Oficiales del IBA (Próximamente)",
-    "tip5_content": "Pronto tendremos las recetas oficiales de la International Bartenders Association (IBA), con videos exclusivos. Tendrás acceso a las versiones originales y sus variaciones más populares."
+    "tip2_content": "Aprovecha nuestros filtros de tragos sin alcohol para crear momentos especiales con los niños.",
+    "tip4_title": "Tragos Originales de la Comunidad (Próximamente)",
+    "tip4_content": "¡Pronto podrás compartir tus creaciones originales con la comunidad NetDrinks!",
+    "tip5_title": "Tragos Oficiales de la IBA (Próximamente)",
+    "tip5_content": "Pronto tendremos las recetas oficiales de la International Bartenders Association (IBA), con videos exclusivos."
   },
   "verify_email_screen": {
     "title": "Verificar Correo Electrónico",
