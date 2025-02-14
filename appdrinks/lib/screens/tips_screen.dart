@@ -18,6 +18,25 @@ class TipsScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Nova funcionalidade de busca multilíngue
+              _buildTipCard(
+                context,
+                icon: FontAwesomeIcons.language,
+                title: FlutterI18n.translate(
+                    context, 'tips_screen.multilanguage_title'),
+                content: FlutterI18n.translate(
+                    context, 'tips_screen.multilanguage_content'),
+              ),
+              // Nova funcionalidade de likes
+              _buildTipCard(
+                context,
+                icon: FontAwesomeIcons.thumbsUp,
+                title:
+                    FlutterI18n.translate(context, 'tips_screen.likes_title'),
+                content:
+                    FlutterI18n.translate(context, 'tips_screen.likes_content'),
+              ),
+              // Funcionalidades existentes
               _buildTipCard(
                 context,
                 icon: FontAwesomeIcons.magic,
@@ -31,13 +50,6 @@ class TipsScreen extends StatelessWidget {
                 title: FlutterI18n.translate(context, 'tips_screen.tip2_title'),
                 content:
                     FlutterI18n.translate(context, 'tips_screen.tip2_content'),
-              ),
-              _buildTipCard(
-                context,
-                icon: FontAwesomeIcons.language,
-                title: FlutterI18n.translate(context, 'tips_screen.tip3_title'),
-                content:
-                    FlutterI18n.translate(context, 'tips_screen.tip3_content'),
               ),
               _buildTipCard(
                 context,
