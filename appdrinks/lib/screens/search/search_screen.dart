@@ -107,17 +107,6 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              FlutterI18n.translate(context, 'search_screen.note'),
-              style: TextStyle(
-                color: Colors.grey,
-                fontSize: 12,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
           ElevatedButton(
             onPressed: _handleMaisRecentesSearch,
             child: Text(
