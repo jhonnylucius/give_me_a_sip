@@ -56,6 +56,17 @@ class TranslationService extends GetxService {
     }
   }
 
+  Future<String> translateToEnglish(String ingredient) async {
+    // Procura no mapa de ingredientes existente
+    for (var entry in _ingredientsMap.entries) {
+      if (entry.value['pt']?.toLowerCase() == ingredient.toLowerCase() ||
+          entry.value['es']?.toLowerCase() == ingredient.toLowerCase()) {
+        return entry.key; // Retorna o nome em inglês (chave)
+      }
+    }
+    return ingredient; // Se não encontrar, retorna o original
+  }
+
   String translateIngredient(String ingredient) {
     return _ingredientsMap[ingredient]?[_currentLanguage.value] ?? ingredient;
   }

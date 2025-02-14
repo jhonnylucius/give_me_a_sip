@@ -20,11 +20,12 @@ class RankingRepository {
 
   Future<List<(Cocktail, DrinkLikes)>> getTopDrinks({int limit = 10}) async {
     try {
-      _logger.d('Iniciando busca de top drinks...');
+      _logger.d('Iniciando busca de top drinks com prioridade na API...');
 
-      final allCocktails = await _cocktailRepository.getAllCocktails();
-      _logger.d('Total de cocktails carregados: ${allCocktails.length}');
+      // Inicia busca paralela dos cocktails para otimização
+      final cocktailsFuture = _cocktailRepository.getAllCocktails();
 
+      // Busca dados do Firestore
       final likesSnapshot = await _firestore
           .collection('drinks_likes')
           .orderBy('total_likes', descending: true)
@@ -33,7 +34,17 @@ class RankingRepository {
 
       _logger
           .d('Documentos encontrados no ranking: ${likesSnapshot.docs.length}');
+
+      // Aguarda resultado dos cocktails da busca paralela
+      final allCocktails = await cocktailsFuture;
+      _logger.d('Total de cocktails carregados: ${allCocktails.length}');
+
+      // Processa os resultados
       List<(Cocktail, DrinkLikes)> rankedDrinks = [];
+
+      // Atualização em paralelo do Firestore
+      final batch = _firestore.batch();
+      var needsUpdate = false;
 
       for (var doc in likesSnapshot.docs) {
         try {
@@ -48,13 +59,28 @@ class RankingRepository {
             'users_liked': doc.data()['users_liked'] ?? [],
           });
 
+          // Verifica se precisa atualizar no Firestore
+          if (doc.data()?['last_updated'] == null) {
+            needsUpdate = true;
+            batch.update(doc.reference, {
+              'last_updated': FieldValue.serverTimestamp(),
+              ...drinkLikes.toJson(),
+            });
+          }
+
           rankedDrinks.add((cocktail, drinkLikes));
           _logger.d(
-              'Drink adicionado: ${cocktail.name} com ${drinkLikes.totalLikes} likes');
+              'Drink processado: ${cocktail.name} com ${drinkLikes.totalLikes} likes');
         } catch (e) {
           _logger.e('Erro ao processar drink ${doc.id}: $e');
           continue;
         }
+      }
+
+      // Executa atualização em batch se necessário
+      if (needsUpdate) {
+        _logger.d('Executando atualização em batch no Firestore...');
+        await batch.commit();
       }
 
       _logger.d('Total de drinks rankeados: ${rankedDrinks.length}');

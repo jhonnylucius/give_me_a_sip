@@ -1,10 +1,13 @@
 import 'package:app_netdrinks/models/cocktail.dart';
 import 'package:app_netdrinks/services/search_service.dart';
+import 'package:app_netdrinks/services/translation_service.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
 class SearchController extends GetxController {
   final SearchService _searchService = SearchService();
+  final TranslationService _translationService =
+      TranslationService(); // Serviço de tradução
 
   // RxLists para armazenar os resultados
   final searchResults = <Cocktail>[].obs;
@@ -79,11 +82,24 @@ class SearchController extends GetxController {
   Future<void> searchMultiIngredients(String ingredients) async {
     try {
       isLoading.value = true;
-      _clearAllResults(); // Limpa todos os resultados primeiro
+      _clearAllResults();
 
-      // Realizar pesquisa apenas em inglês
+      // Processar a string de ingredientes
+      var ingredientsList = ingredients
+          .split(',')
+          .map((e) => e.trim())
+          .where((e) => e.isNotEmpty)
+          .toList();
+
+      // Traduzir cada ingrediente
+      var translatedIngredients = await Future.wait(ingredientsList.map(
+          (ingredient) => _translationService.translateToEnglish(ingredient)));
+
+      // Juntar ingredientes traduzidos no formato correto para a API
+      var processedIngredients = translatedIngredients.join(',');
+
       searchResults.value =
-          await _searchService.searchMultiIngredients(ingredients);
+          await _searchService.searchMultiIngredients(processedIngredients);
     } finally {
       isLoading.value = false;
     }

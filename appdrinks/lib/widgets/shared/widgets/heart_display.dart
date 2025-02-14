@@ -8,11 +8,11 @@ class HeartDisplay extends StatelessWidget {
   final Color color;
 
   const HeartDisplay({
-    Key? key,
+    super.key,
     required this.likes,
     this.size = RankingConstants.heartIconSize,
     this.color = Colors.red,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
