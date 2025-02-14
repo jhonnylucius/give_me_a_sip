@@ -1,3 +1,4 @@
+import 'package:app_netdrinks/screens/cocktail_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -37,13 +38,8 @@ class RankingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Get.toNamed(
-        '/cocktail-detail',
-        arguments: {
-          'id': cocktail.idDrink,
-          'name': cocktail.name,
-          'imageUrl': cocktail.imageUrl,
-        },
+      onTap: () => Get.to(
+        () => CocktailDetailScreen(cocktail: cocktail),
       ),
       child: Container(
         height: RankingConstants.cardHeight,
