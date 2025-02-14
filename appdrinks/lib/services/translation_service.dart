@@ -57,14 +57,35 @@ class TranslationService extends GetxService {
   }
 
   Future<String> translateToEnglish(String ingredient) async {
-    // Procura no mapa de ingredientes existente
+    Logger().d('Ingrediente recebido: $ingredient');
+
+    // Primeiro verificar se o mapa foi carregado
+    if (_ingredientsMap.isEmpty) {
+      await _loadIngredientsMap();
+    }
+
+    Logger().d('Procurando tradução para: ${ingredient.toLowerCase()}');
+
+    // Procurar em todas as entradas do mapa
     for (var entry in _ingredientsMap.entries) {
-      if (entry.value['pt']?.toLowerCase() == ingredient.toLowerCase() ||
-          entry.value['es']?.toLowerCase() == ingredient.toLowerCase()) {
-        return entry.key; // Retorna o nome em inglês (chave)
+      // Log para debug
+      Logger().d('Verificando entrada: ${entry.key} -> ${entry.value}');
+
+      // Verificar se o ingrediente corresponde à tradução em português
+      if (entry.value['pt']?.toLowerCase() == ingredient.toLowerCase()) {
+        Logger().d('Encontrou tradução PT->EN: ${entry.key}');
+        return entry.key;
+      }
+
+      // Verificar se o ingrediente corresponde à tradução em espanhol
+      if (entry.value['es']?.toLowerCase() == ingredient.toLowerCase()) {
+        Logger().d('Encontrou tradução ES->EN: ${entry.key}');
+        return entry.key;
       }
     }
-    return ingredient; // Se não encontrar, retorna o original
+
+    Logger().d('Nenhuma tradução encontrada, retornando original: $ingredient');
+    return ingredient;
   }
 
   String translateIngredient(String ingredient) {
