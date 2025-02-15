@@ -29,18 +29,27 @@ class LanguageSelectionScreen extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () => _saveLanguage('en'),
-              child: Text(FlutterI18n.translate(
-                  context, 'language_selection_screen.english')),
+              child: Text(
+                FlutterI18n.translate(
+                    context, 'language_selection_screen.english'),
+                style: TextStyle(color: Colors.white),
+              ),
             ),
             ElevatedButton(
               onPressed: () => _saveLanguage('pt'),
-              child: Text(FlutterI18n.translate(
-                  context, 'language_selection_screen.portuguese')),
+              child: Text(
+                FlutterI18n.translate(
+                    context, 'language_selection_screen.portuguese'),
+                style: TextStyle(color: Colors.white),
+              ),
             ),
             ElevatedButton(
               onPressed: () => _saveLanguage('es'),
-              child: Text(FlutterI18n.translate(
-                  context, 'language_selection_screen.spanish')),
+              child: Text(
+                FlutterI18n.translate(
+                    context, 'language_selection_screen.spanish'),
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ],
         ),
