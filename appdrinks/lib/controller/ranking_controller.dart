@@ -18,7 +18,7 @@ class RankingController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    refreshRanking();
+    refreshRanking(); // Remove o delay, não é necessário
   }
 
   Future<void> refreshRanking() async {
@@ -27,19 +27,12 @@ class RankingController extends GetxController {
       error.value = '';
       _logger.d('Iniciando atualização do ranking...');
 
+      // Remove a verificação de autenticação que estava causando loop
       final drinks = await _rankingService.getTopDrinks(forceRefresh: true);
-
-      if (drinks.isEmpty) {
-        _logger.w('Nenhum drink encontrado no ranking');
-      } else {
-        _logger.d('Drinks carregados: ${drinks.length}');
-        _logger.d('Primeiro drink: ${drinks.first.$1.name}');
-      }
-
       rankedDrinks.assignAll(drinks);
     } catch (e) {
       _logger.e('Erro ao atualizar ranking: $e');
-      error.value = 'Erro ao carregar o ranking: ${e.toString()}';
+      error.value = 'Tente novamente em alguns instantes...';
     } finally {
       isLoading.value = false;
     }
