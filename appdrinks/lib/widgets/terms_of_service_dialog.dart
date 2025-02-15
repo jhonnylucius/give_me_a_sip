@@ -24,8 +24,8 @@ class TermsOfServiceDialog extends StatelessWidget {
                 context, 'terms_of_service_dialog.content')),
             const SizedBox(height: 16),
             GestureDetector(
-              onTap: () =>
-                  _launchURL('https://union.dev.br/termosNetDrinks.html'),
+              onTap: () => _launchURL(
+                  'https://union.dev.br/escolhaDeIdiomasNetDrink.html'),
               child: Text(
                 FlutterI18n.translate(
                     context, 'terms_of_service_dialog.read_terms'),
