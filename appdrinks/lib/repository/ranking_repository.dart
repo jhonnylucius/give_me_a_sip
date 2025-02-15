@@ -60,7 +60,7 @@ class RankingRepository {
           });
 
           // Verifica se precisa atualizar no Firestore
-          if (doc.data()?['last_updated'] == null) {
+          if (doc.data()['last_updated'] == null) {
             needsUpdate = true;
             batch.update(doc.reference, {
               'last_updated': FieldValue.serverTimestamp(),
