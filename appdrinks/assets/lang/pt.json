@@ -104,9 +104,9 @@
   },
   "language_selection_screen": {
     "title": "Selecione o Idioma",
-    "english": "Inglês",
+    "english": "english",
     "portuguese": "Português",
-    "spanish": "Espanhol"
+    "spanish": "Español"
   },
   "login": {
     "email": "Email",
