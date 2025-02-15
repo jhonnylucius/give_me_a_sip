@@ -110,22 +110,27 @@ class _SearchScreenState extends State<SearchScreen> {
           ElevatedButton(
             onPressed: _handleMaisRecentesSearch,
             child: Text(
-                FlutterI18n.translate(context, 'search_screen.recent_drinks')),
+                FlutterI18n.translate(context, 'search_screen.recent_drinks'),
+                style: TextStyle(color: Colors.white)), // Adicionado style
+          ),
+          ElevatedButton(
+            onPressed: _handleNoAlcool,
+            child: Text(
+                FlutterI18n.translate(
+                    context, 'search_screen.non_alcoholic_drinks'),
+                style: TextStyle(color: Colors.white)), // Adicionado style
           ),
           ElevatedButton(
             onPressed: _handleDezAleatorio,
             child: Text(
-                FlutterI18n.translate(context, 'search_screen.random_drinks')),
-          ),
-          ElevatedButton(
-            onPressed: _handleNoAlcool,
-            child: Text(FlutterI18n.translate(
-                context, 'search_screen.non_alcoholic_drinks')),
+                FlutterI18n.translate(context, 'search_screen.random_drinks'),
+                style: TextStyle(color: Colors.white)), // Adicionado style
           ),
           ElevatedButton(
             onPressed: _handlePopularSearch,
             child: Text(
-                FlutterI18n.translate(context, 'search_screen.popular_drinks')),
+                FlutterI18n.translate(context, 'search_screen.popular_drinks'),
+                style: TextStyle(color: Colors.white)), // Adicionado style
           ),
           Expanded(
             child: Obx(() {
