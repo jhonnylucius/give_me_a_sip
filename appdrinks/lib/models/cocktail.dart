@@ -187,10 +187,6 @@ class Cocktail {
     return strInstructions.split('. ').map((s) => '• $s').join('\n');
   }
 
-  String _sanitizeIngredientName(String ingredient) {
-    return ingredient.replaceAll(' ', '%20');
-  }
-
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
