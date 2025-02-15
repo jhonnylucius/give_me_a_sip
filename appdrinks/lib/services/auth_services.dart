@@ -14,6 +14,8 @@ class AuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final Logger logger = Logger();
 
+  User? get currentUser => _firebaseAuth.currentUser;
+
   Future<String?> entrarUsuario(String email, String senha) async {
     try {
       UserCredential userCredential = await _firebaseAuth
