@@ -11,6 +11,7 @@ class Cocktail {
   final String? strDrinkThumb;
   final List<String?> ingredients;
   final List<String?> measures;
+  final List<String?> originalIngredients; // Para manter os nomes originais
 
   Cocktail({
     required this.idDrink,
@@ -25,18 +26,22 @@ class Cocktail {
     this.strDrinkThumb,
     required this.ingredients,
     required this.measures,
+    required this.originalIngredients,
   });
 
   factory Cocktail.fromJson(Map<String, dynamic> json) {
     List<String?> ingredients = [];
     List<String?> measures = [];
+    List<String?> originalIngredients = []; // Nova lista
 
     for (int i = 1; i <= 15; i++) {
       String ingredientKey = 'strIngredient$i';
       String measureKey = 'strMeasure$i';
 
-      ingredients.add(json[ingredientKey] as String?);
-      measures.add(json[measureKey] as String?);
+      String? ingredient = json[ingredientKey];
+      ingredients.add(ingredient);
+      originalIngredients.add(ingredient); // Guardar original
+      measures.add(json[measureKey]);
     }
 
     return Cocktail(
@@ -52,6 +57,7 @@ class Cocktail {
       strDrinkThumb: json['strDrinkThumb'] as String?,
       ingredients: ingredients,
       measures: measures,
+      originalIngredients: originalIngredients, // Adicionar originalIngredients
     );
   }
 
@@ -104,6 +110,7 @@ class Cocktail {
       strDrinkThumb: strDrinkThumb ?? this.strDrinkThumb,
       ingredients: ingredients ?? this.ingredients,
       measures: measures ?? this.measures,
+      originalIngredients: originalIngredients, // Nova lista
     );
   }
 
@@ -136,24 +143,39 @@ class Cocktail {
   bool get hasIBA => strIBA != null;
 
   // Métodos Utilitários Adicionais
-  String getIngredientImageUrl(String ingredient,
-      {ImageSize size = ImageSize.medium}) {
-    final sanitizedIngredient = _sanitizeIngredientName(ingredient);
-    final sizeStr = size == ImageSize.small
-        ? '-Small'
-        : size == ImageSize.medium
-            ? '-Medium'
-            : '';
-    return 'https://www.thecocktaildb.com/images/ingredients/$sanitizedIngredient$sizeStr.png';
+  // Método para obter a URL da imagem do ingrediente
+  String getIngredientImageUrl(String ingredient) {
+    if (ingredient.isEmpty) return '';
+
+    // Remove acentos e caracteres especiais
+    String normalizedName = ingredient
+        .toLowerCase()
+        .replaceAll(RegExp(r'[àáâãäå]'), 'a')
+        .replaceAll(RegExp(r'[èéêë]'), 'e')
+        .replaceAll(RegExp(r'[ìíîï]'), 'i')
+        .replaceAll(RegExp(r'[òóôõö]'), 'o')
+        .replaceAll(RegExp(r'[ùúûü]'), 'u')
+        .replaceAll(RegExp(r'[ñ]'), 'n')
+        .replaceAll(RegExp(r'[ç]'), 'c');
+
+    // Remove espaços e caracteres especiais
+    String sanitizedName = normalizedName
+        .replaceAll(' ', '%20')
+        .replaceAll(RegExp(r'[^a-z0-9%]'), '');
+
+    return 'https://www.thecocktaildb.com/images/ingredients/$sanitizedName-Small.png';
   }
 
+  // Método para obter ingredientes com medidas
   List<Map<String, String>> getIngredientsWithMeasures() {
     List<Map<String, String>> result = [];
+
     for (int i = 0; i < ingredients.length; i++) {
       if (ingredients[i] != null && ingredients[i]!.isNotEmpty) {
         result.add({
           'ingredient': ingredients[i]!,
-          'measure': measures[i] ?? 'To taste',
+          'measure': measures[i] ?? '',
+          'originalName': ingredients[i]! // Guardamos o nome original
         });
       }
     }
