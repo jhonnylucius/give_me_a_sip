@@ -115,16 +115,19 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
   Future<List<Map<String, String>>> _translateIngredients(
       List<Map<String, String>>? ingredients) async {
     if (ingredients == null) return [];
+
     final translatedIngredients =
         await Future.wait(ingredients.map((ingredient) async {
-      final translatedIngredient =
-          await _translateText(ingredient['ingredient']);
+      final originalName = ingredient['originalName'] ?? '';
+      final translatedIngredient = _selectedLanguage == 'en'
+          ? originalName
+          : await _translateText(originalName);
       final translatedMeasure = await _translateText(ingredient['measure']);
+
       return {
         'ingredient': translatedIngredient ?? '',
         'measure': translatedMeasure ?? '',
-        'originalIngredient':
-            ingredient['ingredient'] ?? '', // Mantém o nome original em inglês
+        'originalName': originalName
       };
     }));
     return translatedIngredients;
@@ -368,49 +371,10 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
                 .where((ingredient) =>
                     ingredient['ingredient'] != null &&
                     ingredient['ingredient']!.isNotEmpty)
-                .map((ingredient) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4.0),
-                child: Row(
-                  children: [
-                    // Imagem do ingrediente
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Image.network(
-                        'https://www.thecocktaildb.com/images/ingredients/${ingredient['originalIngredient']?.replaceAll(' ', '%20')}-Small.png',
-                        width: 40,
-                        height: 40,
-                        errorBuilder: (context, error, stackTrace) {
-                          return Container(
-                            width: 40,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              color: Colors.grey[800],
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Icon(
-                              Icons
-                                  .local_bar_rounded, // Novo ícone mais amigável
-                              color: Colors.redAccent,
-                              size: 24, // Tamanho ajustado
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    SizedBox(width: 8.0),
-                    Icon(Icons.check, color: Colors.redAccent),
-                    SizedBox(width: 8.0),
-                    Expanded(
-                      child: Text(
-                        '${ingredient['ingredient']} ${ingredient['measure']?.isNotEmpty == true ? '- ${ingredient['measure']}' : ''}',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }),
+                .map((ingredient) => Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4.0),
+                      child: _buildIngredientItem(ingredient), // Novo método
+                    )),
           SizedBox(height: 8.0),
           Text(
             FlutterI18n.translate(context, 'cocktail_detail.instructions'),
@@ -516,6 +480,39 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
           ),
         ],
       ),
+    );
+  }
+
+// Adicione este novo método na classe
+  Widget _buildIngredientItem(Map<String, String> ingredient) {
+    return Row(
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: Image.network(
+            widget.cocktail.getIngredientImageUrl(
+                ingredient['originalName'] ?? ingredient['ingredient'] ?? ''),
+            width: 40,
+            height: 40,
+            errorBuilder: (context, error, stackTrace) {
+              return Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: Colors.grey[800],
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(Icons.local_bar_rounded, color: Colors.redAccent),
+              );
+            },
+          ),
+        ),
+        SizedBox(width: 8),
+        Expanded(
+          child: Text(
+              '${ingredient['measure'] ?? ''} ${ingredient['ingredient'] ?? ''}'),
+        ),
+      ],
     );
   }
 }
