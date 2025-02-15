@@ -36,11 +36,18 @@ class RankingScreen extends GetView<RankingController> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(controller.error.value),
+                  Text(
+                    controller.error.value,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.grey[400]),
+                  ),
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: controller.refreshRanking,
-                    child: const Text('Tentar Novamente'),
+                    child: Text(
+                      'Tentar Novamente',
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ],
               ),
