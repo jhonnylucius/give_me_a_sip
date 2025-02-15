@@ -13,6 +13,8 @@ class CocktailAdapter extends TypeAdapter<Cocktail> {
 
   @override
   void write(BinaryWriter writer, Cocktail obj) {
-    writer.writeMap(obj.toJson());
+    final map = obj.toJson();
+    map['originalIngredients'] = obj.originalIngredients;
+    writer.writeMap(map);
   }
 }
