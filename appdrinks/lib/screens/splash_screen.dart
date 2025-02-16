@@ -1,7 +1,7 @@
-import 'package:app_netdrinks/widgets/retro_loading_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -57,7 +57,7 @@ class SplashScreenState extends State<SplashScreen>
         Get.offAllNamed('/home');
       }
     } catch (e) {
-      print('Erro em _initializeApp: $e');
+      Logger().e('Erro em _initializeApp: $e');
     }
   }
 
@@ -107,18 +107,12 @@ class SplashScreenState extends State<SplashScreen>
               const SizedBox(height: 50),
 
               // Loading indicator estilizado
-              AnimatedOpacity(
-                opacity: _animationCompleted ? 0.0 : 1.0,
-                duration: const Duration(milliseconds: 1000),
-                child: SizedBox(
-                  width: 220.0, // Aumentar o tamanho para melhor visualização
-                  height: 180.0, // Aumentar o tamanho para melhor visualização
-                  child: RetroLoadingWidget(
-                    totalDrinks: 636,
-                    showCounter: false, // Example total drinks count
+              if (!_animationCompleted)
+                const CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    Color.fromARGB(255, 204, 7, 17),
                   ),
                 ),
-              ),
             ],
           ),
         ),
