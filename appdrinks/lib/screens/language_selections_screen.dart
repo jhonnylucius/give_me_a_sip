@@ -9,10 +9,9 @@ class LanguageSelectionScreen extends StatelessWidget {
   Future<void> _saveLanguage(String languageCode) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('language', languageCode);
-    await prefs.setBool('selected_language', true); // Mudança crucial aqui
+    await prefs.setBool('selected_language', true);
     Get.updateLocale(Locale(languageCode));
-    Get.offAllNamed(
-        '/terms'); // Usar offAllNamed para limpar a pilha de navegação
+    Get.offAllNamed('/home'); // Redireciona para a tela inicial
   }
 
   @override
