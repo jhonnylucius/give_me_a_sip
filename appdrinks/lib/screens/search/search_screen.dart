@@ -132,6 +132,31 @@ class _SearchScreenState extends State<SearchScreen> {
                 FlutterI18n.translate(context, 'search_screen.popular_drinks'),
                 style: TextStyle(color: Colors.white)), // Adicionado style
           ),
+          // Novo Widget para contagem
+          Obx(() {
+            final results = [
+              ...controller.searchResults,
+              ...controller.popularResults,
+              ...controller.maisRecentesResults,
+              ...controller.multiIngredientsResults,
+              ...controller.noAlcoolResults,
+            ];
+
+            final total = results.length;
+            if (total > 0 && controller.dezAleatorioResults.isEmpty) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Text(
+                  FlutterI18n.translate(context, 'search_screen.results_count',
+                      translationParams: {'count': '$total'}),
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Colors.grey[600],
+                      ),
+                ),
+              );
+            }
+            return SizedBox.shrink();
+          }),
           Expanded(
             child: Obx(() {
               if (controller.isLoading.value) {
