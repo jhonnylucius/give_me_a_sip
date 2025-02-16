@@ -26,16 +26,23 @@ Future<void> main() async {
   await setupLocator();
 
   final prefs = await SharedPreferences.getInstance();
-  final languageCode = prefs.getString('language') ?? 'en';
-  final locale = Locale(languageCode);
+  final bool? termsAccepted = prefs.getBool('termsAccepted');
 
-  runApp(MyApp(locale: locale));
+  // Verifica se os termos foram aceitos
+  if (termsAccepted != true) {
+    runApp(MyApp(showTermsDialog: true));
+  } else {
+    final languageCode = prefs.getString('language') ?? 'en';
+    final locale = Locale(languageCode);
+    runApp(MyApp(locale: locale, showTermsDialog: false));
+  }
 }
 
 class MyApp extends StatelessWidget {
-  final Locale locale;
+  final Locale? locale;
+  final bool showTermsDialog;
 
-  const MyApp({super.key, required this.locale});
+  const MyApp({super.key, this.locale, required this.showTermsDialog});
 
   @override
   Widget build(BuildContext context) {
@@ -213,158 +220,60 @@ class MyApp extends StatelessWidget {
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-    );
-  }
-}
-
-class InitialScreen extends StatefulWidget {
-  const InitialScreen({super.key});
-  @override
-  InitialScreenState createState() => InitialScreenState();
-}
-
-class InitialScreenState extends State<InitialScreen>
-    with WidgetsBindingObserver {
-  late PageController _pageController;
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController();
-    WidgetsBinding.instance.addObserver(this);
-    _checkTermsAccepted();
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    _pageController.dispose();
-    super.dispose();
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      _checkTermsAccepted();
-    }
-  }
-
-  Future<void> _checkTermsAccepted() async {
-    final prefs = await SharedPreferences.getInstance();
-    final bool? termsAccepted = prefs.getBool('termsAccepted');
-
-    if (termsAccepted != true) {
-      Get.offAllNamed('/terms');
-    } else {
-      _navigateToNextScreen();
-    }
-  }
-
-  void _navigateToNextScreen() async {
-    final prefs = await SharedPreferences.getInstance();
-    final String? selectedLanguage = prefs.getString('selected_language');
-
-    if (selectedLanguage == null) {
-      Get.offAllNamed('/language-settings');
-      return;
-    }
-
-    final user = FirebaseAuth.instance.currentUser;
-    if (user == null) {
-      Get.offAllNamed('/login');
-    } else if (!user.emailVerified) {
-      Get.offAllNamed('/verify-email');
-    } else {
-      Get.offAllNamed('/home');
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        fit: StackFit.expand,
-        children: [
-          PageView(
-            controller: _pageController,
-            physics: const NeverScrollableScrollPhysics(),
-            children: [
-              Container(
-                color: Colors.black,
-                child: const Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image(
-                        image: AssetImage('assets/Icon-192.png'),
-                        width: 100,
-                        height: 100,
-                      ),
-                      SizedBox(height: 20),
-                      Text(
-                        "Bem-vindo ao NetDrinks",
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 204, 7, 17),
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
+      home: showTermsDialog
+          ? PopScope(
+              canPop: false,
+              child: TermsOfServiceDialog(
+                onAccepted: () async {
+                  final prefs = await SharedPreferences.getInstance();
+                  await prefs.setBool('termsAccepted', true);
+                  Get.offAllNamed('/login');
+                },
+                onDeclined: () {
+                  Get.offAll(() => Scaffold(
+                        backgroundColor: Colors.black,
+                        body: PopScope(
+                          canPop: false,
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(32.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(
+                                    Icons.local_bar_rounded,
+                                    size: 80,
+                                    color: Color.fromARGB(255, 204, 7, 17),
+                                  ),
+                                  const SizedBox(height: 24),
+                                  const Text(
+                                    'Para usar o NetDrinks e descobrir mais de 600 receitas incríveis de drinks, é necessário aceitar os termos de uso.',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  const SizedBox(height: 16),
+                                  const Text(
+                                    'Feche o app e abra novamente para aceitar os termos.',
+                                    style: TextStyle(
+                                      color: Color.fromARGB(255, 204, 7, 17),
+                                      fontSize: 18,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
+                      ));
+                },
               ),
-              Container(
-                color: Colors.black,
-                child: const Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image(
-                        image: AssetImage('assets/Icon-192.png'),
-                        width: 100,
-                        height: 100,
-                      ),
-                      SizedBox(height: 20),
-                      Text(
-                        "Descubra novos drinks",
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 204, 7, 17),
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                color: Colors.black,
-                child: const Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image(
-                        image: AssetImage('assets/Icon-192.png'),
-                        width: 100,
-                        height: 100,
-                      ),
-                      SizedBox(height: 20),
-                      Text(
-                        "Aproveite!",
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 204, 7, 17),
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
+            )
+          : null,
     );
   }
 }
