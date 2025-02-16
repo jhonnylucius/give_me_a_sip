@@ -129,7 +129,8 @@
     "error_fetching_user": "Erro ao obter usuário após o cadastro.",
     "passwords_do_not_match": "Senhas não conferem.",
     "register": "Cadastrar",
-    "already_have_account": "Já tenho uma conta!"
+    "already_have_account": "Já tenho uma conta!",
+    "empty_fields": "Por favor, preencha todos os campos do formulário."
   },
   "search_dialog": {
     "title": "Pesquisar",
@@ -232,7 +233,8 @@
     "recent_drinks": "Pesquisar os drinks mais recentes",
     "random_drinks": "Pesquisar 10 drinks aleatórios",
     "non_alcoholic_drinks": "Pesquisar drinks não alcoólicos",
-    "popular_drinks": "Pesquisar drinks populares"
+    "popular_drinks": "Pesquisar drinks populares",
+    "results_count": "Total encontrado: {count} drinks"
   },
   "cocktail_detail": {
     "ingredients": "Ingredientes:",
