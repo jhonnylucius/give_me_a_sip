@@ -154,7 +154,8 @@ class Menu extends StatelessWidget {
             onTap: () async {
               await FirebaseAuth.instance.signOut();
               if (!context.mounted) return;
-              Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+              Navigator.pushNamedAndRemoveUntil(
+                  context, '/login', (route) => false);
             },
           ),
           ListTile(
