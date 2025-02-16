@@ -4,6 +4,7 @@ import 'package:app_netdrinks/models/cocktail_api.dart';
 import 'package:app_netdrinks/repository/cocktail_repository.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
+import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
 
 final getIt = GetIt.instance;
@@ -30,10 +31,10 @@ Future<void> setupLocator() async {
           getIt<Box<Cocktail>>(),
         ));
 
-    print('Locator configurado com sucesso');
+    Logger().e('Locator configurado com sucesso');
   } catch (e, stack) {
-    print('Erro na configuração do Locator: $e');
-    print('Stack: $stack');
+    Logger().e('Erro na configuração do Locator: $e');
+    Logger().e('Stack: $stack');
     rethrow; // Importante: Relança o erro para tratamento adequado
   }
 }
