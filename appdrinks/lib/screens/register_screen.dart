@@ -157,6 +157,21 @@ class RegisterScreen extends StatelessWidget {
                             ),
                             // Substituir APENAS o bloco onPressed do ElevatedButton:
                             onPressed: () async {
+                              // Adicionar validação antes do if existente
+                              if (_emailController.text.isEmpty ||
+                                  _senhaController.text.isEmpty ||
+                                  _confirmarSenhaController.text.isEmpty ||
+                                  _nomeController.text.isEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(FlutterI18n.translate(
+                                        context, 'register.empty_fields')),
+                                    backgroundColor: Colors.red,
+                                  ),
+                                );
+                                return;
+                              }
+
                               if (_senhaController.text ==
                                   _confirmarSenhaController.text) {
                                 try {
