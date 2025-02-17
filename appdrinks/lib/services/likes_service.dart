@@ -9,7 +9,6 @@ class LikesService extends GetxService {
   final _auth = FirebaseAuth.instance;
   final _logger = Logger();
 
-  // Remova a primeira declaração duplicada do método e mantenha apenas esta versão
   Future<List<String>> getUserLikedDrinks(String userId) async {
     try {
       final querySnapshot = await _firestore

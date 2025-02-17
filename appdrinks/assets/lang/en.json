@@ -142,19 +142,19 @@
     "title": "NetDrinks"
   },
   "tips_screen": {
-    "title": "Tips and News",
-    "multilanguage_title": "Search in Any Language!",
-    "multilanguage_content": "Now you can search for ingredients in Portuguese or Spanish! The system automatically translates to find your drinks.",
-    "likes_title": "Top Drinks Ranking",
-    "likes_content": "Discover the most popular drinks! Use the likes system to see which drinks are the community's favorites.",
+    "title": "Tips & News",
+    "multilanguage_title": "Search in 3 Languages!",
+    "multilanguage_content": "Now you can search for ingredients in Portuguese, English, or Spanish! The system automatically translates to find your drinks, based on what you have at home.",
+    "likes_title": "Top Favorite Drinks",
+    "likes_content": "Discover the most popular drinks! Use the like system to see which drinks are the community's favorites.",
     "tip1_title": "Drinks with What You Have at Home",
-    "tip1_content": "Use our ingredient search to discover amazing drinks with what you already have at home!",
+    "tip1_content": "Use our ingredient search to discover amazing drinks with what you already have at home! For example, search for Vodka, orange juice, and see how many drinks you can make that contain those ingredients!",
     "tip2_title": "Family Fun",
-    "tip2_content": "Enjoy our alcohol-free drink filters to create special moments with the kids.",
-    "tip4_title": "Community Original Drinks (Coming Soon)",
+    "tip2_content": "Enjoy our non-alcoholic drink filters to create special moments with the kids.",
+    "tip4_title": "Original Drinks from the Community (Coming Soon)",
     "tip4_content": "Soon you'll be able to share your original creations with the NetDrinks community!",
-    "tip5_title": "IBA Official Drinks (Coming Soon)",
-    "tip5_content": "Soon we'll have the official recipes from the International Bartenders Association (IBA), with exclusive videos."
+    "tip5_title": "Official IBA Drinks (Coming Soon)",
+    "tip5_content": "Soon we will have the official recipes from the International Bartenders Association (IBA), with exclusive videos."
   },
   "verify_email_screen": {
     "title": "Verify Email",
@@ -201,7 +201,57 @@
     "language_settings": "Language Settings",
     "logout": "Logout",
     "delete_account": "Delete Account",
-    "ranking": "Top 100 Drinks"
+    "ranking": "Top 100 Drinks",
+    "my_drinks": "My Drinks"
+  },
+  "my_drinks": {
+    "title": "My Drinks",
+    "empty_list": "You don't have any registered drinks yet.",
+    "add_first": "Add First Drink",
+    "ingredients": "Ingredients",
+    "delete_confirmation_title": "Confirm Deletion",
+    "delete_confirmation_message": "Are you sure you want to delete the drink {name}?"
+  },
+  "add_drink": {
+    "title": "New Drink",
+    "name": "Drink Name",
+    "name_required": "Name is required",
+    "category": "Category",
+    "glass": "Glass Type",
+    "alcoholic": "Alcoholic/Non-Alcoholic",
+    "ingredient_name": "Ingredient Name",
+    "measure": "Measure",
+    "add_ingredient": "Add Ingredient",
+    "instructions": "Instructions",
+    "instructions_required": "Instructions are required",
+    "select_image": "Select an Image",
+    "image_size_hint": "Recommended size: 700x700",
+    "image_required": "Image is required",
+    "ingredients_required": "Add at least one ingredient",
+    "save": "Save",
+    "save_error": "Error saving drink"
+  },
+  "common": {
+    "try_again": "Try again",
+    "delete": "Delete",
+    "cancel": "Cancel"
+  },
+  "edit_drink": {
+    "title": "Edit Drink",
+    "name": "Drink Name",
+    "name_required": "Name is required",
+    "category": "Category",
+    "glass": "Glass Type",
+    "alcoholic": "Alcoholic/Non-Alcoholic",
+    "ingredient_name": "Ingredient Name",
+    "measure": "Measure",
+    "add_ingredient": "Add Ingredient",
+    "instructions": "Instructions",
+    "instructions_required": "Instructions are required",
+    "change_image": "Change Image",
+    "ingredients_required": "Add at least one ingredient",
+    "save": "Save Changes",
+    "update_error": "Error updating drink"
   },
   "ranking": {
     "title": "Drinks Ranking",
