@@ -4,6 +4,7 @@ import 'package:app_netdrinks/controller/likes_controller.dart';
 import 'package:app_netdrinks/controller/ranking_controller.dart'; // Novo import
 import 'package:app_netdrinks/repository/cocktail_repository.dart';
 import 'package:app_netdrinks/repository/ranking_repository.dart'; // Novo import
+import 'package:app_netdrinks/services/azure_translation_service.dart';
 import 'package:app_netdrinks/services/likes_service.dart';
 import 'package:app_netdrinks/services/locator_service.dart';
 import 'package:app_netdrinks/services/ranking_service.dart'; // Novo import
@@ -53,5 +54,6 @@ class AppBindings implements Bindings {
       RankingController(Get.find<RankingService>()),
       permanent: true,
     );
+    Get.lazyPut(() => AzureTranslationService());
   }
 }
