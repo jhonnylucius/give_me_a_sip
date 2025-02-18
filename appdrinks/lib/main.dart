@@ -10,6 +10,7 @@ import 'package:app_netdrinks/screens/search/search_results_screen.dart';
 import 'package:app_netdrinks/screens/search/search_screen.dart';
 import 'package:app_netdrinks/screens/splash_screen.dart';
 import 'package:app_netdrinks/screens/verify_email_screen.dart';
+import 'package:app_netdrinks/services/azure_translation_service.dart';
 import 'package:app_netdrinks/services/locator_service.dart';
 import 'package:app_netdrinks/widgets/terms_of_service_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -22,6 +23,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Get.put(AzureTranslationService());
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await setupLocator();
 
