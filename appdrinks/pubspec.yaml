@@ -64,6 +64,7 @@ dependencies:
   flutter_signin_button: ^2.0.0
   flutter_native_splash: ^2.4.4
   firebase_storage: ^12.4.2
+  cached_network_image: ^3.3.1
   
   
 
