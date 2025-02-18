@@ -468,7 +468,6 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
 
     return Row(
       children: [
-        // No método _buildIngredientItem():
         NetworkImageHandler(
           imageUrl: widget.cocktail
               .getIngredientImageUrl(ingredient['originalName'] ?? ''),
