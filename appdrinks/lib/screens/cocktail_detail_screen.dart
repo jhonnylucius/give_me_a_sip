@@ -1,19 +1,20 @@
-import 'dart:convert';
 import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:app_netdrinks/controller/cocktail_detail_controller.dart';
 import 'package:app_netdrinks/models/cocktail.dart';
-import 'package:app_netdrinks/services/translation_service.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:app_netdrinks/services/azure_translation_service.dart';
+import 'package:app_netdrinks/widgets/cocktail_fill_loading.dart';
+import 'package:flutter/foundation.dart' show ByteData, kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:translator/translator.dart';
+
+import '../services/measurement_converter_service.dart';
+import '../widgets/network_image_handler.dart';
 
 class CocktailDetailScreen extends StatefulWidget {
   final Cocktail cocktail;
@@ -27,8 +28,9 @@ class CocktailDetailScreen extends StatefulWidget {
 class CocktailDetailScreenState extends State<CocktailDetailScreen> {
   final GlobalKey _screenShotKey = GlobalKey();
   String _selectedLanguage = 'pt';
-  final translator = GoogleTranslator();
-
+  final logger = Logger();
+  final AzureTranslationService translationService =
+      Get.find<AzureTranslationService>();
   final CocktailController controller = Get.find<CocktailController>();
 
   String? translatedAlternateName;
@@ -41,10 +43,26 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
 
   final TextEditingController _myVersionController = TextEditingController();
 
+  final Map<String, String> translations = {
+    'alternative_name': 'Nome Alternativo',
+    'category': 'Categoria',
+    'type': 'Tipo',
+    'glass': 'Copo',
+    'ingredients': 'Ingredientes',
+    'instructions': 'Instruções',
+    'my_version': 'Minha Versão',
+    'add_your_version': 'Adicione sua versão...',
+    'conversion': 'Conversão automática para ML',
+    'share.message': 'Confira esta receita de '
+  };
+
+  String translate(String key) {
+    return translations[key] ?? key;
+  }
+
   @override
   void initState() {
     super.initState();
-    // Inicializa com o idioma global
     _selectedLanguage = Get.locale?.languageCode ?? 'pt';
     _translateContent();
     controller.loadMyVersion(widget.cocktail.idDrink);
@@ -78,7 +96,6 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
           widget.cocktail.strTags?.split(',').map((tag) => tag.trim()).toList();
       translatedIngredients = widget.cocktail.getIngredientsWithMeasures();
     }
-
     setState(() {});
   }
 
@@ -86,20 +103,10 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
     if (text == null || text.isEmpty) return text;
     if (RegExp(r'^\d+$').hasMatch(text)) return text;
 
-    // Tenta primeiro usar o JSON
-    final translationService = Get.find<TranslationService>();
-    final jsonTranslation = translationService.translateIngredient(text);
-    if (jsonTranslation != text) {
-      return jsonTranslation;
-    }
-
-    // Se não encontrar no JSON, usa o Google Translator
     try {
-      final translation =
-          await translator.translate(text, to: _selectedLanguage);
-      return translation.text;
+      return await translationService.translate(text, _selectedLanguage);
     } catch (e) {
-      Logger().e("Erro ao traduzir: $e");
+      logger.e("Erro ao traduzir: $e");
       return text;
     }
   }
@@ -116,60 +123,39 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
       List<Map<String, String>>? ingredients) async {
     if (ingredients == null) return [];
 
-    final translatedIngredients =
-        await Future.wait(ingredients.map((ingredient) async {
-      final originalName = ingredient['originalName'] ?? '';
-      final translatedIngredient = _selectedLanguage == 'en'
-          ? originalName
-          : await _translateText(originalName);
-      final translatedMeasure = await _translateText(ingredient['measure']);
-
+    return await Future.wait(ingredients.map((ingredient) async {
+      final translatedIngredient =
+          await _translateText(ingredient['ingredient']);
       return {
         'ingredient': translatedIngredient ?? '',
-        'measure': translatedMeasure ?? '',
-        'originalName': originalName
+        'measure': ingredient['measure'] ?? '',
+        'originalName': ingredient['originalName'] ?? ''
       };
     }));
-    return translatedIngredients;
   }
 
   Future<void> _shareScreen() async {
     try {
-      await Future.delayed(Duration(milliseconds: 100));
+      RenderRepaintBoundary boundary = _screenShotKey.currentContext!
+          .findRenderObject() as RenderRepaintBoundary;
+      ui.Image image = await boundary.toImage(pixelRatio: 3.0);
+      ByteData? byteData =
+          await image.toByteData(format: ui.ImageByteFormat.png);
 
-      final boundary = _screenShotKey.currentContext?.findRenderObject()
-          as RenderRepaintBoundary?;
-      if (boundary == null) {
-        Logger().e("RenderRepaintBoundary não encontrado");
-        return;
-      }
-
-      final image = await boundary.toImage(pixelRatio: 3.0);
-      final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-      final bytes = byteData?.buffer.asUint8List();
-
-      if (bytes != null) {
+      if (byteData != null) {
         if (kIsWeb) {
-          base64Encode(bytes);
+          await Share.share('Confira esta receita do NetDrinks!');
         } else {
-          final tempDir = await getTemporaryDirectory();
-          final file = await File('${tempDir.path}/drink.png').create();
-          await file.writeAsBytes(bytes);
-
-          final shareMessage = FlutterI18n.translate(
-            context,
-            'share.message',
-            translationParams: {'name': widget.cocktail.name},
-          );
-
-          await Share.shareXFiles(
-            [XFile(file.path)],
-            text: shareMessage,
-          );
+          final directory = await getTemporaryDirectory();
+          final imagePath = '${directory.path}/drink.png';
+          File imgFile = File(imagePath);
+          await imgFile.writeAsBytes(byteData.buffer.asUint8List());
+          await Share.shareXFiles([XFile(imagePath)],
+              text: '${translate("share.message")}${widget.cocktail.name}');
         }
       }
     } catch (e) {
-      Logger().e('Erro ao compartilhar: $e');
+      logger.e('Erro ao compartilhar: $e');
     }
   }
 
@@ -185,35 +171,25 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
           ),
           DropdownButtonHideUnderline(
             child: DropdownButton<String>(
-              value: _selectedLanguage, // Usa o idioma atual do app
+              value: _selectedLanguage,
               icon: const Padding(
                 padding: EdgeInsets.only(right: 8.0),
-                child: Icon(
-                  Icons.language,
-                  color: Color.fromARGB(255, 151, 4, 4),
-                ),
+                child:
+                    Icon(Icons.language, color: Color.fromARGB(255, 151, 4, 4)),
               ),
               items: const [
                 DropdownMenuItem<String>(
                   value: 'en',
-                  child: Text(
-                    'English',
-                    style: TextStyle(color: Colors.white),
-                  ),
+                  child: Text('English', style: TextStyle(color: Colors.white)),
                 ),
                 DropdownMenuItem<String>(
                   value: 'pt',
-                  child: Text(
-                    'Português',
-                    style: TextStyle(color: Colors.white),
-                  ),
+                  child:
+                      Text('Português', style: TextStyle(color: Colors.white)),
                 ),
                 DropdownMenuItem<String>(
                   value: 'es',
-                  child: Text(
-                    'Español',
-                    style: TextStyle(color: Colors.white),
-                  ),
+                  child: Text('Español', style: TextStyle(color: Colors.white)),
                 ),
               ],
               onChanged: (String? newValue) async {
@@ -221,8 +197,6 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
                   setState(() {
                     _selectedLanguage = newValue;
                   });
-
-                  // Atualiza o conteúdo da tela
                   await _translateContent();
                 }
               },
@@ -252,14 +226,19 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Substitua os Image.network por NetworkImageHandler
+          // No método _buildFullContent():
           Center(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Image.network(
-                widget.cocktail.imageUrl,
-                fit: BoxFit.cover,
-                height: 200,
+            child: NetworkImageHandler(
+              imageUrl: widget.cocktail.imageUrl,
+              placeholder: (context, url) => Container(
+                color: Colors.grey[900],
+                child: const Center(
+                  child: CocktailFillLoading(),
+                ),
               ),
+              height: 200,
+              borderRadius: BorderRadius.circular(20),
             ),
           ),
           SizedBox(height: 16.0),
@@ -270,19 +249,20 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
                   fontWeight: FontWeight.bold,
                 ),
           ),
-          SizedBox(height: 8.0),
-          if (translatedAlternateName != null)
+          if (translatedAlternateName != null) ...[
+            SizedBox(height: 8.0),
             Text(
-              '${FlutterI18n.translate(context, "alternative_name")}: $translatedAlternateName',
+              '${translate("alternative_name")}: $translatedAlternateName',
               style: TextStyle(color: Colors.white),
             ),
+          ],
           SizedBox(height: 8.0),
           Row(
             children: [
               Icon(Icons.category, color: Colors.redAccent),
               SizedBox(width: 8.0),
               Text(
-                '${FlutterI18n.translate(context, "category")}: $translatedCategory',
+                '${translate("category")}: $translatedCategory',
                 style: TextStyle(color: Colors.white),
               ),
             ],
@@ -293,7 +273,7 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
               Icon(Icons.local_bar, color: Colors.redAccent),
               SizedBox(width: 8.0),
               Text(
-                '${FlutterI18n.translate(context, "type")}: $translatedAlcohol',
+                '${translate("type")}: $translatedAlcohol',
                 style: TextStyle(color: Colors.white),
               ),
             ],
@@ -304,13 +284,13 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
               Icon(Icons.wine_bar, color: Colors.redAccent),
               SizedBox(width: 8.0),
               Text(
-                '${FlutterI18n.translate(context, "glass")}: $translatedGlass',
+                '${translate("glass")}: $translatedGlass',
                 style: TextStyle(color: Colors.white),
               ),
             ],
           ),
-          SizedBox(height: 8.0),
-          if (translatedTags != null)
+          if (translatedTags != null && translatedTags!.isNotEmpty) ...[
+            SizedBox(height: 8.0),
             Wrap(
               spacing: 8.0,
               children: translatedTags!.map((tag) {
@@ -321,9 +301,10 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
                 );
               }).toList(),
             ),
-          SizedBox(height: 8.0),
+          ],
+          SizedBox(height: 16.0),
           Text(
-            FlutterI18n.translate(context, 'cocktail_detail.ingredients'),
+            translate("ingredients"),
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   color: Colors.redAccent,
                   fontWeight: FontWeight.bold,
@@ -349,13 +330,13 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(
-                  Icons.liquor, // Ícone mais temático para drinks
+                  Icons.liquor,
                   color: Theme.of(context).colorScheme.primary,
                   size: 20,
                 ),
                 SizedBox(width: 8.0),
                 Text(
-                  FlutterI18n.translate(context, "cocktail_detail.conversion"),
+                  translate("conversion"),
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 14,
@@ -365,19 +346,20 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
               ],
             ),
           ),
-          SizedBox(height: 12.0),
-          if (translatedIngredients != null)
+          if (translatedIngredients != null) ...[
+            SizedBox(height: 12.0),
             ...translatedIngredients!
                 .where((ingredient) =>
                     ingredient['ingredient'] != null &&
                     ingredient['ingredient']!.isNotEmpty)
                 .map((ingredient) => Padding(
                       padding: const EdgeInsets.symmetric(vertical: 4.0),
-                      child: _buildIngredientItem(ingredient), // Novo método
+                      child: _buildIngredientItem(ingredient),
                     )),
-          SizedBox(height: 8.0),
+          ],
+          SizedBox(height: 16.0),
           Text(
-            FlutterI18n.translate(context, 'cocktail_detail.instructions'),
+            translate("instructions"),
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   color: Colors.redAccent,
                   fontWeight: FontWeight.bold,
@@ -388,14 +370,12 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
             translatedInstructions ?? '',
             style: TextStyle(color: Colors.white),
           ),
-
-          // Substitua o Widget que mostra a "Minha Versão"
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 24),
               Text(
-                FlutterI18n.translate(context, 'cocktail_detail.my_version'),
+                translate("my_version"),
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                       color: Colors.redAccent,
                       fontWeight: FontWeight.bold,
@@ -450,8 +430,7 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
                     controller: _myVersionController,
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(
-                      hintText: FlutterI18n.translate(
-                          context, 'cocktail_detail.add_your_version'),
+                      hintText: translate("add_your_version"),
                       hintStyle: TextStyle(color: Colors.grey),
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.redAccent),
@@ -483,36 +462,48 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
     );
   }
 
-// Adicione este novo método na classe
   Widget _buildIngredientItem(Map<String, String> ingredient) {
+    final measure = ingredient['measure'] ?? '';
+    final (originalMeasure, mlMeasure) = _buildMeasureText(measure);
+
     return Row(
       children: [
-        ClipRRect(
+        // No método _buildIngredientItem():
+        NetworkImageHandler(
+          imageUrl: widget.cocktail
+              .getIngredientImageUrl(ingredient['originalName'] ?? ''),
+          width: 40,
+          height: 40,
           borderRadius: BorderRadius.circular(8),
-          child: Image.network(
-            widget.cocktail.getIngredientImageUrl(
-                ingredient['originalName'] ?? ingredient['ingredient'] ?? ''),
-            width: 40,
-            height: 40,
-            errorBuilder: (context, error, stackTrace) {
-              return Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: Colors.grey[800],
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Icon(Icons.local_bar_rounded, color: Colors.redAccent),
-              );
-            },
-          ),
+          placeholder: (context, url) => Container(),
         ),
         SizedBox(width: 8),
         Expanded(
-          child: Text(
-              '${ingredient['measure'] ?? ''} ${ingredient['ingredient'] ?? ''}'),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(ingredient['ingredient'] ?? ''),
+              if (mlMeasure != null)
+                Row(
+                  children: [
+                    Text(originalMeasure, style: TextStyle(color: Colors.grey)),
+                    Text(' ($mlMeasure)',
+                        style: TextStyle(color: Colors.grey[400])),
+                  ],
+                )
+              else
+                Text(originalMeasure, style: TextStyle(color: Colors.grey)),
+            ],
+          ),
         ),
       ],
     );
+  }
+
+  (String, String?) _buildMeasureText(String measure) {
+    if (MeasurementConverter.measurementRegex.hasMatch(measure)) {
+      return (measure, MeasurementConverter.convertToMl(measure));
+    }
+    return (measure, null);
   }
 }
