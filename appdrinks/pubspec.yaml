@@ -65,6 +65,8 @@ dependencies:
   flutter_native_splash: ^2.4.4
   firebase_storage: ^12.4.2
   cached_network_image: ^3.3.1
+  country_flags: ^3.2.0
+  flutter_dotenv: ^5.2.1
   
   
 
@@ -99,11 +101,7 @@ flutter:
     - assets/background_home_screen.jpg
     - assets/fundoRelatorio.jpg
     - assets/iconApp.png
-    - assets/lang/pt.json
-    - assets/lang/en.json
-    - assets/lang/es.json
     - assets/legal.json
-    - assets/data/ingredients_map.json
     - assets/flags/es.svg
     - assets/flags/us.svg
     - assets/i18n/es.json
@@ -111,7 +109,8 @@ flutter:
     - assets/i18n/en.json
     - assets/i18n/pt.json
     - assets/flags/br.svg
-    - assets/data/drinks_data.json
+    - .env
+    
   
 
   # An image asset can refer to one or more resolution-specific "variants", see
