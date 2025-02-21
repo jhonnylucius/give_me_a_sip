@@ -76,7 +76,7 @@ class _CocktailGlassPainter extends CustomPainter {
       ..strokeWidth = 2.0;
 
     final glassPaint = Paint()
-      ..color = color.withOpacity(0.2)
+      ..color = color.withAlpha((0.2 * 255).toInt())
       ..style = PaintingStyle.fill;
 
     final fillPaint = Paint()
