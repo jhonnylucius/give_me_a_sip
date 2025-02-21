@@ -5,7 +5,9 @@ import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key, required bool afterVerify});
+  final bool afterVerify;
+
+  const SplashScreen({super.key, required this.afterVerify});
 
   @override
   SplashScreenState createState() => SplashScreenState();
@@ -46,6 +48,12 @@ class SplashScreenState extends State<SplashScreen>
       final user = FirebaseAuth.instance.currentUser;
       final prefs = await SharedPreferences.getInstance();
       final hasSelectedLanguage = prefs.getBool('selected_language') ?? false;
+
+      // Verifica se é após verificação de email
+      if (widget.afterVerify && user != null) {
+        Get.offAllNamed('/home');
+        return;
+      }
 
       if (!hasSelectedLanguage) {
         Get.offAllNamed('/language-settings');
