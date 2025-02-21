@@ -5,111 +5,78 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
 class SearchController extends GetxController {
-  final SearchService _searchService = SearchService();
-  final TranslationService _translationService =
-      TranslationService(); // Serviço de tradução
+  final SearchService _searchService;
+  final TranslationService _translationService;
+  final logger = Logger();
 
-  // RxLists para armazenar os resultados
   final searchResults = <Cocktail>[].obs;
   final popularResults = <Cocktail>[].obs;
   final maisRecentesResults = <Cocktail>[].obs;
   final dezAleatorioResults = <Cocktail>[].obs;
   final multiIngredientsResults = <Cocktail>[].obs;
   final noAlcoolResults = <Cocktail>[].obs;
-
   final isLoading = false.obs;
 
-  // Método para limpar todos os resultados
-  void _clearAllResults() {
-    searchResults.clear();
-    popularResults.clear();
-    maisRecentesResults.clear();
-    dezAleatorioResults.clear();
-    multiIngredientsResults.clear();
-    noAlcoolResults.clear();
+  SearchController(this._searchService, this._translationService);
+
+  @override
+  void onInit() {
+    super.onInit();
+    loadInitialData();
   }
 
-  // Método para busca sem álcool
-  Future<void> searchNoAlcool() async {
+  Future<void> loadInitialData() async {
     try {
       isLoading.value = true;
-      _clearAllResults(); // Limpa todos os resultados anteriores
-      final results = await _searchService.searchNoAlcool();
-      noAlcoolResults.value = results;
+      await Future.wait([
+        searchPopular(),
+        searchMaisRecentes(),
+        searchDezAleatorio(),
+        searchNoAlcool(),
+      ]);
     } catch (e) {
-      Logger().e('Erro na busca sem álcool: $e');
-      rethrow;
+      logger.e('Erro ao carregar dados iniciais: $e');
     } finally {
       isLoading.value = false;
     }
-  }
-
-  // Método para busca aleatória
-  Future<void> searchDezAleatorio() async {
-    try {
-      isLoading.value = true;
-      _clearAllResults(); // Limpa todos os resultados anteriores
-      final results = await _searchService.searchDezAleatorio();
-      dezAleatorioResults.value = results;
-    } catch (e) {
-      Logger().e('Erro na busca aleatória: $e');
-      rethrow;
-    } finally {
-      isLoading.value = false;
-    }
-  }
-
-  // Método para obter todos os resultados
-  List<Cocktail> get allResults {
-    if (noAlcoolResults.isNotEmpty) return noAlcoolResults;
-    if (dezAleatorioResults.isNotEmpty) return dezAleatorioResults;
-    if (popularResults.isNotEmpty) return popularResults;
-    if (maisRecentesResults.isNotEmpty) return maisRecentesResults;
-    if (multiIngredientsResults.isNotEmpty) return multiIngredientsResults;
-    return searchResults;
   }
 
   Future<void> searchByFirstLetter(String letter) async {
+    if (letter.isEmpty) return;
     try {
       isLoading.value = true;
-      _clearAllResults(); // Limpa todos os resultados
-      searchResults.value = await _searchService.searchByFirstLetter(letter);
+      final language = Get.locale?.languageCode ?? 'pt';
+      final results =
+          await _searchService.searchByFirstLetter(letter, language);
+      searchResults.assignAll(results);
+    } catch (e) {
+      logger.e('Erro na busca por letra: $e');
+      searchResults.clear();
     } finally {
       isLoading.value = false;
     }
   }
 
   Future<void> searchMultiIngredients(String ingredients) async {
+    if (ingredients.isEmpty) return;
     try {
       isLoading.value = true;
-      _clearAllResults();
-
-      // Processar a string de ingredientes
+      final language = Get.locale?.languageCode ?? 'pt';
       var ingredientsList = ingredients
           .split(',')
           .map((e) => e.trim())
           .where((e) => e.isNotEmpty)
           .toList();
 
-      // Traduzir cada ingrediente
-      var translatedIngredients = await Future.wait(ingredientsList.map(
-          (ingredient) => _translationService.translateToEnglish(ingredient)));
+      var translatedIngredients = await Future.wait(ingredientsList
+          .map((i) => _translationService.translateToEnglish(i)));
 
-      // Juntar ingredientes traduzidos no formato correto para a API
-      var processedIngredients = translatedIngredients.join(',');
-
-      searchResults.value =
-          await _searchService.searchMultiIngredients(processedIngredients);
-    } finally {
-      isLoading.value = false;
-    }
-  }
-
-  Future<void> searchPopular() async {
-    try {
-      isLoading.value = true;
-      _clearAllResults(); // Limpa todos os resultados
-      popularResults.value = await _searchService.searchPopular();
+      final results = await _searchService.searchMultiIngredients(
+          translatedIngredients.join(','), language);
+      multiIngredientsResults.assignAll(results);
+    } catch (e) {
+      logger.e('Erro na busca por ingredientes: $e');
+      multiIngredientsResults.clear();
     } finally {
       isLoading.value = false;
     }
@@ -118,8 +85,54 @@ class SearchController extends GetxController {
   Future<void> searchMaisRecentes() async {
     try {
       isLoading.value = true;
-      _clearAllResults(); // Limpa todos os resultados
-      maisRecentesResults.value = await _searchService.searchMaisRecentes();
+      final language = Get.locale?.languageCode ?? 'pt';
+      final results = await _searchService.getRecentCocktails(language);
+      maisRecentesResults.assignAll(results);
+    } catch (e) {
+      logger.e('Erro na busca mais recentes: $e');
+      maisRecentesResults.clear();
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> searchDezAleatorio() async {
+    try {
+      isLoading.value = true;
+      final language = Get.locale?.languageCode ?? 'pt';
+      final results = await _searchService.getRandomCocktails(10, language);
+      dezAleatorioResults.assignAll(results);
+    } catch (e) {
+      logger.e('Erro na busca aleatória: $e');
+      dezAleatorioResults.clear();
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> searchNoAlcool() async {
+    try {
+      isLoading.value = true;
+      final language = Get.locale?.languageCode ?? 'pt';
+      final results = await _searchService.searchNoAlcool(language);
+      noAlcoolResults.assignAll(results);
+    } catch (e) {
+      logger.e('Erro na busca sem álcool: $e');
+      noAlcoolResults.clear();
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> searchPopular() async {
+    try {
+      isLoading.value = true;
+      final language = Get.locale?.languageCode ?? 'pt';
+      final results = await _searchService.getPopularCocktails(language);
+      popularResults.assignAll(results);
+    } catch (e) {
+      logger.e('Erro na busca popular: $e');
+      popularResults.clear();
     } finally {
       isLoading.value = false;
     }
@@ -128,12 +141,16 @@ class SearchController extends GetxController {
   Future<void> fetchCocktailDetailsAndNavigate(String drinkId) async {
     try {
       isLoading.value = true;
-      final details = await _searchService.getCocktailDetails(drinkId);
+      final language = Get.locale?.languageCode ?? 'pt';
+      final details = await _searchService.getById(drinkId, language);
       if (details != null) {
         Get.toNamed('/cocktail-detail', arguments: details);
       } else {
         Get.snackbar("Erro", "Não foi possível carregar detalhes do drink.");
       }
+    } catch (e) {
+      logger.e('Erro ao carregar detalhes: $e');
+      Get.snackbar("Erro", "Ocorreu um erro ao carregar os detalhes.");
     } finally {
       isLoading.value = false;
     }
