@@ -1,6 +1,7 @@
+import 'package:app_netdrinks/adapters/cocktail_adapter.dart';
 import 'package:app_netdrinks/bindings/app_bindings.dart';
-import 'package:app_netdrinks/bindings/search_binding.dart';
 import 'package:app_netdrinks/firebase_options.dart';
+import 'package:app_netdrinks/models/cocktail.dart';
 import 'package:app_netdrinks/screens/cocktail_detail_screen.dart';
 import 'package:app_netdrinks/screens/drink_ranking_screen.dart';
 import 'package:app_netdrinks/screens/home_screen.dart';
@@ -10,33 +11,64 @@ import 'package:app_netdrinks/screens/search/search_results_screen.dart';
 import 'package:app_netdrinks/screens/search/search_screen.dart';
 import 'package:app_netdrinks/screens/splash_screen.dart';
 import 'package:app_netdrinks/screens/verify_email_screen.dart';
-import 'package:app_netdrinks/services/azure_translation_service.dart';
 import 'package:app_netdrinks/services/locator_service.dart';
+import 'package:app_netdrinks/services/translation_service.dart';
 import 'package:app_netdrinks/widgets/terms_of_service_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  Get.put(AzureTranslationService());
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await setupLocator();
+  try {
+    WidgetsFlutterBinding.ensureInitialized();
+    // Inicializa primeiro o TranslationService
+    final translationService = TranslationService();
+    await translationService.initialize();
+    Get.put<TranslationService>(translationService, permanent: true);
 
-  final prefs = await SharedPreferences.getInstance();
-  final bool? termsAccepted = prefs.getBool('termsAccepted');
+    // 1. Carrega variáveis de ambiente
+    await dotenv.load(fileName: ".env");
 
-  // Verifica se os termos foram aceitos
-  if (termsAccepted != true) {
-    runApp(MyApp(showTermsDialog: true));
-  } else {
+    // 2. Inicializa armazenamento local
+    final appDir = await getApplicationDocumentsDirectory();
+    Hive.init(appDir.path);
+
+    if (!Hive.isAdapterRegistered(0)) {
+      Hive.registerAdapter(CocktailAdapter());
+    }
+
+    await Hive.openBox<Cocktail>('cocktails');
+    await Hive.openBox('drinks');
+
+    // 3. Inicializa Firebase
+    await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform);
+
+    // 4. Setup do GetIt
+    await setupLocator();
+
+    // 5. Carrega preferências
+    final prefs = await SharedPreferences.getInstance();
+    final termsAccepted = prefs.getBool('termsAccepted');
     final languageCode = prefs.getString('language') ?? 'en';
-    final locale = Locale(languageCode);
-    runApp(MyApp(locale: locale, showTermsDialog: false));
+
+    // 7. Inicia o app
+    if (termsAccepted != true) {
+      runApp(MyApp(showTermsDialog: true));
+    } else {
+      runApp(MyApp(locale: Locale(languageCode), showTermsDialog: false));
+    }
+  } catch (e, stack) {
+    debugPrint('Erro na inicialização: $e');
+    debugPrint('Stack: $stack');
+    rethrow;
   }
 }
 
@@ -175,7 +207,7 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/search',
           page: () => const SearchScreen(),
-          binding: SearchBinding(),
+          binding: AppBindings(),
         ),
         GetPage(
           name: '/search-results',
