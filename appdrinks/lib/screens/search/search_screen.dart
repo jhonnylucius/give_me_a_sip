@@ -12,7 +12,11 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  final controller = Get.put(netdrink.SearchController());
+  final controller = Get.put(netdrink.SearchController(
+    // Alterado
+    Get.find(), // Alterado
+    Get.find(), // Alterado
+  ));
   final searchController = TextEditingController();
   final multiIngredientsController = TextEditingController();
   final FocusNode _focusNodeFirstLetter = FocusNode();
