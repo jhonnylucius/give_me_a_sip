@@ -1,53 +1,96 @@
+import 'package:app_netdrinks/services/translation_service.dart';
+import 'package:country_flags/country_flags.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LanguageSelectionScreen extends StatelessWidget {
   const LanguageSelectionScreen({super.key});
 
+  static const Map<String, Map<String, String>> supportedLanguages = {
+    'pt': {'name': 'Português', 'country': 'BR'},
+    'en': {'name': 'English', 'country': 'US'},
+    'es': {'name': 'Español', 'country': 'ES'},
+    'fr': {'name': 'Français', 'country': 'FR'},
+    'it': {'name': 'Italiano', 'country': 'IT'},
+    'de': {'name': 'Deutsch', 'country': 'DE'},
+  };
+
   Future<void> _saveLanguage(String languageCode) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('language', languageCode);
-    await prefs.setBool('selected_language', true);
-    Get.updateLocale(Locale(languageCode));
-    Get.offAllNamed('/home'); // Redireciona para a tela inicial
+    try {
+      final translationService = Get.find<TranslationService>();
+      await translationService.setLanguage(languageCode);
+      Get.offAllNamed('/home');
+    } catch (e) {
+      print('Erro ao salvar idioma: $e');
+    }
+  }
+
+  Widget _buildLanguageCard(
+      String languageCode, Map<String, String> languageInfo) {
+    return Card(
+      color: const Color.fromARGB(255, 0, 0, 0),
+      margin: const EdgeInsets.only(bottom: 8),
+      child: ListTile(
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 4,
+        ),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CountryFlag.fromCountryCode(
+              languageInfo['country']!,
+              height: 32,
+              width: 32,
+              shape: const RoundedRectangle(12),
+            ),
+            const SizedBox(width: 12),
+            Text(
+              languageInfo['name']!,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+              ),
+            ),
+          ],
+        ),
+        onTap: () => _saveLanguage(languageCode),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-            FlutterI18n.translate(context, 'language_selection_screen.title')),
-        automaticallyImplyLeading: false, // Impede o botão de voltar
-      ),
-      body: Center(
+      backgroundColor: Colors.black,
+      body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
-              onPressed: () => _saveLanguage('en'),
-              child: Text(
-                FlutterI18n.translate(
-                    context, 'language_selection_screen.english'),
-                style: TextStyle(color: Colors.white),
-              ),
+            const SizedBox(height: 48),
+            Text(
+              'Escolha seu idioma',
+              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
-            ElevatedButton(
-              onPressed: () => _saveLanguage('pt'),
-              child: Text(
-                FlutterI18n.translate(
-                    context, 'language_selection_screen.portuguese'),
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () => _saveLanguage('es'),
-              child: Text(
-                FlutterI18n.translate(
-                    context, 'language_selection_screen.spanish'),
-                style: TextStyle(color: Colors.white),
+            const SizedBox(height: 24),
+            Expanded(
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 300),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    itemCount: supportedLanguages.length,
+                    itemBuilder: (context, index) {
+                      final languageCode =
+                          supportedLanguages.keys.elementAt(index);
+                      final languageInfo = supportedLanguages[languageCode]!;
+                      return _buildLanguageCard(languageCode, languageInfo);
+                    },
+                  ),
+                ),
               ),
             ),
           ],
