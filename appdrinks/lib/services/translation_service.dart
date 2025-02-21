@@ -8,8 +8,9 @@ import 'package:logger/logger.dart';
 class TranslationService extends GetxService {
   static TranslationService get to => Get.find();
 
-  final _drinksData = <String, dynamic>{};
-  final _interfaceStrings = <String, Map<String, dynamic>>{};
+  final _drinksData = <String, dynamic>{}.obs; // Tornando observável
+  final _interfaceStrings =
+      <String, Map<String, dynamic>>{}.obs; // Tornando observável
   final _currentLanguage = 'pt'.obs;
   final List<String> supportedLanguages = ['en', 'pt', 'es', 'fr', 'it', 'de'];
   final logger = Logger();
@@ -62,43 +63,63 @@ class TranslationService extends GetxService {
 
   String translateDrinkField(String drinkId, String field) {
     try {
-      // Debug
-      logger.d('Traduzindo campo $field do drink $drinkId');
-      logger.d('Dados carregados: ${_drinksData.keys.join(", ")}');
-
-      if (!_isInitialized) {
-        logger.e('TranslationService não inicializado!');
-        return '';
-      }
-
-      final drinks = _drinksData['drinks'] as Map<String, dynamic>?;
-      if (drinks == null) {
-        logger.e('Nó "drinks" não encontrado no JSON');
-        return '';
-      }
-
-      final drink = drinks[drinkId];
-      if (drink == null) {
+      final drinks = _drinksData['drinks'];
+      if (drinks == null || drinks[drinkId] == null) {
         logger.w('Drink não encontrado: $drinkId');
         return '';
       }
 
-      if (field == 'instructions') {
-        final instructions = drink['instructions'] as Map<String, dynamic>?;
-        if (instructions != null) {
-          final translated =
-              instructions[_currentLanguage.value] ?? instructions['en'];
-          logger.d('Instrução traduzida: $translated');
-          return translated ?? '';
-        }
+      final drink = drinks[drinkId];
+
+      // Para campos que precisam de tradução específica
+      switch (field) {
+        case 'category':
+          return _translateCategory(drink['category'] ?? '');
+        case 'glass':
+          return _translateGlass(drink['glass'] ?? '');
+        case 'alcoholic':
+          return _translateAlcoholic(drink['alcoholic'] ?? '');
+        case 'instructions':
+          final instructions = drink['instructions'];
+          if (instructions != null) {
+            return instructions[_currentLanguage.value] ??
+                instructions['en'] ??
+                '';
+          }
       }
 
       return drink[field]?.toString() ?? '';
-    } catch (e, stack) {
-      logger.e('Erro ao traduzir campo $field do drink $drinkId: $e');
-      logger.e('Stack: $stack');
+    } catch (e) {
+      logger.e('Erro ao traduzir campo: $e');
       return '';
     }
+  }
+
+// No TranslationService, usamos métodos auxiliares:
+  String _translateCategory(String category) {
+    final categories = _drinksData['categories'];
+    if (categories != null && categories[category] != null) {
+      return categories[category][_currentLanguage.value] ??
+          categories[category]['en'] ??
+          category;
+    }
+    return category;
+  }
+
+  String _translateGlass(String glass) {
+    final glasses = _drinksData['glasses'];
+    if (glasses != null && glasses[glass] != null) {
+      return glasses[glass][_currentLanguage.value] ??
+          glasses[glass]['en'] ??
+          glass;
+    }
+    return glass;
+  }
+
+  String _translateAlcoholic(String type) {
+    return type.toLowerCase() == 'alcoholic'
+        ? getInterfaceString('cocktails.alcoholic') ?? type
+        : getInterfaceString('cocktails.non_alcoholic') ?? type;
   }
 
   String translateIngredient(String ingredient) {
@@ -159,6 +180,25 @@ class TranslationService extends GetxService {
     }
   }
 
+  String translateTag(String tag) {
+    try {
+      // Normalizar a tag antes de buscar
+      final normalizedTag = tag.toLowerCase().trim().replaceAll(' ', '_');
+      // Buscar diretamente na seção 'tags' do arquivo de idiomas
+      final interfaceStringsForLanguage =
+          _interfaceStrings[_currentLanguage.value];
+      if (interfaceStringsForLanguage != null &&
+          interfaceStringsForLanguage['tags'] is Map) {
+        final tags = interfaceStringsForLanguage['tags'] as Map;
+        return tags[normalizedTag]?.toString() ?? tag;
+      }
+      return tag;
+    } catch (e) {
+      logger.e('Erro ao traduzir tag: $e');
+      return tag;
+    }
+  }
+
   String getInterfaceString(String key) {
     try {
       if (!_isInitialized) {
@@ -166,9 +206,37 @@ class TranslationService extends GetxService {
         return key;
       }
 
-      return _interfaceStrings[_currentLanguage.value]?[key]?.toString() ?? key;
-    } catch (e) {
+      final interfaceStringsForLanguage =
+          _interfaceStrings[_currentLanguage.value];
+      if (interfaceStringsForLanguage == null) {
+        logger.w(
+            'Nenhuma string de interface encontrada para o idioma: ${_currentLanguage.value}');
+        return key;
+      }
+
+      // Lidar com chaves aninhadas (ex: 'cocktail_detail.ingredients')
+      final keyParts = key.split('.');
+      dynamic value = interfaceStringsForLanguage;
+
+      for (var part in keyParts) {
+        if (value is Map<String, dynamic>) {
+          value = value[part];
+        } else {
+          logger.w('Caminho inválido para a chave: $key');
+          return key;
+        }
+      }
+
+      if (value == null) {
+        logger.w(
+            'Nenhuma tradução encontrada para a chave: $key no idioma ${_currentLanguage.value}');
+        return key;
+      }
+
+      return value.toString();
+    } catch (e, stack) {
       logger.e('Erro ao obter string de interface: $e');
+      logger.e('Stack: $stack');
       return key;
     }
   }
@@ -180,7 +248,7 @@ class TranslationService extends GetxService {
       }
 
       _currentLanguage.value = languageCode;
-      await Get.updateLocale(Locale(languageCode));
+      Get.updateLocale(Locale(languageCode)); // Usar Get.updateLocale
       updateTranslations();
     } catch (e) {
       logger.e('Erro ao definir idioma: $e');
@@ -188,6 +256,7 @@ class TranslationService extends GetxService {
   }
 
   void updateTranslations() {
+    // Notifica os ouvintes sobre a mudança de idioma
     Get.forceAppUpdate();
   }
 
