@@ -3,7 +3,6 @@ import 'package:app_netdrinks/controller/cocktail_list_controller.dart';
 import 'package:app_netdrinks/controller/likes_controller.dart';
 import 'package:app_netdrinks/models/cocktail.dart';
 import 'package:app_netdrinks/screens/cocktail_detail_screen.dart';
-import 'package:app_netdrinks/widgets/cocktail_card_widget.dart';
 import 'package:app_netdrinks/widgets/retro_loading_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -142,8 +141,8 @@ class HomeScreenState extends State<HomeScreen> {
                       key: ValueKey(currentIndex),
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: NetworkImage(
-                            displayCocktails[currentIndex].imageUrl,
+                          image: AssetImage(
+                            displayCocktails[currentIndex].getDrinkImageUrl(),
                           ),
                           fit: BoxFit.cover,
                         ),
@@ -279,9 +278,24 @@ class HomeScreenState extends State<HomeScreen> {
                           child: GestureDetector(
                             onTap: () =>
                                 _navigateToDetails(displayCocktails[index]),
-                            child: CocktailCard(
-                              cocktail: displayCocktails[index],
-                              user: widget.user.uid,
+                            child: Container(
+                              margin: const EdgeInsets.symmetric(horizontal: 8),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(12),
+                                child: Image.asset(
+                                  displayCocktails[index].getDrinkImageUrl(),
+                                  width: double.infinity,
+                                  height: 200,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Container(
+                                      color: Colors.grey[900],
+                                      child: const Icon(Icons.error,
+                                          color: Colors.redAccent),
+                                    );
+                                  },
+                                ),
+                              ),
                             ),
                           ),
                         );
