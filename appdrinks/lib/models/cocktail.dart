@@ -1,17 +1,49 @@
+import 'package:hive/hive.dart';
+import 'package:logger/logger.dart';
+
+@HiveType(typeId: 0)
 class Cocktail {
+  @HiveField(0)
   final String idDrink;
+
+  @HiveField(1)
   final String strDrink;
+
+  @HiveField(2)
   final String? strDrinkAlternate;
+
+  @HiveField(3)
   final String? strTags;
+
+  @HiveField(4)
   final String? strCategory;
+
+  @HiveField(5)
   final String? strIBA;
+
+  @HiveField(6)
   final String? strAlcoholic;
+
+  @HiveField(7)
   final String? strGlass;
+
+  @HiveField(8)
   final String strInstructions;
+
+  @HiveField(9)
   final String? strDrinkThumb;
+
+  @HiveField(10)
   final List<String?> ingredients;
+
+  @HiveField(11)
   final List<String?> measures;
-  final List<String?> originalIngredients; // Para manter os nomes originais
+
+  @HiveField(12)
+  final List<String?> originalIngredients;
+
+  @HiveField(13)
+  final Map<String, String>? translations;
 
   Cocktail({
     required this.idDrink,
@@ -27,12 +59,14 @@ class Cocktail {
     required this.ingredients,
     required this.measures,
     required this.originalIngredients,
+    this.translations,
   });
 
-  factory Cocktail.fromJson(Map<String, dynamic> json) {
+  factory Cocktail.fromJson(Map<String, dynamic> json,
+      {String language = 'en'}) {
     List<String?> ingredients = [];
     List<String?> measures = [];
-    List<String?> originalIngredients = []; // Nova lista
+    List<String?> originalIngredients = [];
 
     for (int i = 1; i <= 15; i++) {
       String ingredientKey = 'strIngredient$i';
@@ -40,40 +74,49 @@ class Cocktail {
 
       String? ingredient = json[ingredientKey];
       ingredients.add(ingredient);
-      originalIngredients.add(ingredient); // Guardar original
+      originalIngredients.add(ingredient);
       measures.add(json[measureKey]);
     }
 
+    // Ajuste no tratamento das instruções
+    final instructions = json['instructions'] is Map
+        ? (json['instructions'][language] ?? json['instructions']['en'] ?? '')
+        : json['instructions'] ?? '';
+
     return Cocktail(
-      idDrink: json['idDrink'] ?? '',
-      strDrink: json['strDrink'] ?? '',
-      strDrinkAlternate: json['strDrinkAlternate'] as String?,
-      strTags: json['strTags'] as String?,
-      strCategory: json['strCategory'] as String?,
-      strIBA: json['strIBA'] as String?,
-      strAlcoholic: json['strAlcoholic'] as String?,
-      strGlass: json['strGlass'] as String?,
-      strInstructions: json['strInstructions'] ?? '',
-      strDrinkThumb: json['strDrinkThumb'] as String?,
+      idDrink: json['id'] ?? json['idDrink'] ?? '',
+      strDrink: json['name'] ?? json['strDrink'] ?? '',
+      strDrinkAlternate: json['strDrinkAlternate'],
+      strTags: json['strTags'],
+      strCategory: json['category'] ?? json['strCategory'],
+      strIBA: json['strIBA'],
+      strAlcoholic: json['alcohol'] ?? json['strAlcoholic'],
+      strGlass: json['glass'] ?? json['strGlass'],
+      strInstructions: instructions,
+      strDrinkThumb: json['id'] ?? json['idDrink'] ?? '',
       ingredients: ingredients,
       measures: measures,
-      originalIngredients: originalIngredients, // Adicionar originalIngredients
+      originalIngredients: originalIngredients,
+      translations: json['translations'] != null
+          ? Map<String, String>.from(json['translations'])
+          : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
 
-    data['idDrink'] = idDrink;
-    data['strDrink'] = strDrink;
+    data['id'] = idDrink;
+    data['name'] = strDrink;
     data['strDrinkAlternate'] = strDrinkAlternate;
     data['strTags'] = strTags;
-    data['strCategory'] = strCategory;
+    data['category'] = strCategory;
     data['strIBA'] = strIBA;
-    data['strAlcoholic'] = strAlcoholic;
-    data['strGlass'] = strGlass;
-    data['strInstructions'] = strInstructions;
-    data['strDrinkThumb'] = strDrinkThumb;
+    data['alcohol'] = strAlcoholic;
+    data['glass'] = strGlass;
+    data['instructions'] = strInstructions;
+    data['image'] = strDrinkThumb;
+    data['translations'] = translations;
 
     for (int i = 0; i < ingredients.length; i++) {
       data['strIngredient${i + 1}'] = ingredients[i];
@@ -96,6 +139,8 @@ class Cocktail {
     String? strDrinkThumb,
     List<String?>? ingredients,
     List<String?>? measures,
+    List<String?>? originalIngredients,
+    Map<String, String>? translations,
   }) {
     return Cocktail(
       idDrink: idDrink ?? this.idDrink,
@@ -110,13 +155,14 @@ class Cocktail {
       strDrinkThumb: strDrinkThumb ?? this.strDrinkThumb,
       ingredients: ingredients ?? this.ingredients,
       measures: measures ?? this.measures,
-      originalIngredients: originalIngredients, // Nova lista
+      originalIngredients: originalIngredients ?? this.originalIngredients,
+      translations: translations ?? this.translations,
     );
   }
 
-  // Getters e Métodos Utilitários
+  // Getters
   String get imageUrl => strDrinkThumb ?? '';
-  String get thumbnailUrl => '$strDrinkThumb/preview';
+  String get thumbnailUrl => strDrinkThumb ?? '';
   String get name => strDrink;
   String get category => strCategory ?? '';
   String get alcohol => strAlcoholic ?? '';
@@ -141,41 +187,30 @@ class Cocktail {
   bool get hasMeasures => measures.any((measure) => measure != null);
   bool get hasTags => strTags != null;
   bool get hasIBA => strIBA != null;
+  bool get hasTranslations => translations != null && translations!.isNotEmpty;
 
-  // Métodos Utilitários Adicionais
-  // Método para obter a URL da imagem do ingrediente
-  String getIngredientImageUrl(String ingredient) {
-    if (ingredient.isEmpty) return '';
-
-    // Remove acentos e caracteres especiais
-    String normalizedName = ingredient
+  String getIngredientImageUrl(String ingredientName) {
+    // Sanitizando o nome do ingrediente para o formato do arquivo
+    final sanitized = ingredientName
         .toLowerCase()
-        .replaceAll(RegExp(r'[àáâãäå]'), 'a')
-        .replaceAll(RegExp(r'[èéêë]'), 'e')
-        .replaceAll(RegExp(r'[ìíîï]'), 'i')
-        .replaceAll(RegExp(r'[òóôõö]'), 'o')
-        .replaceAll(RegExp(r'[ùúûü]'), 'u')
-        .replaceAll(RegExp(r'[ñ]'), 'n')
-        .replaceAll(RegExp(r'[ç]'), 'c');
-
-    // Remove espaços e caracteres especiais
-    String sanitizedName = normalizedName
-        .replaceAll(' ', '%20')
-        .replaceAll(RegExp(r'[^a-z0-9%]'), '');
-
-    return 'https://www.thecocktaildb.com/images/ingredients/$sanitizedName-Small.png';
+        .replaceAll(' ', '_')
+        .replaceAll(RegExp(r'[^a-z0-9_]'), '');
+    return 'assets/data/images/ingredients/$sanitized.png';
   }
 
-  // Método para obter ingredientes com medidas
+  String getDrinkImageUrl() {
+    return 'assets/data/images/drinks/$idDrink.jpg';
+  }
+
   List<Map<String, String>> getIngredientsWithMeasures() {
     List<Map<String, String>> result = [];
-
     for (int i = 0; i < ingredients.length; i++) {
       if (ingredients[i] != null && ingredients[i]!.isNotEmpty) {
         result.add({
           'ingredient': ingredients[i]!,
           'measure': measures[i] ?? '',
-          'originalName': ingredients[i]! // Guardamos o nome original
+          'originalName': originalIngredients[i] ?? ingredients[i]!,
+          'imageUrl': getIngredientImageUrl(ingredients[i]!)
         });
       }
     }
@@ -185,6 +220,29 @@ class Cocktail {
   String getFormattedInstructions() {
     if (strInstructions.isEmpty) return '';
     return strInstructions.split('. ').map((s) => '• $s').join('\n');
+  }
+
+  String getInstructionsForLanguage(String langCode) {
+    try {
+      // Verifica se temos as traduções
+      if (translations != null) {
+        // Converte as traduções para o tipo correto
+        final Map<String, dynamic> translationsMap =
+            Map<String, dynamic>.from(translations!);
+
+        // Verifica se há instruções para o idioma selecionado
+        if (translationsMap.containsKey(langCode)) {
+          return translationsMap[langCode] ?? strInstructions;
+        }
+
+        // Se não encontrar no idioma selecionado, tenta em inglês
+        return translationsMap['en'] ?? strInstructions;
+      }
+      return strInstructions;
+    } catch (e) {
+      Logger().e('Erro ao buscar instruções para drink $idDrink: $e');
+      return strInstructions;
+    }
   }
 
   @override
@@ -199,7 +257,7 @@ class Cocktail {
 
   @override
   String toString() =>
-      'Cocktail(id: $idDrink, name: $name, category: $category, imageUrl: $imageUrl)';
+      'Cocktail(id: $idDrink, name: $name, category: $category)';
 }
 
 enum ImageSize {
