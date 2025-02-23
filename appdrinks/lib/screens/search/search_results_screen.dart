@@ -40,7 +40,6 @@ class SearchResultsScreen extends StatelessWidget {
 
         return Column(
           children: [
-            // Contador de resultados
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Text(
@@ -51,13 +50,12 @@ class SearchResultsScreen extends StatelessWidget {
                 ),
               ),
             ),
-            // Grid de resultados
             Expanded(
               child: GridView.builder(
                 padding: const EdgeInsets.all(8),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  childAspectRatio: 0.75,
+                  childAspectRatio: 0.80,
                   mainAxisSpacing: 8,
                   crossAxisSpacing: 8,
                 ),
@@ -95,17 +93,26 @@ class CocktailCard extends StatelessWidget {
       child: InkWell(
         onTap: () async {
           final controller = Get.find<custom.SearchController>();
-          await controller.fetchCocktailDetailsAndNavigate(cocktail.idDrink);
+
+          if (controller.currentSearchType.value ==
+              custom.SearchType.ingredients) {
+            final detailsResponse =
+                await controller.searchService.getById(cocktail.idDrink);
+            if (detailsResponse != null) {
+              Get.toNamed('/cocktail-detail', arguments: detailsResponse);
+            }
+          } else {
+            await controller.fetchCocktailDetailsAndNavigate(cocktail.idDrink);
+          }
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Imagem do drink (mantém o mesmo)
             ClipRRect(
               borderRadius:
                   const BorderRadius.vertical(top: Radius.circular(15)),
               child: SizedBox(
-                height: 165,
+                height: 150,
                 width: double.infinity,
                 child: Image.network(
                   cocktail.strDrinkThumb ?? '',
@@ -117,7 +124,6 @@ class CocktailCard extends StatelessWidget {
                 ),
               ),
             ),
-            // Nome do drink (mantém o mesmo)
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
@@ -131,38 +137,6 @@ class CocktailCard extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            // Tags (nova adição)
-            if (cocktail.strTags?.isNotEmpty == true)
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Wrap(
-                  spacing: 4,
-                  runSpacing: 4,
-                  children: cocktail.strTags!
-                      .split(',')
-                      .map((tag) => Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 6,
-                              vertical: 2,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Theme.of(context)
-                                  .primaryColor
-                                  .withAlpha((0.1 * 255).toInt()),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Text(
-                              tag.trim(),
-                              style: TextStyle(
-                                fontSize: 10,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                          ))
-                      .toList(),
-                ),
-              ),
-            const SizedBox(height: 8), // Espaçamento final
           ],
         ),
       ),

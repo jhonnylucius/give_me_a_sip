@@ -106,6 +106,23 @@ class HomeScreenState extends State<HomeScreen> {
             showCounter: true, // Número total de drinks disponíveis
           );
         }
+        List<Cocktail> sortCocktailsWithFavoritesFirst(
+            List<Cocktail> cocktails) {
+          if (!widget.showFavorites) {
+            // Se estiver na tela de favoritos, mantém a ordem original
+            final sortedList = List<Cocktail>.from(cocktails);
+            sortedList.sort((a, b) {
+              final aIsLiked = likesController.isLikedRx(a.idDrink);
+              final bIsLiked = likesController.isLikedRx(b.idDrink);
+
+              if (aIsLiked && !bIsLiked) return -1;
+              if (!aIsLiked && bIsLiked) return 1;
+              return 0;
+            });
+            return sortedList;
+          }
+          return cocktails;
+        }
 
         // Nova lógica para filtrar favoritos usando o LikesController
         final displayCocktails = widget.showFavorites
@@ -113,7 +130,8 @@ class HomeScreenState extends State<HomeScreen> {
                 .where((cocktail) =>
                     likesController.userLikedDrinks.contains(cocktail.idDrink))
                 .toList()
-            : controller.cocktails;
+            : sortCocktailsWithFavoritesFirst(
+                controller.cocktails); // Aplica a ordenação
 
         if (displayCocktails.isEmpty && widget.showFavorites) {
           return Center(
@@ -290,7 +308,7 @@ class HomeScreenState extends State<HomeScreen> {
                                       child: Image.asset(
                                         displayCocktails[index]
                                             .getDrinkImageUrl(),
-                                        width: 300,
+                                        width: 400,
                                         height: 300,
                                         fit: BoxFit.cover,
                                         errorBuilder:

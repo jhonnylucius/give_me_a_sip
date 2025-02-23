@@ -100,13 +100,19 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
           }
         }
 
-        // Tags
-        if (drink.strTags != null) {
-          translatedTags = drink.strTags!
+        // Correção do processamento das tags
+        if (drink.strTags != null && drink.strTags!.isNotEmpty) {
+          final rawTags = drink.strTags!
               .split(',')
               .map((tag) => tag.trim())
+              .where((tag) => tag.isNotEmpty)
+              .toList();
+
+          translatedTags = rawTags
               .map((tag) => translationService.translateTag(tag))
               .toList();
+        } else {
+          translatedTags = [];
         }
       });
     } catch (e, stack) {
@@ -209,7 +215,12 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildDrinkInfo(),
-          if (translatedTags?.isNotEmpty ?? false) _buildTags(),
+          // Nova condição de exibição das tags
+          if (widget.cocktail.strTags != null &&
+              widget.cocktail.strTags!.isNotEmpty &&
+              translatedTags != null &&
+              translatedTags!.isNotEmpty)
+            _buildTags(),
           const SizedBox(height: 16),
           if (translatedIngredients?.isNotEmpty ?? false)
             _buildIngredientsList(),

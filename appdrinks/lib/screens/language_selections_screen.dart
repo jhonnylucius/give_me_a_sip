@@ -2,6 +2,7 @@ import 'package:app_netdrinks/services/translation_service.dart';
 import 'package:country_flags/country_flags.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 
 class LanguageSelectionScreen extends StatelessWidget {
   const LanguageSelectionScreen({super.key});
@@ -21,7 +22,7 @@ class LanguageSelectionScreen extends StatelessWidget {
       await translationService.setLanguage(languageCode);
       Get.offAllNamed('/home');
     } catch (e) {
-      print('Erro ao salvar idioma: $e');
+      Logger().e('Erro ao salvar idioma: $e');
     }
   }
 

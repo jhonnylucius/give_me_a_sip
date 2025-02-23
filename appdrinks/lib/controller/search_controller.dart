@@ -18,11 +18,13 @@ class SearchController extends GetxController {
   final isLoading = false.obs;
   final currentSearchType = Rx<SearchType>(SearchType.none);
   final selectedIngredients = <String>[].obs;
+  final SearchService searchService = SearchService();
 
   // Lista observável de ingredientes selecionados com seus nomes traduzidos
   final selectedIngredientsDisplay = <String>[].obs;
 
   SearchController(this._searchService, this._translationService);
+  SearchService get service => _searchService;
 
   Future<void> searchByFirstLetter(String letter) async {
     if (letter.isEmpty) return;
@@ -144,7 +146,11 @@ class SearchController extends GetxController {
       isLoading.value = true;
       final details = await _searchService.getById(drinkId);
       if (details != null) {
-        Get.toNamed('/cocktail-detail', arguments: details);
+        // Garantir que as tags estejam formatadas corretamente
+        final formattedDetails = details.copyWith(
+          strTags: details.strTags?.trim(),
+        );
+        Get.toNamed('/cocktail-detail', arguments: formattedDetails);
       } else {
         Get.snackbar("Erro", "Não foi possível carregar detalhes do drink.");
       }
@@ -189,7 +195,8 @@ class SearchController extends GetxController {
       case SearchType.letter:
         return searchResults;
       case SearchType.ingredients:
-        return multiIngredientsResults;
+        // Retorna lista vazia para não mostrar na tela de pesquisa
+        return [];
       case SearchType.recent:
         return maisRecentesResults;
       case SearchType.random:

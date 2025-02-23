@@ -157,8 +157,8 @@ class SearchScreenState extends State<SearchScreen> {
                             borderRadius: BorderRadius.circular(8),
                             child: Image.network(
                               cocktail.strDrinkThumb ?? '',
-                              width: 56,
-                              height: 56,
+                              width: 100,
+                              height: 100,
                               fit: BoxFit.cover,
                               errorBuilder: (_, __, ___) =>
                                   const Icon(Icons.error),
