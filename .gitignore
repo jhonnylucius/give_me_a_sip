@@ -4608,3 +4608,5 @@ assets/data/images/drinks/178368.jpg
 assets/data/images/drinks/178369.jpg
 assets/data/images/drinks/178370.jpg
 assets/data/images/drinks/178371.jpg
+appdrinks/lib/utils/download_missing_drinks_images.dart
+appdrinks/lib/utils/download_missing_drinks.dart
