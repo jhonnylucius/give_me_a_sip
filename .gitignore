@@ -3956,3 +3956,4 @@ appdrinks/assets/data/images/ingredients/wildberry schnapps.png
 appdrinks/assets/data/images/ingredients/worcestershire sauce.png
 appdrinks/assets/data/images/ingredients/yellow chartreuse.png
 appdrinks/assets/data/images/ingredients/yukon jack.png
+appdrinks/scripts/download_ingredient_images.dart
