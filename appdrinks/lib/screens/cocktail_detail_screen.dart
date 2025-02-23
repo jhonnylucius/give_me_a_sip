@@ -2,7 +2,9 @@ import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:app_netdrinks/controller/cocktail_detail_controller.dart';
+import 'package:app_netdrinks/controller/likes_controller.dart';
 import 'package:app_netdrinks/models/cocktail.dart';
+import 'package:app_netdrinks/models/drink_likes.dart';
 import 'package:app_netdrinks/services/measurement_converter_service.dart';
 import 'package:app_netdrinks/services/translation_service.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -23,7 +25,6 @@ class CocktailDetailScreen extends StatefulWidget {
 
 class CocktailDetailScreenState extends State<CocktailDetailScreen> {
   final GlobalKey _screenShotKey = GlobalKey();
-  String _selectedLanguage = 'pt';
   final logger = Logger();
   final translationService = Get.find<TranslationService>();
   late final CocktailController controller;
@@ -42,7 +43,6 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
   void initState() {
     super.initState();
     controller = Get.find<CocktailController>();
-    _selectedLanguage = Get.locale?.languageCode ?? 'pt';
     _loadTranslations();
     controller.loadMyVersion(widget.cocktail.idDrink);
   }
@@ -136,7 +136,7 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
           await Share.shareXFiles([XFile(imagePath)],
               text: translationService
                   .getInterfaceString('share.message')
-                  ?.replaceAll('{name}', widget.cocktail.name));
+                  .replaceAll('{name}', widget.cocktail.name));
         }
       }
     } catch (e) {
@@ -151,11 +151,26 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
       appBar: AppBar(
         title: Text(widget.cocktail.name),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.share),
-            onPressed: _shareScreen,
+          StreamBuilder<DrinkLikes>(
+            stream: Get.find<LikesController>()
+                .getLikesStream(widget.cocktail.idDrink),
+            builder: (context, snapshot) {
+              return IconButton(
+                icon: Icon(
+                  Get.find<LikesController>().isLikedRx(widget.cocktail.idDrink)
+                      ? Icons.favorite
+                      : Icons.favorite_border,
+                  color: Colors.red,
+                ),
+                onPressed: () => Get.find<LikesController>()
+                    .toggleLike(widget.cocktail.idDrink),
+              );
+            },
           ),
-          _buildLanguageDropdown(),
+          IconButton(
+            onPressed: _shareScreen,
+            icon: const Icon(Icons.share),
+          ),
         ],
       ),
       body: SingleChildScrollView(
@@ -168,33 +183,6 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildLanguageDropdown() {
-    return DropdownButtonHideUnderline(
-      child: DropdownButton<String>(
-        value: _selectedLanguage,
-        icon: const Padding(
-          padding: EdgeInsets.only(right: 8.0),
-          child: Icon(Icons.language, color: Colors.redAccent),
-        ),
-        items: translationService.supportedLanguages.map((String code) {
-          return DropdownMenuItem<String>(
-            value: code,
-            child: Text(translationService
-                    .getInterfaceString('language_selection_screen.$code') ??
-                code),
-          );
-        }).toList(),
-        onChanged: (String? newValue) async {
-          if (newValue != null) {
-            setState(() => _selectedLanguage = newValue);
-            await translationService.setLanguage(newValue);
-            await _translateContent();
-          }
-        },
       ),
     );
   }
@@ -279,23 +267,28 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
   }
 
   Widget _buildTags() {
-    return Wrap(
-      spacing: 8,
-      runSpacing: 8,
-      children: translatedTags!.map((tag) {
-        // Apenas normaliza a tag e usa direto
-        final normalizedTag = tag.toLowerCase().trim().replaceAll(' ', '_');
-        // Remove o 'tags.' pois o translateTag já usa esse prefixo
-        final translatedTag = translationService.translateTag(normalizedTag);
-
-        return Chip(
-          label: Text(
-            translatedTag,
-            style: const TextStyle(color: Colors.white),
-          ),
-          backgroundColor: Colors.redAccent,
-        );
-      }).toList(),
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      child: Wrap(
+        spacing: 8,
+        runSpacing: 8,
+        children: translatedTags!.map((tag) {
+          return Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            decoration: BoxDecoration(
+              color: Colors.redAccent,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Text(
+              tag,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 14,
+              ),
+            ),
+          );
+        }).toList(),
+      ),
     );
   }
 
