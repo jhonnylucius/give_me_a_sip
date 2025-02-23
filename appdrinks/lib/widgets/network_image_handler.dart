@@ -9,13 +9,13 @@ class NetworkImageHandler extends StatelessWidget {
   final BoxFit fit;
 
   const NetworkImageHandler({
-    Key? key,
+    super.key,
     required this.imageUrl,
     this.width = double.infinity,
     this.height = 200,
     this.borderRadius = 12,
     this.fit = BoxFit.cover,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
