@@ -62,20 +62,31 @@ class Cocktail {
     this.translations,
   });
 
+  // CORREÇÃO: Modificar os getters para usar URLs da API quando disponíveis
+  String get imageUrl => strDrinkThumb?.isNotEmpty == true
+      ? strDrinkThumb!
+      : 'assets/images/default_cocktail.png';
+
+  String get thumbnailUrl => strDrinkThumb?.isNotEmpty == true
+      ? '$strDrinkThumb/preview'
+      : 'assets/images/default_cocktail.png';
+
   factory Cocktail.fromJson(Map<String, dynamic> json,
       {String language = 'en'}) {
-    List<String?> ingredients = [];
-    List<String?> measures = [];
-    List<String?> originalIngredients = [];
+    final ingredients = <String?>[];
+    final measures = <String?>[];
+    final originalIngredients = <String?>[];
 
-    for (int i = 1; i <= 15; i++) {
-      String ingredientKey = 'strIngredient$i';
-      String measureKey = 'strMeasure$i';
+    // CORREÇÃO: Garantir que os campos da API sejam corretamente mapeados
+    for (var i = 1; i <= 15; i++) {
+      final ingredient = json['strIngredient$i'];
+      final measure = json['strMeasure$i'];
 
-      String? ingredient = json[ingredientKey];
-      ingredients.add(ingredient);
-      originalIngredients.add(ingredient);
-      measures.add(json[measureKey]);
+      if (ingredient != null && ingredient.toString().isNotEmpty) {
+        ingredients.add(ingredient);
+        originalIngredients.add(ingredient);
+        measures.add(measure);
+      }
     }
 
     // Ajuste no tratamento das instruções
@@ -93,7 +104,8 @@ class Cocktail {
       strAlcoholic: json['alcohol'] ?? json['strAlcoholic'],
       strGlass: json['glass'] ?? json['strGlass'],
       strInstructions: instructions,
-      strDrinkThumb: json['id'] ?? json['idDrink'] ?? '',
+      strDrinkThumb:
+          json['strDrinkThumb'], // CORREÇÃO: Não modificar a URL da imagem
       ingredients: ingredients,
       measures: measures,
       originalIngredients: originalIngredients,
@@ -160,9 +172,7 @@ class Cocktail {
     );
   }
 
-  // Getters
-  String get imageUrl => strDrinkThumb ?? '';
-  String get thumbnailUrl => strDrinkThumb ?? '';
+  // Getters (mantidos -  os getters `imageUrl` e `thumbnailUrl` foram movidos para perto da declaração das variáveis)
   String get name => strDrink;
   String get category => strCategory ?? '';
   String get alcohol => strAlcoholic ?? '';
