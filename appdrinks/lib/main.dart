@@ -7,6 +7,7 @@ import 'package:app_netdrinks/screens/drink_ranking_screen.dart';
 import 'package:app_netdrinks/screens/home_screen.dart';
 import 'package:app_netdrinks/screens/language_selections_screen.dart';
 import 'package:app_netdrinks/screens/login_screen.dart';
+import 'package:app_netdrinks/screens/search/ingredient_search_screen.dart';
 import 'package:app_netdrinks/screens/search/search_results_screen.dart';
 import 'package:app_netdrinks/screens/search/search_screen.dart';
 import 'package:app_netdrinks/screens/splash_screen.dart';
@@ -101,6 +102,9 @@ class MyApp extends StatelessWidget {
         Locale('en', ''),
         Locale('pt', ''),
         Locale('es', ''),
+        Locale('it', ''),
+        Locale('fr', ''),
+        Locale('de', ''),
       ],
       localeResolutionCallback: (locale, supportedLocales) {
         return supportedLocales.firstWhere(
@@ -216,6 +220,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/cocktail-detail',
           page: () => CocktailDetailScreen(cocktail: Get.arguments),
+        ),
+        GetPage(
+          name: '/ingredient-search',
+          page: () => const IngredientSearchScreen(),
         ),
         GetPage(
           name: '/ranking',
