@@ -14,6 +14,46 @@ class RankingService extends GetxService {
 
   RankingService() : _repository = Get.find<RankingRepository>();
 
+  Future<void> _calculatePercentages(
+      List<(Cocktail, DrinkLikes)> drinks) async {
+    if (drinks.isEmpty) return;
+
+    // Calcula o total de likes de todos os drinks no ranking
+    final totalLikes = drinks
+        .map((d) => d.$2.totalLikes)
+        .reduce((sum, likes) => sum + likes)
+        .toDouble();
+
+    // Se houver pelo menos um like, calcula a porcentagem baseada no total
+    if (totalLikes > 0) {
+      for (var (_, drinkLikes) in drinks) {
+        // Calcula a porcentagem individual baseada no total de likes
+        drinkLikes.likePercentage = (drinkLikes.totalLikes / totalLikes) * 100;
+      }
+    } else {
+      // Se não houver likes, distribui igualmente entre os drinks presentes
+      final equalPercentage = 100.0 / drinks.length;
+      for (var (_, drinkLikes) in drinks) {
+        drinkLikes.likePercentage = equalPercentage;
+      }
+    }
+
+    // Verifica se a soma das porcentagens é 100%
+    double totalPercentage =
+        drinks.fold(0.0, (sum, drink) => sum + drink.$2.likePercentage);
+
+    // Ajusta pequenas diferenças de arredondamento se necessário
+    if (totalPercentage != 100 && drinks.isNotEmpty) {
+      final adjustment = (100 - totalPercentage) / drinks.length;
+      for (var (_, drinkLikes) in drinks) {
+        drinkLikes.likePercentage += adjustment;
+      }
+    }
+
+    _logger.d(
+        'Porcentagens calculadas. Total: ${totalPercentage.toStringAsFixed(2)}%');
+  }
+
   Future<List<(Cocktail, DrinkLikes)>> getTopDrinks(
       {bool forceRefresh = false}) async {
     try {
@@ -27,6 +67,7 @@ class RankingService extends GetxService {
 
       _logger.d('Buscando top drinks...');
       final drinks = await _repository.getTopDrinks(limit: 50);
+      await _calculatePercentages(drinks);
       _logger.d('Drinks encontrados: ${drinks.length}');
 
       _cachedTopDrinks = drinks;
