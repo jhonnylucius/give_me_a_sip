@@ -8,15 +8,19 @@ import 'package:logger/logger.dart';
 class TranslationService extends GetxService {
   static TranslationService get to => Get.find();
 
+  final _ingredientsData = <String, dynamic>{}.obs;
   final _drinksData = <String, dynamic>{}.obs; // Tornando observável
   final _interfaceStrings =
       <String, Map<String, dynamic>>{}.obs; // Tornando observável
+  final _ingredientsMap =
+      <String, dynamic>{}; // Definindo o mapa de ingredientes
   final _currentLanguage = 'pt'.obs;
   final List<String> supportedLanguages = ['en', 'pt', 'es', 'fr', 'it', 'de'];
   final logger = Logger();
   bool _isInitialized = false;
 
   bool get isInitialized => _isInitialized;
+  Map<String, dynamic> get ingredientsData => _ingredientsData;
 
   @override
   Future<void> onInit() async {
@@ -24,24 +28,37 @@ class TranslationService extends GetxService {
     await initialize();
   }
 
+  Future<void> ensureInitialized() async {
+    if (!_isInitialized || _ingredientsData.isEmpty) {
+      await initialize();
+    }
+  }
+
   Future<void> initialize() async {
     try {
       if (_isInitialized) return;
 
-      // Força carregamento do arquivo JSON
-      final file = await rootBundle.loadString('assets/data/drinks_data.json');
-      final data = json.decode(file);
-
-      // Garante que os dados são carregados corretamente
+      // Carregar drinks_data.json
+      final drinksFile =
+          await rootBundle.loadString('assets/data/drinks_data.json');
+      final drinksData = json.decode(drinksFile);
       _drinksData.clear();
-      _drinksData.addAll(data);
+      _drinksData.addAll(drinksData);
 
-      // Carrega strings de interface
+      // Carregar ingredients_map.json
+      final ingredientsFile =
+          await rootBundle.loadString('assets/data/ingredients_map.json');
+      final ingredientsData = json.decode(ingredientsFile);
+      _ingredientsData.clear();
+      _ingredientsData.addAll(ingredientsData);
+
+      // Carregar strings de interface
       await _loadInterfaceStrings();
 
       _isInitialized = true;
       logger.i('TranslationService inicializado com sucesso');
       logger.i('Drinks carregados: ${_drinksData["drinks"]?.length ?? 0}');
+      logger.i('Ingredientes carregados: ${_ingredientsData.length}');
     } catch (e, stack) {
       logger.e('Erro na inicialização do TranslationService: $e');
       logger.e('Stack: $stack');
@@ -152,33 +169,46 @@ class TranslationService extends GetxService {
   Future<String> translateToEnglish(String text) async {
     try {
       if (!_isInitialized) {
-        logger.e('TranslationService não inicializado!');
-        return text;
+        await initialize();
       }
 
-      // Para ingredientes
-      final ingredients = _drinksData['ingredients'] as Map<String, dynamic>?;
-      if (ingredients != null) {
-        for (var entry in ingredients.entries) {
-          final translations =
-              entry.value['translations'] as Map<String, dynamic>?;
+      var ingredientsList = text
+          .split(',')
+          .map((e) => e.trim().toLowerCase())
+          .where((e) => e.isNotEmpty)
+          .toList();
+
+      logger.d('Tentando traduzir ingredientes: $ingredientsList');
+
+      var translatedIngredients =
+          await Future.wait(ingredientsList.map((i) async {
+        // Procurar nas traduções de cada ingrediente
+        for (var entry in _ingredientsData.entries) {
+          final translations = entry.value['translations'];
           if (translations != null) {
-            for (var lang in translations.keys) {
-              if (translations[lang].toString().toLowerCase() ==
-                  text.toLowerCase()) {
-                return translations['en'] ?? text;
+            // Procurar em todas as traduções disponíveis
+            for (var lang in translations.values) {
+              if (lang.toString().toLowerCase() == i) {
+                logger.d('Encontrada tradução: ${entry.key} para $i');
+                return entry.key;
               }
             }
           }
         }
-      }
 
-      return text;
-    } catch (e) {
-      logger.e('Erro ao traduzir para inglês: $e');
+        logger.w('Ingrediente não encontrado no mapa de traduções: $i');
+        return i;
+      }));
+
+      final result = translatedIngredients.join(',');
+      logger.d('Resultado da tradução: $result');
+      return result;
+    } catch (e, stack) {
+      logger.e('Erro ao traduzir para inglês: $e\n$stack');
       return text;
     }
   }
+// Método para normalizar o nome do ingrediente
 
   String translateTag(String tag) {
     try {
