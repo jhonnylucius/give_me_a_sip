@@ -2,226 +2,216 @@ import 'package:app_netdrinks/controller/search_controller.dart' as netdrink;
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
 
   @override
-  State<SearchScreen> createState() => _SearchScreenState();
+  SearchScreenState createState() => SearchScreenState();
 }
 
-class _SearchScreenState extends State<SearchScreen> {
+class SearchScreenState extends State<SearchScreen> {
   final controller = Get.put(netdrink.SearchController(
-    // Alterado
-    Get.find(), // Alterado
-    Get.find(), // Alterado
+    Get.find(),
+    Get.find(),
   ));
-  final searchController = TextEditingController();
-  final multiIngredientsController = TextEditingController();
-  final FocusNode _focusNodeFirstLetter = FocusNode();
-  final FocusNode _focusNodeMultiIngredients = FocusNode();
-
-  @override
-  void dispose() {
-    _focusNodeFirstLetter.dispose();
-    _focusNodeMultiIngredients.dispose();
-    searchController.dispose();
-    multiIngredientsController.dispose();
-    super.dispose();
-  }
-
-  void _handleSearch() {
-    _focusNodeFirstLetter.unfocus(); // Fecha o teclado
-    final searchText = searchController.text.trim(); // Remove espaços em branco
-    controller.searchByFirstLetter(searchText);
-  }
-
-  void _handleMultiIngredientsSearch() {
-    _focusNodeMultiIngredients.unfocus(); // Fecha o teclado
-    final searchText = multiIngredientsController.text.trim();
-    controller.searchMultiIngredients(searchText);
-  }
-
-  void _handleMaisRecentesSearch() {
-    _focusNodeFirstLetter.unfocus();
-    _focusNodeMultiIngredients.unfocus();
-    controller.searchMaisRecentes();
-  }
-
-  void _handleDezAleatorio() {
-    _focusNodeFirstLetter.unfocus();
-    _focusNodeMultiIngredients.unfocus();
-    controller.searchDezAleatorio();
-  }
-
-  void _handleNoAlcool() {
-    _focusNodeFirstLetter.unfocus();
-    _focusNodeMultiIngredients.unfocus();
-    controller.searchNoAlcool();
-  }
-
-  void _handlePopularSearch() {
-    _focusNodeFirstLetter.unfocus();
-    _focusNodeMultiIngredients.unfocus();
-    controller.searchPopular();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(FlutterI18n.translate(context, 'search_screen.title')),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Get.back(),
+        ),
         actions: [
           IconButton(
-            icon: Icon(Icons.home),
+            icon: const Icon(Icons.home),
             onPressed: () => Get.toNamed('/home'),
           ),
         ],
       ),
       body: Column(
         children: [
+          // Botão para busca por ingredientes
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              controller: searchController,
-              focusNode: _focusNodeFirstLetter,
-              decoration: InputDecoration(
-                hintText: FlutterI18n.translate(
-                    context, 'search_screen.hint_first_letter'),
-                suffixIcon: IconButton(
-                  icon: Icon(Icons.search),
-                  onPressed: _handleSearch,
+            child: ElevatedButton.icon(
+              onPressed: () => Get.toNamed('/ingredient-search'),
+              icon: const Icon(Icons.local_bar),
+              label: Text(FlutterI18n.translate(
+                context,
+                'search.search_by_ingredients',
+              )),
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(double.infinity, 48),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(36),
                 ),
               ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              controller: multiIngredientsController,
-              focusNode: _focusNodeMultiIngredients,
-              decoration: InputDecoration(
-                hintText: FlutterI18n.translate(
-                    context, 'search_screen.hint_multi_ingredients'),
-                suffixIcon: IconButton(
-                  icon: Icon(Icons.search),
-                  onPressed: _handleMultiIngredientsSearch,
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Row(
+              children: [
+                Expanded(child: Divider()),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Text(
+                    FlutterI18n.translate(context, 'search.or_choose_option'),
+                    style: TextStyle(color: Colors.grey[600]),
+                  ),
                 ),
-              ),
+                Expanded(child: Divider()),
+              ],
             ),
           ),
-          ElevatedButton(
-            onPressed: _handleMaisRecentesSearch,
-            child: Text(
-                FlutterI18n.translate(context, 'search_screen.recent_drinks'),
-                style: TextStyle(color: Colors.white)), // Adicionado style
+
+          // Botões de filtro em coluna
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                _SearchButtonWidget(
+                  onPressed: () => controller.searchPopular(),
+                  label: FlutterI18n.translate(
+                      context, 'search_screen.popular_drinks'),
+                ),
+                const SizedBox(height: 8),
+                _SearchButtonWidget(
+                  onPressed: () => controller.searchMaisRecentes(),
+                  label: FlutterI18n.translate(
+                      context, 'search_screen.recent_drinks'),
+                ),
+                const SizedBox(height: 8),
+                _SearchButtonWidget(
+                  onPressed: () => controller.searchNoAlcool(),
+                  label: FlutterI18n.translate(
+                      context, 'search_screen.non_alcoholic_drinks'),
+                ),
+                const SizedBox(height: 8),
+                _SearchButtonWidget(
+                  onPressed: () => controller.searchDezAleatorio(),
+                  label: FlutterI18n.translate(
+                      context, 'search_screen.random_drinks'),
+                ),
+              ],
+            ),
           ),
-          ElevatedButton(
-            onPressed: _handleNoAlcool,
-            child: Text(
-                FlutterI18n.translate(
-                    context, 'search_screen.non_alcoholic_drinks'),
-                style: TextStyle(color: Colors.white)), // Adicionado style
-          ),
-          ElevatedButton(
-            onPressed: _handleDezAleatorio,
-            child: Text(
-                FlutterI18n.translate(context, 'search_screen.random_drinks'),
-                style: TextStyle(color: Colors.white)), // Adicionado style
-          ),
-          ElevatedButton(
-            onPressed: _handlePopularSearch,
-            child: Text(
-                FlutterI18n.translate(context, 'search_screen.popular_drinks'),
-                style: TextStyle(color: Colors.white)), // Adicionado style
-          ),
-          // Novo Widget para contagem
+          // Contador de resultados
           Obx(() {
-            final results = [
-              ...controller.searchResults,
-              ...controller.popularResults,
-              ...controller.maisRecentesResults,
-              ...controller.multiIngredientsResults,
-              ...controller.noAlcoolResults,
-            ];
+            final results = controller.getCurrentResults();
+            if (results.isEmpty) return const SizedBox.shrink();
 
-            final total = results.length;
-            if (total > 0 && controller.dezAleatorioResults.isEmpty) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Text(
-                  FlutterI18n.translate(context, 'search_screen.results_count',
-                      translationParams: {'count': '$total'}),
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Colors.grey[600],
-                      ),
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                '${results.length} ${FlutterI18n.translate(context, 'search.drinks_found')}',
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
                 ),
-              );
-            }
-            return SizedBox.shrink();
+              ),
+            );
           }),
+
+          // Lista de resultados
           Expanded(
-            child: Obx(() {
-              if (controller.isLoading.value) {
-                return Center(child: CircularProgressIndicator());
-              }
+            child: Obx(
+              () {
+                if (controller.isLoading.value) {
+                  return const Center(child: CircularProgressIndicator());
+                }
 
-              final allResults = [
-                ...controller.searchResults,
-                ...controller.popularResults,
-                ...controller.maisRecentesResults,
-                ...controller.dezAleatorioResults,
-                ...controller.multiIngredientsResults,
-                ...controller.noAlcoolResults,
-              ];
+                final results = controller.getCurrentResults();
 
-              return ListView.builder(
-                padding: const EdgeInsets.all(8.0),
-                itemCount: allResults.length,
-                itemBuilder: (context, index) {
-                  final cocktail = allResults[index];
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: ListTile(
-                      leading: ClipRRect(
-                        borderRadius: BorderRadius.circular(15),
-                        child: SizedBox(
-                          width: 100, // Aumentado
-                          height: 180, // Aumentado
-                          child: Image.network(
-                            cocktail.imageUrl,
-                            fit: BoxFit.cover,
+                if (results.isEmpty) {
+                  return Center(
+                    child: Text(
+                      FlutterI18n.translate(
+                          context, 'search_screen.no_results'),
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  );
+                }
+
+                return ListView.builder(
+                  padding: const EdgeInsets.all(8.0),
+                  itemCount: results.length,
+                  itemBuilder: (context, index) {
+                    final cocktail = results[index];
+
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: Card(
+                        elevation: 0, // Remove a sombra
+                        color: Colors.transparent,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: ListTile(
+                          contentPadding: const EdgeInsets.all(8.0),
+                          leading: ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Image.network(
+                              cocktail.strDrinkThumb ?? '',
+                              width: 56,
+                              height: 56,
+                              fit: BoxFit.cover,
+                              errorBuilder: (_, __, ___) =>
+                                  const Icon(Icons.error),
+                            ),
+                          ),
+                          title: Text(cocktail.strDrink ?? ''),
+                          onTap: () =>
+                              controller.fetchCocktailDetailsAndNavigate(
+                            cocktail.idDrink,
                           ),
                         ),
                       ),
-                      title: Text(
-                        cocktail.name,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      onTap: () async {
-                        if (cocktail.ingredients.isNotEmpty &&
-                            cocktail.instructions.isNotEmpty) {
-                          // Se já tem detalhes completos, navega direto
-                          Get.toNamed('/cocktail-detail', arguments: cocktail);
-                        } else {
-                          // Caso contrário, busca detalhes antes de navegar
-                          Logger().e(
-                              "Buscando detalhes para ID: ${cocktail.idDrink}");
-                          await controller.fetchCocktailDetailsAndNavigate(
-                              cocktail.idDrink);
-                        }
-                      },
-                    ),
-                  );
-                },
-              );
-            }),
+                    );
+                  },
+                );
+              },
+            ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+// Atualizar o estilo do botão de pesquisa
+class _SearchButtonWidget extends StatelessWidget {
+  final VoidCallback onPressed;
+  final String label;
+
+  const _SearchButtonWidget({
+    required this.onPressed,
+    required this.label,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(36),
+          ),
+        ),
+        child: Text(
+          label,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 16,
+          ),
+        ),
       ),
     );
   }
