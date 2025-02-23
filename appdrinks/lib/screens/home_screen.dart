@@ -2,6 +2,7 @@ import 'package:app_netdrinks/components/menu.dart';
 import 'package:app_netdrinks/controller/cocktail_list_controller.dart';
 import 'package:app_netdrinks/controller/likes_controller.dart';
 import 'package:app_netdrinks/models/cocktail.dart';
+import 'package:app_netdrinks/models/drink_likes.dart';
 import 'package:app_netdrinks/screens/cocktail_detail_screen.dart';
 import 'package:app_netdrinks/widgets/retro_loading_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -245,7 +246,6 @@ class HomeScreenState extends State<HomeScreen> {
                           currentIndex >= displayCocktails.length) {
                         return Container();
                       }
-
                       return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: Text(
@@ -264,7 +264,7 @@ class HomeScreenState extends State<HomeScreen> {
                   ),
                   const SizedBox(height: 20),
                   SizedBox(
-                    height: 200,
+                    height: 220,
                     child: PageView.builder(
                       controller: pageController,
                       itemCount: displayCocktails.length,
@@ -279,22 +279,59 @@ class HomeScreenState extends State<HomeScreen> {
                             onTap: () =>
                                 _navigateToDetails(displayCocktails[index]),
                             child: Container(
-                              margin: const EdgeInsets.symmetric(horizontal: 8),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(12),
-                                child: Image.asset(
-                                  displayCocktails[index].getDrinkImageUrl(),
-                                  width: double.infinity,
-                                  height: 200,
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return Container(
-                                      color: Colors.grey[900],
-                                      child: const Icon(Icons.error,
-                                          color: Colors.redAccent),
-                                    );
-                                  },
-                                ),
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 16),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    flex: 9,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(12),
+                                      child: Image.asset(
+                                        displayCocktails[index]
+                                            .getDrinkImageUrl(),
+                                        width: 300,
+                                        height: 300,
+                                        fit: BoxFit.cover,
+                                        errorBuilder:
+                                            (context, error, stackTrace) {
+                                          return Container(
+                                            color: Colors.grey[900],
+                                            child: const Icon(Icons.error,
+                                                color: Colors.redAccent),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 2,
+                                    child: StreamBuilder<DrinkLikes>(
+                                      stream: likesController.getLikesStream(
+                                          displayCocktails[index].idDrink),
+                                      builder: (context, snapshot) {
+                                        return Container(
+                                          alignment: Alignment.topRight,
+                                          child: IconButton(
+                                            icon: Icon(
+                                              likesController.isLikedRx(
+                                                      displayCocktails[index]
+                                                          .idDrink)
+                                                  ? Icons.favorite
+                                                  : Icons.favorite_border,
+                                              color: Colors.red,
+                                              size: 28,
+                                            ),
+                                            onPressed: () =>
+                                                likesController.toggleLike(
+                                                    displayCocktails[index]
+                                                        .idDrink),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
