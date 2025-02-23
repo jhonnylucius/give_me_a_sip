@@ -53,16 +53,21 @@ class RankingCard extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Container(
-              width: RankingConstants.rankingImageSize,
-              height: RankingConstants.rankingImageSize,
-              margin: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                image: DecorationImage(
-                  image: NetworkImage(cocktail.imageUrl),
-                  fit: BoxFit.cover,
-                ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.asset(
+                cocktail.getDrinkImageUrl(),
+                width: RankingConstants.rankingImageSize + 35,
+                height: RankingConstants.rankingImageSize + 35,
+                fit: BoxFit.contain,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    width: RankingConstants.rankingImageSize,
+                    height: RankingConstants.rankingImageSize,
+                    color: Colors.grey[900],
+                    child: const Icon(Icons.error, color: Colors.redAccent),
+                  );
+                },
               ),
             ),
             Expanded(
@@ -81,6 +86,8 @@ class RankingCard extends StatelessWidget {
                   const SizedBox(height: 8),
                   HeartDisplay(
                     likes: drinkLikes.totalLikes,
+                    percentage: drinkLikes
+                        .likePercentage, // Novo campo a ser adicionado
                     color: _getMedalColor(),
                   ),
                 ],
