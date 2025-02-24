@@ -94,15 +94,15 @@ class CocktailCard extends StatelessWidget {
         onTap: () async {
           final controller = Get.find<custom.SearchController>();
 
-          if (controller.currentSearchType.value ==
-              custom.SearchType.ingredients) {
+          try {
+            // Buscar detalhes completos do cocktail independente do tipo de pesquisa
             final detailsResponse =
                 await controller.searchService.getById(cocktail.idDrink);
             if (detailsResponse != null) {
               Get.toNamed('/cocktail-detail', arguments: detailsResponse);
             }
-          } else {
-            await controller.fetchCocktailDetailsAndNavigate(cocktail.idDrink);
+          } catch (e) {
+            print('Erro ao buscar detalhes: $e');
           }
         },
         child: Column(
