@@ -1,3 +1,4 @@
+import 'package:app_netdrinks/widgets/cocktail_fill_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -31,7 +32,7 @@ class RankingScreen extends GetView<RankingController> {
         onRefresh: controller.refreshRanking,
         child: Obx(() {
           if (controller.isLoading.value) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: CocktailFillLoading());
           }
 
           if (controller.error.value.isNotEmpty) {
