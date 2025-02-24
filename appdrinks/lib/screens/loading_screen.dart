@@ -1,3 +1,4 @@
+import 'package:app_netdrinks/widgets/cocktail_fill_loading.dart';
 import 'package:flutter/material.dart';
 
 class LoadingScreen extends StatelessWidget {
@@ -8,8 +9,8 @@ class LoadingScreen extends StatelessWidget {
     return Container(
       color: const Color.fromARGB(255, 204, 7, 17), // Vermelho Netflix
       child: const Center(
-        child: CircularProgressIndicator(
-          color: Colors.white,
+        child: CocktailFillLoading(
+          color: Color.fromARGB(255, 204, 7, 17),
         ),
       ),
     );
