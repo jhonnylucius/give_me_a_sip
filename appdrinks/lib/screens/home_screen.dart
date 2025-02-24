@@ -106,16 +106,28 @@ class HomeScreenState extends State<HomeScreen> {
         List<Cocktail> sortCocktailsWithFavoritesFirst(
             List<Cocktail> cocktails) {
           if (!widget.showFavorites) {
-            // Se estiver na tela de favoritos, mantém a ordem original
             final sortedList = List<Cocktail>.from(cocktails);
-            sortedList.sort((a, b) {
-              final aIsLiked = likesController.isLikedRx(a.idDrink);
-              final bIsLiked = likesController.isLikedRx(b.idDrink);
 
-              if (aIsLiked && !bIsLiked) return -1;
-              if (!aIsLiked && bIsLiked) return 1;
-              return 0;
-            });
+            // Verifica se há algum favorito
+            final hasAnyFavorite = sortedList
+                .any((cocktail) => likesController.isLikedRx(cocktail.idDrink));
+
+            if (hasAnyFavorite) {
+              // Se tiver favoritos, ordena colocando favoritos primeiro
+              sortedList.sort((a, b) {
+                final aIsLiked = likesController.isLikedRx(a.idDrink);
+                final bIsLiked = likesController.isLikedRx(b.idDrink);
+
+                if (aIsLiked && !bIsLiked) return -1;
+                if (!aIsLiked && bIsLiked) return 1;
+                return 0;
+              });
+            } else {
+              // Se não tiver favoritos, ordena por ID
+              sortedList.sort((a, b) =>
+                  int.parse(a.idDrink).compareTo(int.parse(b.idDrink)));
+            }
+
             return sortedList;
           }
           return cocktails;
