@@ -12,7 +12,7 @@ class TranslationService extends GetxService {
   final _drinksData = <String, dynamic>{}.obs; // Tornando observável
   final _interfaceStrings =
       <String, Map<String, dynamic>>{}.obs; // Tornando observável
-  final _ingredientsMap =
+  final ingredientsMap =
       <String, dynamic>{}; // Definindo o mapa de ingredientes
   final _currentLanguage = 'pt'.obs;
   final List<String> supportedLanguages = ['en', 'pt', 'es', 'fr', 'it', 'de'];
@@ -135,8 +135,8 @@ class TranslationService extends GetxService {
 
   String _translateAlcoholic(String type) {
     return type.toLowerCase() == 'alcoholic'
-        ? getInterfaceString('cocktails.alcoholic') ?? type
-        : getInterfaceString('cocktails.non_alcoholic') ?? type;
+        ? getInterfaceString('cocktails.alcoholic')
+        : getInterfaceString('cocktails.non_alcoholic');
   }
 
   String translateIngredient(String ingredient) {
@@ -146,23 +146,58 @@ class TranslationService extends GetxService {
         return ingredient;
       }
 
-      final ingredients = _drinksData['ingredients'] as Map<String, dynamic>?;
-      if (ingredients == null) return ingredient;
+      // Normalizar o nome do ingrediente
+      final normalizedName = ingredient.toLowerCase().trim();
 
-      final normalizedName = ingredient.toLowerCase();
-      final ingredientData = ingredients[normalizedName];
-      if (ingredientData == null) return ingredient;
+      // Buscar o ingrediente no mapa
+      for (var entry in _ingredientsData.entries) {
+        if (normalizedName == entry.key.toLowerCase()) {
+          // O valor pode ser um Map<String, dynamic>
+          final translations = entry.value as Map<String, dynamic>;
 
-      final translations =
-          ingredientData['translations'] as Map<String, dynamic>?;
-      if (translations == null) return ingredient;
+          // Buscar a tradução na ordem: idioma atual -> inglês -> original
+          if (translations.containsKey(_currentLanguage.value)) {
+            return translations[_currentLanguage.value].toString();
+          } else if (translations.containsKey('en')) {
+            return translations['en'].toString();
+          }
+          return ingredient;
+        }
+      }
 
-      return translations[_currentLanguage.value] ??
-          translations['en'] ??
-          ingredient;
+      // Se não encontrou correspondência exata, tenta buscar ignorando case
+      final matchingKey = _ingredientsData.keys.firstWhere(
+          (key) => key.toLowerCase() == normalizedName,
+          orElse: () => '');
+
+      if (matchingKey.isNotEmpty) {
+        final translations =
+            _ingredientsData[matchingKey] as Map<String, dynamic>;
+        if (translations.containsKey(_currentLanguage.value)) {
+          return translations[_currentLanguage.value].toString();
+        } else if (translations.containsKey('en')) {
+          return translations['en'].toString();
+        }
+      }
+
+      // Se ainda não encontrou, registra o log e retorna o original
+      logger.w('Ingrediente não encontrado: $normalizedName');
+      return ingredient;
     } catch (e) {
       logger.e('Erro ao traduzir ingrediente: $e');
       return ingredient;
+    }
+  }
+
+// Método auxiliar para carregar o mapa de ingredientes
+  Future<void> loadIngredientsData() async {
+    try {
+      final String jsonString =
+          await rootBundle.loadString('assets/data/ingredients_map.json');
+      _ingredientsData.value = json.decode(jsonString);
+      logger.i('Mapa de ingredientes carregado com sucesso');
+    } catch (e) {
+      logger.e('Erro ao carregar mapa de ingredientes: $e');
     }
   }
 
