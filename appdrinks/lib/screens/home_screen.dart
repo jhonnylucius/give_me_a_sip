@@ -4,7 +4,7 @@ import 'package:app_netdrinks/controller/likes_controller.dart';
 import 'package:app_netdrinks/models/cocktail.dart';
 import 'package:app_netdrinks/models/drink_likes.dart';
 import 'package:app_netdrinks/screens/cocktail_detail_screen.dart';
-import 'package:app_netdrinks/widgets/retro_loading_widget.dart';
+import 'package:app_netdrinks/widgets/cocktail_fill_loading.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
@@ -101,10 +101,7 @@ class HomeScreenState extends State<HomeScreen> {
       drawer: Menu(user: widget.user),
       body: Obx(() {
         if (controller.cocktails.isEmpty) {
-          return const RetroLoadingWidget(
-            totalDrinks: 636,
-            showCounter: true, // Número total de drinks disponíveis
-          );
+          return const CocktailFillLoading(); // Número total de drinks disponíveis
         }
         List<Cocktail> sortCocktailsWithFavoritesFirst(
             List<Cocktail> cocktails) {
