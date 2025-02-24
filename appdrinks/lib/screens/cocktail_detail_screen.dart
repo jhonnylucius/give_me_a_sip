@@ -67,41 +67,38 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
 
       setState(() {
         translatedAlternateName = drink.strDrinkAlternate;
-
-        // Traduzir valores principais usando o serviço de tradução
         translatedCategory =
-            translationService.translateDrinkField(drink.idDrink, 'category') ??
-                drink.strCategory;
-
-        translatedAlcohol = translationService.translateDrinkField(
-                drink.idDrink, 'alcoholic') ??
-            drink.strAlcoholic;
-
+            translationService.translateDrinkField(drink.idDrink, 'category');
+        translatedAlcohol =
+            translationService.translateDrinkField(drink.idDrink, 'alcoholic');
         translatedGlass =
-            translationService.translateDrinkField(drink.idDrink, 'glass') ??
-                drink.strGlass;
-
-        // Resto do código permanece igual
+            translationService.translateDrinkField(drink.idDrink, 'glass');
         translatedInstructions = translationService.translateDrinkField(
             drink.idDrink, 'instructions');
 
-        // Para ingredientes
+        // Modificação principal aqui - tradução de ingredientes
+        // Correção na tradução de ingredientes
         translatedIngredients = [];
         for (var i = 0; i < drink.ingredients.length; i++) {
-          final ingredient = drink.ingredients.elementAt(i);
+          final ingredient = drink.ingredients[i];
           if (ingredient != null && ingredient.isNotEmpty) {
             final measure = i < drink.measures.length ? drink.measures[i] : '';
+            // Usar o originalName (nome original) para buscar a tradução correta
+            final originalName = drink.originalIngredients[i] ?? ingredient;
+            final translatedName =
+                translationService.translateIngredient(originalName);
 
             translatedIngredients!.add({
-              'name': translationService.translateIngredient(ingredient),
+              'name': translatedName,
               'measure': measure ?? '',
-              'imageUrl':
-                  'ingredients/${ingredient.toLowerCase().replaceAll(' ', '_')}.png'
+              'originalName':
+                  originalName, // Mantemos o nome original para o mapeamento de imagens
+              'imageUrl': IngredientImageMapper.getImagePath(originalName) ??
+                  'assets/data/images/ingredients/default.png'
             });
           }
         }
 
-        // Correção do processamento das tags
         if (drink.strTags != null && drink.strTags!.isNotEmpty) {
           final rawTags = drink.strTags!
               .split(',')
@@ -309,9 +306,8 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          translationService
-                  .getInterfaceString('cocktail_detail.ingredients') ??
-              'Ingredients',
+          translationService.getInterfaceString('cocktail_detail.ingredients'),
+          semanticsLabel: 'Ingredients',
           style: const TextStyle(
             color: Colors.redAccent,
             fontSize: 20,
@@ -329,11 +325,11 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
     final measure = ingredient['measure'] ?? '';
     final (originalMeasure, mlMeasure) = _buildMeasureText(measure);
     final ingredientName = ingredient['name'] ?? '';
+    final originalName = ingredient['originalName'] ?? '';
 
-    // Usar o IngredientImageMapper para obter o nome correto da imagem
-    final imageName =
-        IngredientImageMapper.getImageName(ingredientName.toLowerCase());
-    final imageUrl = imageName != null ? 'ingredients/$imageName.png' : '';
+    // Usar o nome original para buscar a imagem
+    final imagePath =
+        ingredient['imageUrl'] ?? 'assets/data/images/ingredients/default.png';
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
@@ -342,17 +338,13 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: Image.asset(
-              'assets/data/images/$imageUrl',
+              imagePath,
               width: 40,
               height: 40,
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) {
-                return Container(
-                  width: 40,
-                  height: 40,
-                  color: Colors.grey[900],
-                  child: const Icon(Icons.no_drinks, color: Colors.redAccent),
-                );
+                return const Icon(Icons.local_bar,
+                    color: Colors.grey, size: 40);
               },
             ),
           ),
@@ -363,17 +355,20 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
               children: [
                 Text(
                   ingredientName,
-                  style: const TextStyle(color: Colors.white, fontSize: 16),
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
                 ),
-                if (mlMeasure != null)
+                if (measure.isNotEmpty)
                   Text(
-                    '$originalMeasure ($mlMeasure)',
-                    style: TextStyle(color: Colors.grey[400], fontSize: 14),
-                  )
-                else if (originalMeasure.isNotEmpty)
-                  Text(
-                    originalMeasure,
-                    style: TextStyle(color: Colors.grey[400], fontSize: 14),
+                    mlMeasure != null
+                        ? '$originalMeasure ($mlMeasure)'
+                        : originalMeasure,
+                    style: const TextStyle(
+                      color: Colors.grey,
+                      fontSize: 14,
+                    ),
                   ),
               ],
             ),
@@ -388,9 +383,8 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          translationService
-                  .getInterfaceString('cocktail_detail.instructions') ??
-              'Instructions',
+          translationService.getInterfaceString('cocktail_detail.instructions'),
+          semanticsLabel: 'Instructions',
           style: const TextStyle(
             color: Colors.redAccent,
             fontSize: 20,
@@ -415,8 +409,8 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          translationService.getInterfaceString('cocktail_detail.my_version') ??
-              'My Version',
+          translationService.getInterfaceString('cocktail_detail.my_version'),
+          semanticsLabel: 'My Version',
           style: const TextStyle(
             color: Colors.redAccent,
             fontSize: 20,
@@ -462,8 +456,8 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
           TextButton.icon(
             icon: const Icon(Icons.edit, color: Colors.redAccent),
             label: Text(
-              translationService.getInterfaceString('cocktail_detail.edit') ??
-                  'Edit',
+              translationService.getInterfaceString('cocktail_detail.edit'),
+              semanticsLabel: 'Edit',
               style: const TextStyle(color: Colors.redAccent),
             ),
             onPressed: () {
