@@ -7,6 +7,7 @@ import 'package:app_netdrinks/models/cocktail.dart';
 import 'package:app_netdrinks/models/drink_likes.dart';
 import 'package:app_netdrinks/services/measurement_converter_service.dart';
 import 'package:app_netdrinks/services/translation_service.dart';
+import 'package:app_netdrinks/utils/string_normalizer.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -329,6 +330,11 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
     final (originalMeasure, mlMeasure) = _buildMeasureText(measure);
     final ingredientName = ingredient['name'] ?? '';
 
+    // Usar o IngredientImageMapper para obter o nome correto da imagem
+    final imageName =
+        IngredientImageMapper.getImageName(ingredientName.toLowerCase());
+    final imageUrl = imageName != null ? 'ingredients/$imageName.png' : '';
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
@@ -336,7 +342,7 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: Image.asset(
-              'assets/data/images/${ingredient['imageUrl']}',
+              'assets/data/images/$imageUrl',
               width: 40,
               height: 40,
               fit: BoxFit.cover,
