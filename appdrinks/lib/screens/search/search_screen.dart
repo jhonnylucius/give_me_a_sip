@@ -1,4 +1,5 @@
 import 'package:app_netdrinks/controller/search_controller.dart' as netdrink;
+import 'package:app_netdrinks/widgets/cocktail_fill_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:get/get.dart';
@@ -122,7 +123,7 @@ class SearchScreenState extends State<SearchScreen> {
             child: Obx(
               () {
                 if (controller.isLoading.value) {
-                  return const Center(child: CircularProgressIndicator());
+                  return const Center(child: CocktailFillLoading());
                 }
 
                 final results = controller.getCurrentResults();
@@ -164,7 +165,7 @@ class SearchScreenState extends State<SearchScreen> {
                                   const Icon(Icons.error),
                             ),
                           ),
-                          title: Text(cocktail.strDrink ?? ''),
+                          title: Text(cocktail.strDrink),
                           onTap: () =>
                               controller.fetchCocktailDetailsAndNavigate(
                             cocktail.idDrink,
