@@ -27,6 +27,7 @@ class HomeScreenState extends State<HomeScreen> {
   late final CocktailListController controller;
   late final LikesController likesController;
   double _viewportFraction = 0.7;
+  bool _isReordering = false;
 
   @override
   void initState() {
@@ -108,25 +109,20 @@ class HomeScreenState extends State<HomeScreen> {
           if (!widget.showFavorites) {
             final sortedList = List<Cocktail>.from(cocktails);
 
-            // Verifica se há algum favorito
-            final hasAnyFavorite = sortedList
-                .any((cocktail) => likesController.isLikedRx(cocktail.idDrink));
-
-            if (hasAnyFavorite) {
-              // Se tiver favoritos, ordena colocando favoritos primeiro
-              sortedList.sort((a, b) {
-                final aIsLiked = likesController.isLikedRx(a.idDrink);
-                final bIsLiked = likesController.isLikedRx(b.idDrink);
-
-                if (aIsLiked && !bIsLiked) return -1;
-                if (!aIsLiked && bIsLiked) return 1;
-                return 0;
-              });
-            } else {
-              // Se não tiver favoritos, ordena por ID
-              sortedList.sort((a, b) =>
-                  int.parse(a.idDrink).compareTo(int.parse(b.idDrink)));
+            // Mantém a ordem atual se estiver reordenando
+            if (_isReordering) {
+              return sortedList;
             }
+
+            // Ordena normalmente
+            sortedList.sort((a, b) {
+              final aIsLiked = likesController.isLikedRx(a.idDrink);
+              final bIsLiked = likesController.isLikedRx(b.idDrink);
+
+              if (aIsLiked && !bIsLiked) return -1;
+              if (!aIsLiked && bIsLiked) return 1;
+              return 0;
+            });
 
             return sortedList;
           }
@@ -349,10 +345,49 @@ class HomeScreenState extends State<HomeScreen> {
                                               color: Colors.red,
                                               size: 28,
                                             ),
-                                            onPressed: () =>
-                                                likesController.toggleLike(
-                                                    displayCocktails[index]
-                                                        .idDrink),
+                                            onPressed: () {
+                                              likesController.toggleLike(
+                                                  displayCocktails[index]
+                                                      .idDrink);
+                                              if (!_isReordering) {
+                                                _isReordering = true;
+                                                Future.delayed(
+                                                    const Duration(seconds: 20),
+                                                    () {
+                                                  if (mounted) {
+                                                    setState(() {
+                                                      final newList =
+                                                          List<Cocktail>.from(
+                                                              controller
+                                                                  .cocktails);
+                                                      newList.sort((a, b) {
+                                                        final aIsLiked =
+                                                            likesController
+                                                                .isLikedRx(
+                                                                    a.idDrink);
+                                                        final bIsLiked =
+                                                            likesController
+                                                                .isLikedRx(
+                                                                    b.idDrink);
+
+                                                        if (aIsLiked &&
+                                                            !bIsLiked) {
+                                                          return -1;
+                                                        }
+                                                        if (!aIsLiked &&
+                                                            bIsLiked) {
+                                                          return 1;
+                                                        }
+                                                        return 0;
+                                                      });
+                                                      controller.cocktails
+                                                          .assignAll(newList);
+                                                      _isReordering = false;
+                                                    });
+                                                  }
+                                                });
+                                              }
+                                            },
                                           ),
                                         );
                                       },
