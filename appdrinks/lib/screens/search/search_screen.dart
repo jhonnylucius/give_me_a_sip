@@ -20,6 +20,7 @@ class SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: Text(FlutterI18n.translate(context, 'search_screen.title')),
         leading: IconButton(
@@ -33,158 +34,178 @@ class SearchScreenState extends State<SearchScreen> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          // Botão para busca por ingredientes
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ElevatedButton.icon(
-              onPressed: () => Get.toNamed('/ingredient-search'),
-              icon: const Icon(Icons.local_bar),
-              label: Text(FlutterI18n.translate(
-                context,
-                'search.search_by_ingredients',
-              )),
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(double.infinity, 48),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(36),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText:
+                      FlutterI18n.translate(context, 'search.search_by_letter'),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(36),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                 ),
+                maxLength: 1,
+                textAlign: TextAlign.start,
+                style: const TextStyle(fontSize: 14),
+                textInputAction: TextInputAction.search,
+                onChanged: (value) {
+                  if (value.isNotEmpty) {
+                    controller.searchByFirstLetter(value.toLowerCase());
+                    FocusScope.of(context).unfocus();
+                  }
+                },
+                onSubmitted: (_) => FocusScope.of(context).unfocus(),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Row(
-              children: [
-                Expanded(child: Divider()),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Text(
-                    FlutterI18n.translate(context, 'search.or_choose_option'),
-                    style: TextStyle(color: Colors.grey[600]),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton.icon(
+                onPressed: () => Get.toNamed('/ingredient-search'),
+                icon: const Icon(Icons.local_bar),
+                label: Text(FlutterI18n.translate(
+                  context,
+                  'search.search_by_ingredients',
+                )),
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size(double.infinity, 48),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(36),
                   ),
                 ),
-                Expanded(child: Divider()),
-              ],
-            ),
-          ),
-
-          // Botões de filtro em coluna
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                _SearchButtonWidget(
-                  onPressed: () => controller.searchPopular(),
-                  label: FlutterI18n.translate(
-                      context, 'search_screen.popular_drinks'),
-                ),
-                const SizedBox(height: 8),
-                _SearchButtonWidget(
-                  onPressed: () => controller.searchMaisRecentes(),
-                  label: FlutterI18n.translate(
-                      context, 'search_screen.recent_drinks'),
-                ),
-                const SizedBox(height: 8),
-                _SearchButtonWidget(
-                  onPressed: () => controller.searchNoAlcool(),
-                  label: FlutterI18n.translate(
-                      context, 'search_screen.non_alcoholic_drinks'),
-                ),
-                const SizedBox(height: 8),
-                _SearchButtonWidget(
-                  onPressed: () => controller.searchDezAleatorio(),
-                  label: FlutterI18n.translate(
-                      context, 'search_screen.random_drinks'),
-                ),
-              ],
-            ),
-          ),
-          // Contador de resultados
-          Obx(() {
-            final results = controller.getCurrentResults();
-            if (results.isEmpty) return const SizedBox.shrink();
-
-            return Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                '${results.length} ${FlutterI18n.translate(context, 'search.drinks_found')}',
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
               ),
-            );
-          }),
-
-          // Lista de resultados
-          Expanded(
-            child: Obx(
-              () {
-                if (controller.isLoading.value) {
-                  return const Center(child: CocktailFillLoading());
-                }
-
-                final results = controller.getCurrentResults();
-
-                if (results.isEmpty) {
-                  return Center(
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                children: [
+                  Expanded(child: Divider()),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Text(
-                      FlutterI18n.translate(
-                          context, 'search_screen.no_results'),
-                      style: Theme.of(context).textTheme.bodyLarge,
+                      FlutterI18n.translate(context, 'search.or_choose_option'),
+                      style: TextStyle(color: Colors.grey[600]),
                     ),
-                  );
-                }
+                  ),
+                  Expanded(child: Divider()),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  _SearchButtonWidget(
+                    onPressed: () => controller.searchPopular(),
+                    label: FlutterI18n.translate(
+                        context, 'search_screen.popular_drinks'),
+                  ),
+                  const SizedBox(height: 8),
+                  _SearchButtonWidget(
+                    onPressed: () => controller.searchMaisRecentes(),
+                    label: FlutterI18n.translate(
+                        context, 'search_screen.recent_drinks'),
+                  ),
+                  const SizedBox(height: 8),
+                  _SearchButtonWidget(
+                    onPressed: () => controller.searchNoAlcool(),
+                    label: FlutterI18n.translate(
+                        context, 'search_screen.non_alcoholic_drinks'),
+                  ),
+                  const SizedBox(height: 8),
+                  _SearchButtonWidget(
+                    onPressed: () => controller.searchDezAleatorio(),
+                    label: FlutterI18n.translate(
+                        context, 'search_screen.random_drinks'),
+                  ),
+                ],
+              ),
+            ),
+            Obx(() {
+              final results = controller.getCurrentResults();
+              if (results.isEmpty) return const SizedBox.shrink();
 
-                return ListView.builder(
-                  padding: const EdgeInsets.all(8.0),
-                  itemCount: results.length,
-                  itemBuilder: (context, index) {
-                    final cocktail = results[index];
+              return Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  '${results.length} ${FlutterI18n.translate(context, 'search.drinks_found')}',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              );
+            }),
+            SizedBox(
+              height: MediaQuery.of(context).size.height - 400,
+              child: Obx(
+                () {
+                  if (controller.isLoading.value) {
+                    return const Center(child: CocktailFillLoading());
+                  }
 
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: Card(
-                        elevation: 0, // Remove a sombra
-                        color: Colors.transparent,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: ListTile(
-                          contentPadding: const EdgeInsets.all(8.0),
-                          leading: ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Image.network(
-                              cocktail.strDrinkThumb ?? '',
-                              width: 100,
-                              height: 100,
-                              fit: BoxFit.cover,
-                              errorBuilder: (_, __, ___) =>
-                                  const Icon(Icons.error),
-                            ),
-                          ),
-                          title: Text(cocktail.strDrink),
-                          onTap: () =>
-                              controller.fetchCocktailDetailsAndNavigate(
-                            cocktail.idDrink,
-                          ),
-                        ),
+                  final results = controller.getCurrentResults();
+
+                  if (results.isEmpty) {
+                    return Center(
+                      child: Text(
+                        FlutterI18n.translate(
+                            context, 'search_screen.no_results'),
+                        style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     );
-                  },
-                );
-              },
+                  }
+
+                  return ListView.builder(
+                    padding: const EdgeInsets.all(8.0),
+                    itemCount: results.length,
+                    itemBuilder: (context, index) {
+                      final cocktail = results[index];
+
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: Card(
+                          elevation: 0,
+                          color: Colors.transparent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: ListTile(
+                            contentPadding: const EdgeInsets.all(8.0),
+                            leading: ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Image.network(
+                                cocktail.strDrinkThumb ?? '',
+                                width: 100,
+                                height: 100,
+                                fit: BoxFit.cover,
+                                errorBuilder: (_, __, ___) =>
+                                    const Icon(Icons.error),
+                              ),
+                            ),
+                            title: Text(cocktail.strDrink),
+                            onTap: () =>
+                                controller.fetchCocktailDetailsAndNavigate(
+                              cocktail.idDrink,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 }
 
-// Atualizar o estilo do botão de pesquisa
 class _SearchButtonWidget extends StatelessWidget {
   final VoidCallback onPressed;
   final String label;
