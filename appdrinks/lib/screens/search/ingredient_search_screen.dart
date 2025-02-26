@@ -13,6 +13,8 @@ class IngredientSearchScreen extends StatefulWidget {
 
 class _IngredientSearchScreenState extends State<IngredientSearchScreen> {
   final controller = Get.find<netdrink.SearchController>();
+  final searchController = TextEditingController();
+  final RxString searchQuery = ''.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,6 @@ class _IngredientSearchScreenState extends State<IngredientSearchScreen> {
           onPressed: () => Get.back(),
         ),
         actions: [
-          // Botão de pesquisa na AppBar
           Obx(() {
             if (controller.selectedIngredients.isEmpty) {
               return const SizedBox.shrink();
@@ -35,8 +36,7 @@ class _IngredientSearchScreenState extends State<IngredientSearchScreen> {
                 controller.searchMultiIngredients(
                   controller.selectedIngredients.join(','),
                 );
-                Get.toNamed(
-                    '/search-results'); // Navega para tela de resultados
+                Get.toNamed('/search-results');
               },
             );
           }),
@@ -44,6 +44,25 @@ class _IngredientSearchScreenState extends State<IngredientSearchScreen> {
       ),
       body: Column(
         children: [
+          // Campo de pesquisa
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: searchController,
+              decoration: InputDecoration(
+                hintText:
+                    FlutterI18n.translate(context, 'search.filter_ingredients'),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(36),
+                ),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+              ),
+              onChanged: (value) {
+                searchQuery.value = value;
+              },
+            ),
+          ),
+
           // Ingredientes selecionados
           Obx(() {
             if (controller.selectedIngredientsDisplay.isEmpty) {
@@ -75,16 +94,23 @@ class _IngredientSearchScreenState extends State<IngredientSearchScreen> {
 
           // Grid de ingredientes
           Expanded(
-            child: IngredientsSelector(
-              selectedIngredients: controller.selectedIngredients,
-              onIngredientsChanged: (ingredients, [search = false]) {
-                controller.updateSelectedIngredients(ingredients, false);
-                setState(() {});
-              },
-            ),
+            child: Obx(() => IngredientsSelector(
+                  selectedIngredients: controller.selectedIngredients,
+                  onIngredientsChanged: (ingredients, [search = false]) {
+                    controller.updateSelectedIngredients(ingredients, false);
+                    setState(() {});
+                  },
+                  searchQuery: searchQuery.value,
+                )),
           ),
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
   }
 }
