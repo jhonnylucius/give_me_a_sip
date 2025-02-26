@@ -500,7 +500,7 @@ class IngredientImageMapper {
   static String? getImagePath(String ingredient) {
     final imageName = getImageName(ingredient);
     return imageName != null
-        ? 'assets/data/images/ingredients/$imageName.png'
+        ? 'assets/data/images/ingredients/$imageName.webp'
         : null;
   }
 
