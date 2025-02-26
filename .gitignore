@@ -58,23 +58,7 @@ appdrinks/assets/lang/pt.json
 appdrinks/lib/data/drinks_data.json
 appdrinks/lib/data/ingredients_map.json
 
-appdrinks/lib/main.dart
-appdrinks/lib/bindings/app_bindings.dart
-appdrinks/lib/bindings/search_binding.dart
-appdrinks/lib/bindings/translation_binding.dart
-appdrinks/lib/components/menu.dart
-appdrinks/lib/controller/search_controller.dart
-appdrinks/lib/models/cocktail.dart
-appdrinks/lib/screens/cocktail_detail_screen.dart
-appdrinks/lib/screens/home_screen.dart
-appdrinks/lib/screens/language_selections_screen.dart
-appdrinks/lib/screens/splash_screen.dart
-appdrinks/lib/screens/search/search_screen.dart
-appdrinks/lib/services/translation_service.dart
-appdrinks/lib/widgets/cocktail_fill_loading.dart
-appdrinks/lib/widgets/network_image_handler.dart
-appdrinks/lib/widgets/retro_loading_widget.dart
-appdrinks/test/widget_test.dart
+
 appdrinks/assets/data/images/drinks/11000.webp
 appdrinks/assets/data/images/drinks/11001.webp
 appdrinks/assets/data/images/drinks/11002.webp
