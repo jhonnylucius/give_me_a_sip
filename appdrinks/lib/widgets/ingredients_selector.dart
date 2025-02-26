@@ -72,7 +72,7 @@ class IngredientsSelector extends StatelessWidget {
                                 child: Image.asset(
                                   IngredientImageMapper.getImagePath(
                                           ingredient) ??
-                                      'assets/data/images/ingredients/default.png', // fallback image
+                                      'assets/data/images/ingredients/default.webp', // fallback image
                                   fit: BoxFit.cover,
                                   errorBuilder: (_, __, ___) => const Icon(
                                     Icons.local_bar,

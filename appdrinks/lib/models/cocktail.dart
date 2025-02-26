@@ -65,11 +65,11 @@ class Cocktail {
   // CORREÇÃO: Modificar os getters para usar URLs da API quando disponíveis
   String get imageUrl => strDrinkThumb?.isNotEmpty == true
       ? strDrinkThumb!
-      : 'assets/images/default_cocktail.png';
+      : 'assets/images/default_cocktail.webp';
 
   String get thumbnailUrl => strDrinkThumb?.isNotEmpty == true
       ? '$strDrinkThumb/preview'
-      : 'assets/images/default_cocktail.png';
+      : 'assets/images/default_cocktail.webp';
 
   factory Cocktail.fromJson(Map<String, dynamic> json,
       {String language = 'en'}) {
@@ -205,11 +205,11 @@ class Cocktail {
         .toLowerCase()
         .replaceAll(' ', '_')
         .replaceAll(RegExp(r'[^a-z0-9_]'), '');
-    return 'assets/data/images/ingredients/$sanitized.png';
+    return 'assets/data/images/ingredients/$sanitized.webp';
   }
 
   String getDrinkImageUrl() {
-    return 'assets/data/images/drinks/$idDrink.jpg';
+    return 'assets/data/images/drinks/$idDrink.webp';
   }
 
   List<Map<String, String>> getIngredientsWithMeasures() {

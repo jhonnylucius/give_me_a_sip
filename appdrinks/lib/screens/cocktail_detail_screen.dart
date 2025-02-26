@@ -94,7 +94,7 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
               'originalName':
                   originalName, // Mantemos o nome original para o mapeamento de imagens
               'imageUrl': IngredientImageMapper.getImagePath(originalName) ??
-                  'assets/data/images/ingredients/default.png'
+                  'assets/data/images/ingredients/default.webp'
             });
           }
         }
@@ -133,7 +133,7 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
           await Share.share('Confira esta receita do NetDrinks!');
         } else {
           final directory = await getTemporaryDirectory();
-          final imagePath = '${directory.path}/drink.png';
+          final imagePath = '${directory.path}/drink.webp';
           final imgFile = File(imagePath);
           await imgFile.writeAsBytes(byteData.buffer.asUint8List());
 
@@ -329,7 +329,7 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
 
     // Usar o nome original para buscar a imagem
     final imagePath =
-        ingredient['imageUrl'] ?? 'assets/data/images/ingredients/default.png';
+        ingredient['imageUrl'] ?? 'assets/data/images/ingredients/default.webp';
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
