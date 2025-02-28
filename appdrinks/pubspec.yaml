@@ -68,6 +68,8 @@ dependencies:
   path: ^1.9.0
   
   
+  
+  
 
 dev_dependencies:
   flutter_test:
@@ -112,6 +114,8 @@ flutter:
     - assets/lang/fr.json
     - assets/lang/it.json
     - assets/lang/de.json
+    - assets/data/drinks_data_iba.json
+    - assets/data/images/drinks_iba/
     
   
 
