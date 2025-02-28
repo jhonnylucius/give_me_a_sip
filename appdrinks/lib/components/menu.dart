@@ -7,6 +7,8 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
+// ...resto dos imports existentes...
+
 class Menu extends StatelessWidget {
   final User user;
 
@@ -108,6 +110,17 @@ class Menu extends StatelessWidget {
             },
           ),
           ListTile(
+            leading: const Icon(Icons.local_bar, color: Colors.white),
+            title: Text(
+              FlutterI18n.translate(context, 'menu.iba_drinks'),
+              style: const TextStyle(color: Colors.white),
+            ),
+            onTap: () {
+              Navigator.pop(context); // Fecha o drawer
+              Get.toNamed('/iba-drinks');
+            },
+          ),
+          ListTile(
             leading: const Icon(Icons.favorite_border),
             title: Text(FlutterI18n.translate(context, 'menu.favorites')),
             onTap: () {
@@ -123,6 +136,14 @@ class Menu extends StatelessWidget {
             },
           ),
           ListTile(
+            leading: const Icon(Icons.star),
+            title: Text(FlutterI18n.translate(context, 'menu.ranking')),
+            onTap: () {
+              Navigator.pop(context); // Fecha o drawer
+              Get.toNamed('/ranking');
+            },
+          ),
+          ListTile(
             leading: const FaIcon(FontAwesomeIcons.lightbulb),
             title: Text(FlutterI18n.translate(context, 'menu.tips_and_news')),
             onTap: () {
@@ -130,14 +151,6 @@ class Menu extends StatelessWidget {
                 context,
                 MaterialPageRoute(builder: (context) => TipsScreen()),
               );
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.star),
-            title: Text(FlutterI18n.translate(context, 'menu.ranking')),
-            onTap: () {
-              Navigator.pop(context); // Fecha o drawer
-              Get.toNamed('/ranking');
             },
           ),
           ListTile(
