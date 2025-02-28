@@ -196,7 +196,8 @@ class IBADrinksScreenState extends State<IBADrinksScreen> {
                           // Botão de Like
                           Container(
                             decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(0.5),
+                              color:
+                                  Colors.black.withAlpha((0.5 * 255).toInt()),
                               shape: BoxShape.circle,
                             ),
                             child: StreamBuilder<DrinkLikes>(
