@@ -102,7 +102,9 @@ class HomeScreenState extends State<HomeScreen> {
       drawer: Menu(user: widget.user),
       body: Obx(() {
         if (controller.cocktails.isEmpty) {
-          return const CocktailFillLoading(); // Número total de drinks disponíveis
+          return const Center(
+              child:
+                  CocktailFillLoading()); // Número total de drinks disponíveis
         }
         List<Cocktail> sortCocktailsWithFavoritesFirst(
             List<Cocktail> cocktails) {
