@@ -1,10 +1,13 @@
 import 'package:app_netdrinks/adapters/cocktail_adapter.dart';
 import 'package:app_netdrinks/bindings/app_bindings.dart';
+import 'package:app_netdrinks/bindings/iba_bindings.dart';
 import 'package:app_netdrinks/firebase_options.dart';
 import 'package:app_netdrinks/models/cocktail.dart';
 import 'package:app_netdrinks/screens/cocktail_detail_screen.dart';
 import 'package:app_netdrinks/screens/drink_ranking_screen.dart';
 import 'package:app_netdrinks/screens/home_screen.dart';
+import 'package:app_netdrinks/screens/iba_cocktail_detail_screen.dart';
+import 'package:app_netdrinks/screens/iba_drinks_screen.dart';
 import 'package:app_netdrinks/screens/language_selections_screen.dart';
 import 'package:app_netdrinks/screens/login_screen.dart';
 import 'package:app_netdrinks/screens/search/ingredient_search_screen.dart';
@@ -216,6 +219,20 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/search-results',
           page: () => SearchResultsScreen(),
+        ),
+        GetPage(
+          name: '/iba-drinks',
+          page: () {
+            final user = FirebaseAuth.instance.currentUser;
+            if (user == null) return LoginScreen();
+            return IBADrinksScreen(user: user);
+          },
+          binding: IBABindings(),
+        ),
+        GetPage(
+          name: '/iba-detail',
+          page: () => IBACocktailDetailScreen(
+              drink: Get.arguments), // Modificar para receber IBADrink
         ),
         GetPage(
           name: '/cocktail-detail',
