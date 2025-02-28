@@ -1361,3 +1361,6 @@ appdrinks/assets/data/images/drinks_iba/0101.webp
 appdrinks/assets/data/images/drinks_iba/0102.webp
 appdrinks/assets/data/iba_ingredients_translations.json
 appdrinks/assets/data/translations/iba_ingredients_translations.json
+appdrinks/lib/utils/azure_translator_helper.dart
+appdrinks/lib/utils/azure_translator.dart
+appdrinks/lib/utils/unique_ingredients.dart
