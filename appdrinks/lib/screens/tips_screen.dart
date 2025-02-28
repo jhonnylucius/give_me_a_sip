@@ -58,13 +58,6 @@ class TipsScreen extends StatelessWidget {
                 content:
                     FlutterI18n.translate(context, 'tips_screen.tip4_content'),
               ),
-              _buildTipCard(
-                context,
-                icon: FontAwesomeIcons.trophy,
-                title: FlutterI18n.translate(context, 'tips_screen.tip5_title'),
-                content:
-                    FlutterI18n.translate(context, 'tips_screen.tip5_content'),
-              ),
             ],
           ),
         ),
