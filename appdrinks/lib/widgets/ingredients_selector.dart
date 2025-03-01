@@ -15,19 +15,33 @@ class IngredientsSelector extends StatelessWidget {
     this.searchQuery = '',
   });
 
+  // Método auxiliar para verificar se existe imagem
+  bool _hasValidImage(String ingredient) {
+    try {
+      // Verifica se o arquivo da imagem existe
+      final imagePath = IngredientImageMapper.getImagePath(ingredient);
+      return imagePath != null && imagePath.isNotEmpty;
+    } catch (_) {
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final translationService = Get.find<TranslationService>();
     final currentLang = translationService.currentLanguage;
     final ingredients = translationService.ingredientsData;
 
+    // Filtra os ingredientes baseado na busca e existência de imagem
     final displayIngredients = searchQuery.isEmpty
-        ? ingredients.keys.toList()
+        ? ingredients.keys.where((key) => _hasValidImage(key)).toList()
         : ingredients.entries
-            .where((entry) => entry.value[currentLang]
-                .toString()
-                .toLowerCase()
-                .contains(searchQuery.toLowerCase()))
+            .where((entry) =>
+                entry.value[currentLang]
+                    .toString()
+                    .toLowerCase()
+                    .contains(searchQuery.toLowerCase()) &&
+                _hasValidImage(entry.key))
             .map((e) => e.key)
             .toList();
 
