@@ -1364,3 +1364,5 @@ appdrinks/assets/data/translations/iba_ingredients_translations.json
 appdrinks/lib/utils/azure_translator_helper.dart
 appdrinks/lib/utils/azure_translator.dart
 appdrinks/lib/utils/unique_ingredients.dart
+appdrinks/assets/data/images/ingredients/fresh lemon juice.webp
+appdrinks/assets/data/images/ingredients/fresh_lemon juice.webp
