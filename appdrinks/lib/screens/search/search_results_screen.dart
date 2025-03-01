@@ -4,6 +4,7 @@ import 'package:app_netdrinks/widgets/cocktail_fill_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 
 class SearchResultsScreen extends StatelessWidget {
   final custom.SearchController controller = Get.find();
@@ -103,7 +104,7 @@ class CocktailCard extends StatelessWidget {
               Get.toNamed('/cocktail-detail', arguments: detailsResponse);
             }
           } catch (e) {
-            print('Erro ao buscar detalhes: $e');
+            Logger().e('Erro ao buscar detalhes: $e');
           }
         },
         child: Column(
