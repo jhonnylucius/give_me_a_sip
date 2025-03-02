@@ -2,9 +2,12 @@ import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:app_netdrinks/controller/cocktail_detail_controller.dart';
+import 'package:app_netdrinks/controller/cocktail_list_controller.dart';
 import 'package:app_netdrinks/controller/likes_controller.dart';
+import 'package:app_netdrinks/enums/recipe_type.dart';
 import 'package:app_netdrinks/models/cocktail.dart';
 import 'package:app_netdrinks/models/drink_likes.dart';
+import 'package:app_netdrinks/repository/iba_drinks_repository.dart';
 import 'package:app_netdrinks/services/measurement_converter_service.dart';
 import 'package:app_netdrinks/services/translation_service.dart';
 import 'package:app_netdrinks/utils/string_normalizer.dart';
@@ -184,6 +187,7 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
             children: [
               _buildMainImage(),
               _buildContent(),
+              _buildRecipeInfo(),
             ],
           ),
         ),
@@ -508,5 +512,74 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
       return (measure, MeasurementConverter.convertToMl(measure));
     }
     return (measure, null);
+  }
+
+  Widget _buildRecipeInfo() {
+    final status = Get.find<CocktailListController>()
+        .getRecipeStatus(widget.cocktail.idDrink);
+    final translationService = Get.find<TranslationService>();
+
+    if (status == null || status.type == RecipeType.original) {
+      return const SizedBox.shrink();
+    }
+
+    return Container(
+      margin: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: status.type == RecipeType.official
+            ? Colors.green.withAlpha((0.1 * 255).toInt())
+            : Colors.amber.withAlpha((0.1 * 255).toInt()),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          color: status.type == RecipeType.official
+              ? Colors.green
+              : const ui.Color.fromARGB(255, 167, 5, 5),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            status.type == RecipeType.official
+                ? translationService
+                    .getInterfaceString('cocktail_detail.official')
+                : translationService
+                    .getInterfaceString('cocktail_detail.variation'),
+            style: TextStyle(
+              color: status.type == RecipeType.official
+                  ? Colors.green
+                  : Colors.amber,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          if (status.type == RecipeType.variation &&
+              status.ibaReference != null)
+            FutureBuilder(
+              future: Get.find<IBADrinksRepository>()
+                  .getDrinkById(status.ibaReference!),
+              builder: (context, snapshot) {
+                if (snapshot.hasData && snapshot.data != null) {
+                  return TextButton(
+                    onPressed: () => Get.toNamed(
+                      '/iba-detail',
+                      arguments: snapshot.data,
+                    ),
+                    child: Text(
+                      translationService
+                          .getInterfaceString('cocktail_detail.see_original'),
+                      style: const TextStyle(
+                        color: ui.Color.fromARGB(255, 204, 7, 17),
+                      ),
+                    ),
+                  );
+                }
+                return const SizedBox.shrink();
+              },
+            ),
+        ],
+      ),
+    );
   }
 }
