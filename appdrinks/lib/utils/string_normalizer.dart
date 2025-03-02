@@ -1,5 +1,5 @@
 class IngredientImageMapper {
-  static final Map<String, String> _imageMap = {
+  static final Map<String, String> _imageMap = <String, String>{
     "151 proof rum": "151 proof rum",
     "7-up": "7-up",
     "absinthe": "absinthe",
@@ -249,6 +249,7 @@ class IngredientImageMapper {
     "irish whiskey": "irish whiskey",
     "islay single malt scotch": "islay single malt scotch",
     "jack daniels": "jack daniels",
+    "jägermeister": "jägermeister",
     "jagermeister": "jagermeister",
     "jello": "jello",
     "jelly": "jelly",
