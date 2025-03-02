@@ -14,6 +14,7 @@ import 'package:app_netdrinks/utils/string_normalizer.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
@@ -517,68 +518,74 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
   Widget _buildRecipeInfo() {
     final status = Get.find<CocktailListController>()
         .getRecipeStatus(widget.cocktail.idDrink);
-    final translationService = Get.find<TranslationService>();
 
     if (status == null || status.type == RecipeType.original) {
       return const SizedBox.shrink();
     }
 
-    return Container(
-      margin: const EdgeInsets.all(16),
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: status.type == RecipeType.official
-            ? Colors.green.withAlpha((0.1 * 255).toInt())
-            : Colors.amber.withAlpha((0.1 * 255).toInt()),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(
+    return Center(
+      // Wrapper externo para centralizar tudo
+      child: Container(
+        margin: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
           color: status.type == RecipeType.official
-              ? Colors.green
-              : const ui.Color.fromARGB(255, 167, 5, 5),
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            status.type == RecipeType.official
-                ? translationService
-                    .getInterfaceString('cocktail_detail.official')
-                : translationService
-                    .getInterfaceString('cocktail_detail.variation'),
-            style: TextStyle(
-              color: status.type == RecipeType.official
-                  ? Colors.green
-                  : Colors.amber,
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
+              ? Colors.green.withAlpha((0.1 * 255).toInt())
+              : Colors.amber.withAlpha((0.1 * 255).toInt()),
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(
+            color: status.type == RecipeType.official
+                ? Colors.green
+                : const ui.Color.fromARGB(255, 167, 5, 5),
           ),
-          if (status.type == RecipeType.variation &&
-              status.ibaReference != null)
-            FutureBuilder(
-              future: Get.find<IBADrinksRepository>()
-                  .getDrinkById(status.ibaReference!),
-              builder: (context, snapshot) {
-                if (snapshot.hasData && snapshot.data != null) {
-                  return TextButton(
-                    onPressed: () => Get.toNamed(
-                      '/iba-detail',
-                      arguments: snapshot.data,
-                    ),
-                    child: Text(
-                      translationService
-                          .getInterfaceString('cocktail_detail.see_original'),
-                      style: const TextStyle(
-                        color: ui.Color.fromARGB(255, 204, 7, 17),
-                      ),
-                    ),
-                  );
-                }
-                return const SizedBox.shrink();
-              },
+        ),
+        child: Column(
+          mainAxisSize:
+              MainAxisSize.min, // Para não ocupar todo espaço vertical
+          children: [
+            SizedBox(
+              width: double.infinity, // Garante largura total
+              child: Text(
+                status.type == RecipeType.official
+                    ? FlutterI18n.translate(context, "cocktail_detail.official")
+                    : FlutterI18n.translate(
+                        context, "cocktail_detail.variation"),
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: status.type == RecipeType.official
+                      ? Colors.green
+                      : Colors.amber,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
-        ],
+            if (status.type == RecipeType.variation &&
+                status.ibaReference != null)
+              FutureBuilder(
+                future: Get.find<IBADrinksRepository>()
+                    .getDrinkById(status.ibaReference!),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData && snapshot.data != null) {
+                    return TextButton(
+                      onPressed: () => Get.toNamed(
+                        '/iba-detail',
+                        arguments: snapshot.data,
+                      ),
+                      child: Text(
+                        FlutterI18n.translate(
+                            context, "cocktail_detail.see_original"),
+                        style: const TextStyle(
+                          color: ui.Color.fromARGB(255, 204, 7, 17),
+                        ),
+                      ),
+                    );
+                  }
+                  return const SizedBox.shrink();
+                },
+              ),
+          ],
+        ),
       ),
     );
   }
