@@ -463,7 +463,7 @@ class HomeScreenState extends State<HomeScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.7),
+        color: Colors.black.withAlpha(179),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: isOfficial ? Colors.green : Colors.amber,
@@ -472,12 +472,13 @@ class HomeScreenState extends State<HomeScreen> {
       ),
       child: Tooltip(
         message: isOfficial
-            ? 'recipe_validation.tooltip_official'.tr
-            : 'recipe_validation.tooltip_variation'.tr,
+            ? FlutterI18n.translate(context, "cocktail_detail.tooltip_official")
+            : FlutterI18n.translate(
+                context, "cocktail_detail.tooltip_variation"),
         child: Text(
           isOfficial
-              ? 'recipe_validation.official_badge'.tr
-              : 'recipe_validation.variation_badge'.tr,
+              ? FlutterI18n.translate(context, "cocktail_detail.official")
+              : FlutterI18n.translate(context, "cocktail_detail.variation"),
           style: TextStyle(
             color: isOfficial ? Colors.green : Colors.amber,
             fontSize: 12,
