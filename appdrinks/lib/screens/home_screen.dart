@@ -1,6 +1,7 @@
 import 'package:app_netdrinks/components/menu.dart';
 import 'package:app_netdrinks/controller/cocktail_list_controller.dart';
 import 'package:app_netdrinks/controller/likes_controller.dart';
+import 'package:app_netdrinks/enums/recipe_type.dart';
 import 'package:app_netdrinks/models/cocktail.dart';
 import 'package:app_netdrinks/models/drink_likes.dart';
 import 'package:app_netdrinks/screens/cocktail_detail_screen.dart';
@@ -332,6 +333,7 @@ class HomeScreenState extends State<HomeScreen> {
                     _currentPage.value = index;
                   },
                   itemBuilder: (context, index) {
+                    final drink = cocktails[index];
                     return AnimatedScale(
                       scale: _currentPage.value == index ? 1.0 : 0.8,
                       duration: const Duration(milliseconds: 300),
@@ -345,18 +347,29 @@ class HomeScreenState extends State<HomeScreen> {
                                 flex: 9,
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(12),
-                                  child: Image.asset(
-                                    cocktails[index].getDrinkImageUrl(),
-                                    width: 400,
-                                    height: 300,
-                                    fit: BoxFit.cover,
-                                    errorBuilder: (context, error, stackTrace) {
-                                      return Container(
-                                        color: Colors.grey[900],
-                                        child: const Icon(Icons.error,
-                                            color: Colors.redAccent),
-                                      );
-                                    },
+                                  child: Stack(
+                                    children: [
+                                      Image.asset(
+                                        cocktails[index].getDrinkImageUrl(),
+                                        width: 400,
+                                        height: 300,
+                                        fit: BoxFit.cover,
+                                        errorBuilder:
+                                            (context, error, stackTrace) {
+                                          return Container(
+                                            color: Colors.grey[900],
+                                            child: const Icon(Icons.error,
+                                                color: Colors.redAccent),
+                                          );
+                                        },
+                                      ),
+                                      // Adicionar o badge de versão
+                                      Positioned(
+                                        top: 8,
+                                        left: 8,
+                                        child: _buildRecipeStatusBadge(drink),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
@@ -437,6 +450,44 @@ class HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  Widget _buildRecipeStatusBadge(Cocktail drink) {
+    final status =
+        Get.find<CocktailListController>().getRecipeStatus(drink.idDrink);
+
+    if (status == null || status.type == RecipeType.original) {
+      return const SizedBox.shrink();
+    }
+
+    final isOfficial = status.type == RecipeType.official;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: Colors.black.withOpacity(0.7),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: isOfficial ? Colors.green : Colors.amber,
+          width: 1,
+        ),
+      ),
+      child: Tooltip(
+        message: isOfficial
+            ? 'recipe_validation.tooltip_official'.tr
+            : 'recipe_validation.tooltip_variation'.tr,
+        child: Text(
+          isOfficial
+              ? 'recipe_validation.official_badge'.tr
+              : 'recipe_validation.variation_badge'.tr,
+          style: TextStyle(
+            color: isOfficial ? Colors.green : Colors.amber,
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
+  }
+
   // Novo estilo IBA
   // Estilo IBA
   Widget _buildIBAStyleView(List<Cocktail> cocktails) {
@@ -473,11 +524,16 @@ class HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                           Positioned(
+                            top: 8,
+                            left: 8,
+                            child: _buildRecipeStatusBadge(drink),
+                          ),
+                          Positioned(
                             top: 16,
                             right: 16,
                             child: Container(
                               decoration: BoxDecoration(
-                                color: Colors.black.withOpacity(0.5),
+                                color: Colors.black.withAlpha(128),
                                 shape: BoxShape.circle,
                               ),
                               child: StreamBuilder<DrinkLikes>(
@@ -592,10 +648,15 @@ class HomeScreenState extends State<HomeScreen> {
                         ),
                         Positioned(
                           top: 8,
+                          left: 8,
+                          child: _buildRecipeStatusBadge(drink),
+                        ),
+                        Positioned(
+                          top: 8,
                           right: 8,
                           child: Container(
                             decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(0.5),
+                              color: Colors.black.withAlpha(128),
                               shape: BoxShape.circle,
                             ),
                             child: StreamBuilder<DrinkLikes>(
