@@ -153,9 +153,10 @@ class MyApp extends StatelessWidget {
                                   color: Color.fromARGB(255, 204, 7, 17),
                                 ),
                                 const SizedBox(height: 24),
-                                const Text(
-                                  'Para usar o NetDrinks e descobrir mais de 600 receitas incríveis de drinks, é necessário aceitar os termos de uso.',
-                                  style: TextStyle(
+                                Text(
+                                  FlutterI18n.translate(
+                                      context, "terms.decline.title"),
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 24,
                                     fontWeight: FontWeight.bold,
@@ -163,8 +164,9 @@ class MyApp extends StatelessWidget {
                                   textAlign: TextAlign.center,
                                 ),
                                 const SizedBox(height: 16),
-                                const Text(
-                                  'Feche o app e abra novamente para aceitar os termos.',
+                                Text(
+                                  FlutterI18n.translate(
+                                      context, "terms.decline.subtitle"),
                                   style: TextStyle(
                                     color: Color.fromARGB(255, 204, 7, 17),
                                     fontSize: 18,
@@ -289,7 +291,9 @@ class MyApp extends StatelessWidget {
                   Get.offAllNamed('/login');
                 },
                 onDeclined: () {
-                  Get.offAll(() => Scaffold(
+                  Get.offAll(
+                    () => Builder(
+                      builder: (context) => Scaffold(
                         backgroundColor: Colors.black,
                         body: PopScope(
                           canPop: false,
@@ -305,9 +309,10 @@ class MyApp extends StatelessWidget {
                                     color: Color.fromARGB(255, 204, 7, 17),
                                   ),
                                   const SizedBox(height: 24),
-                                  const Text(
-                                    'Para usar o NetDrinks e descobrir mais de 600 receitas incríveis de drinks, é necessário aceitar os termos de uso.',
-                                    style: TextStyle(
+                                  Text(
+                                    FlutterI18n.translate(
+                                        context, "terms.decline.title"),
+                                    style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 24,
                                       fontWeight: FontWeight.bold,
@@ -315,9 +320,10 @@ class MyApp extends StatelessWidget {
                                     textAlign: TextAlign.center,
                                   ),
                                   const SizedBox(height: 16),
-                                  const Text(
-                                    'Feche o app e abra novamente para aceitar os termos.',
-                                    style: TextStyle(
+                                  Text(
+                                    FlutterI18n.translate(
+                                        context, "terms.decline.subtitle"),
+                                    style: const TextStyle(
                                       color: Color.fromARGB(255, 204, 7, 17),
                                       fontSize: 18,
                                     ),
@@ -328,11 +334,13 @@ class MyApp extends StatelessWidget {
                             ),
                           ),
                         ),
-                      ));
+                      ),
+                    ),
+                  );
                 },
               ),
             )
-          : null,
+          : null, // Este null é necessário para o operador ternário funcionar corretamente
     );
   }
 }
