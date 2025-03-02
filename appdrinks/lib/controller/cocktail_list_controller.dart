@@ -1,6 +1,9 @@
 import 'package:app_netdrinks/controller/likes_controller.dart';
 import 'package:app_netdrinks/models/cocktail.dart';
+import 'package:app_netdrinks/models/recipe_status.dart';
 import 'package:app_netdrinks/repository/cocktail_repository.dart';
+import 'package:app_netdrinks/repository/iba_drinks_repository.dart';
+import 'package:app_netdrinks/services/recipe_validation_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
@@ -16,12 +19,15 @@ class CocktailListController extends GetxController {
   final _favorites = <String>[].obs;
   List<String> get favorites => _favorites;
 
+  final _recipeValidationService = Get.find<RecipeValidationService>();
+  final _recipeStatuses = <String, RecipeStatus>{}.obs;
+
   CocktailListController({required this.repository});
 
   @override
   void onInit() {
     super.onInit();
-    getAllCocktails(); // Adicionar esta chamada
+    loadCocktails(); // Adicionar esta chamada
 
     // Adicionar listener para mudanças de auth
     FirebaseAuth.instance.authStateChanges().listen((user) {
@@ -96,5 +102,39 @@ class CocktailListController extends GetxController {
     } catch (e) {
       logger.e('Erro ao salvar favoritos no Hive: $e');
     }
+  }
+
+  Future<void> loadCocktails() async {
+    try {
+      // Alterado getCocktails para getAllCocktails
+      final drinks = await repository.getAllCocktails();
+      _cocktails.value = drinks;
+
+      await _validateRecipes();
+    } catch (e) {
+      logger.e('Erro ao carregar cocktails: $e');
+    }
+  }
+
+  Future<void> _validateRecipes() async {
+    try {
+      final ibaRepository = Get.find<IBADrinksRepository>();
+      final ibaDrinks = await ibaRepository.loadIBADrinks();
+
+      // Filtra apenas os drinks que não são IBA do menu geral
+      for (var drink in _cocktails) {
+        logger.d('Validando drink: ${drink.name}');
+        final status =
+            await _recipeValidationService.validateRecipe(drink, ibaDrinks);
+        _recipeStatuses[drink.idDrink] = status;
+        logger.d('Status para ${drink.name}: ${status.type}');
+      }
+    } catch (e) {
+      logger.e('Erro ao validar receitas: $e');
+    }
+  }
+
+  RecipeStatus? getRecipeStatus(String drinkId) {
+    return _recipeStatuses[drinkId];
   }
 }
