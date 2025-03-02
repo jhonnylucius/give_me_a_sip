@@ -3,10 +3,13 @@ import 'package:app_netdrinks/controller/cocktail_list_controller.dart';
 import 'package:app_netdrinks/controller/likes_controller.dart';
 import 'package:app_netdrinks/controller/ranking_controller.dart';
 import 'package:app_netdrinks/repository/cocktail_repository.dart';
+import 'package:app_netdrinks/repository/iba_drinks_repository.dart';
 import 'package:app_netdrinks/repository/ranking_repository.dart';
+import 'package:app_netdrinks/services/iba_translation_service.dart';
 import 'package:app_netdrinks/services/likes_service.dart';
 import 'package:app_netdrinks/services/locator_service.dart';
 import 'package:app_netdrinks/services/ranking_service.dart';
+import 'package:app_netdrinks/services/recipe_validation_service.dart';
 import 'package:app_netdrinks/services/search_service.dart';
 import 'package:app_netdrinks/services/translation_service.dart';
 import 'package:get/get.dart';
@@ -24,14 +27,25 @@ class AppBindings implements Bindings {
       Get.put<TranslationService>(translationService, permanent: true);
       logger.i('TranslationService inicializado');
 
+      // IBA Translation Service
+      Get.put(IBATranslationService(), permanent: true);
+      logger.i('IBATranslationService inicializado');
+
       // Services
       Get.put<SearchService>(SearchService(), permanent: true);
       logger.i('SearchService registrado');
 
-      // Repository
+      // Repositories
       final repository = getIt<CocktailRepository>();
       Get.put(repository, permanent: true);
       logger.i('CocktailRepository registrado');
+
+      Get.put(IBADrinksRepository(), permanent: true);
+      logger.i('IBADrinksRepository registrado');
+
+      // Recipe Validation Service
+      Get.put(RecipeValidationService(), permanent: true);
+      logger.i('RecipeValidationService inicializado');
 
       // Controllers
       Get.put(CocktailListController(repository: repository), permanent: true);
@@ -61,7 +75,7 @@ class AppBindings implements Bindings {
       logger.i('✅ Todas as dependências registradas com sucesso');
     } catch (e) {
       logger.e('❌ Erro ao registrar dependências: $e');
-      rethrow; // Permite que o erro seja tratado em níveis superiores
+      rethrow;
     }
   }
 }
