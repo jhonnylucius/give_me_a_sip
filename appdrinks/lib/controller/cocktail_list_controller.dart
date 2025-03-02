@@ -40,17 +40,6 @@ class CocktailListController extends GetxController {
     });
   }
 
-  Future<void> getAllCocktails() async {
-    try {
-      logger.d('Fetching Cocktail...');
-      final result = await repository.getAllCocktails();
-      logger.d('Cocktail fetched: ${result.length}');
-      _cocktails.assignAll(result);
-    } catch (error) {
-      logger.e('Error fetching cocktail: $error');
-    }
-  }
-
   bool isFavorite(String cocktailId) {
     return _favorites.contains(cocktailId);
   }
@@ -106,10 +95,18 @@ class CocktailListController extends GetxController {
 
   Future<void> loadCocktails() async {
     try {
-      // Alterado getCocktails para getAllCocktails
       final drinks = await repository.getAllCocktails();
-      _cocktails.value = drinks;
 
+      // Ordenação simples e direta
+      drinks.sort((a, b) {
+        final nameA =
+            a.name.toLowerCase().replaceAll(RegExp(r'[^a-zA-Z\s]'), '');
+        final nameB =
+            b.name.toLowerCase().replaceAll(RegExp(r'[^a-zA-Z\s]'), '');
+        return nameA.compareTo(nameB);
+      });
+
+      _cocktails.value = drinks;
       await _validateRecipes();
     } catch (e) {
       logger.e('Erro ao carregar cocktails: $e');
