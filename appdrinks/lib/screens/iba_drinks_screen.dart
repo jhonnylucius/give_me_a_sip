@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class IBADrinksScreen extends StatefulWidget {
@@ -25,6 +26,7 @@ class IBADrinksScreenState extends State<IBADrinksScreen> {
   late final LikesController likesController;
   final logger = Logger();
   String selectedCategory = 'Todos';
+  final RxInt _viewType = 0.obs; // 0 para lista, 1 para grid
 
   @override
   void initState() {
@@ -32,6 +34,18 @@ class IBADrinksScreenState extends State<IBADrinksScreen> {
     controller = Get.find<IBAListController>();
     likesController = Get.find<LikesController>();
     controller.loadIBADrinks();
+    _loadViewPreference();
+  }
+
+  Future<void> _loadViewPreference() async {
+    final prefs = await SharedPreferences.getInstance();
+    _viewType.value = prefs.getInt('iba_view_type') ?? 0;
+  }
+
+  Future<void> _saveViewPreference(int value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('iba_view_type', value);
+    _viewType.value = value;
   }
 
   @override
@@ -49,6 +63,34 @@ class IBADrinksScreenState extends State<IBADrinksScreen> {
           ),
         ),
         actions: [
+          PopupMenuButton<int>(
+            icon: const Icon(Icons.view_agenda),
+            onSelected: _saveViewPreference,
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: 0,
+                child: Row(
+                  children: [
+                    Icon(Icons.view_agenda,
+                        color: _viewType.value == 0 ? Colors.red : Colors.grey),
+                    const SizedBox(width: 8),
+                    Text(FlutterI18n.translate(context, 'view.list')),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                value: 1,
+                child: Row(
+                  children: [
+                    Icon(Icons.grid_view,
+                        color: _viewType.value == 1 ? Colors.red : Colors.grey),
+                    const SizedBox(width: 8),
+                    Text(FlutterI18n.translate(context, 'view.grid')),
+                  ],
+                ),
+              ),
+            ],
+          ),
           IconButton(
             icon: const Icon(Icons.home),
             onPressed: () =>
@@ -68,7 +110,6 @@ class IBADrinksScreenState extends State<IBADrinksScreen> {
           return const Center(child: CocktailFillLoading());
         }
 
-        // Modificando a criação da lista de categorias
         final categories = [
           'Todos',
           ...drinks.map((d) => d.category).toSet().toList()..sort()
@@ -80,11 +121,9 @@ class IBADrinksScreenState extends State<IBADrinksScreen> {
 
         return Column(
           children: [
-            // Filtros de Categoria com padding adicional
             Container(
               height: 50,
-              margin: const EdgeInsets.symmetric(
-                  vertical: 8, horizontal: 8), // Adicionado horizontal margin
+              margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: categories.length,
@@ -104,7 +143,7 @@ class IBADrinksScreenState extends State<IBADrinksScreen> {
                           color: isSelected ? Colors.white : Colors.grey,
                           fontWeight: category == 'Todos'
                               ? FontWeight.bold
-                              : FontWeight.normal, // Destaque para 'Todos'
+                              : FontWeight.normal,
                         ),
                       ),
                       onSelected: (_) =>
@@ -114,20 +153,148 @@ class IBADrinksScreenState extends State<IBADrinksScreen> {
                 },
               ),
             ),
-            // Lista de Drinks
             Expanded(
-              child: ListView.builder(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                itemCount: filteredDrinks.length,
-                itemBuilder: (context, index) {
-                  final drink = filteredDrinks[index];
-                  return _buildDrinkCard(drink);
-                },
-              ),
+              child: Obx(() => _viewType.value == 0
+                  ? _buildListView(filteredDrinks)
+                  : _buildGridView(filteredDrinks)),
             ),
           ],
         );
       }),
+    );
+  }
+
+  Widget _buildListView(List<IBADrink> drinks) {
+    return ListView.builder(
+      padding: const EdgeInsets.symmetric(vertical: 16),
+      itemCount: drinks.length,
+      itemBuilder: (context, index) {
+        return _buildDrinkCard(drinks[index]);
+      },
+    );
+  }
+
+  Widget _buildGridView(List<IBADrink> drinks) {
+    return GridView.builder(
+      padding: const EdgeInsets.all(8),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: 0.75,
+        mainAxisSpacing: 8,
+        crossAxisSpacing: 8,
+      ),
+      itemCount: drinks.length,
+      itemBuilder: (context, index) {
+        final drink = drinks[index];
+        return GestureDetector(
+          onTap: () => Get.to(() => IBACocktailDetailScreen(drink: drink)),
+          child: Card(
+            elevation: 4,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      ClipRRect(
+                        borderRadius: const BorderRadius.vertical(
+                          top: Radius.circular(12),
+                        ),
+                        child: Image.asset(
+                          drink.getDrinkImageUrl(),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      Positioned(
+                        top: 8,
+                        right: 8,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            if (drink.videoUrl != null &&
+                                drink.videoUrl!.isNotEmpty)
+                              Container(
+                                margin: const EdgeInsets.only(right: 4),
+                                decoration: BoxDecoration(
+                                  color: Colors.black.withAlpha(128),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: IconButton(
+                                  iconSize: 20,
+                                  icon: const Icon(
+                                    Icons.play_circle_outline,
+                                    color: Colors.white,
+                                  ),
+                                  onPressed: () async {
+                                    final url = Uri.parse(drink.videoUrl!);
+                                    try {
+                                      if (await canLaunchUrl(url)) {
+                                        await launchUrl(url);
+                                      }
+                                    } catch (e) {
+                                      logger.e('Erro ao abrir vídeo: $e');
+                                    }
+                                  },
+                                ),
+                              ),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.black.withAlpha(128),
+                                shape: BoxShape.circle,
+                              ),
+                              child: StreamBuilder<DrinkLikes>(
+                                stream: likesController
+                                    .getLikesStream(drink.idDrink),
+                                builder: (context, snapshot) {
+                                  return IconButton(
+                                    iconSize: 20,
+                                    icon: Icon(
+                                      likesController.isLikedRx(drink.idDrink)
+                                          ? Icons.favorite
+                                          : Icons.favorite_border,
+                                      color: Colors.red,
+                                    ),
+                                    onPressed: () => likesController
+                                        .toggleLike(drink.idDrink),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: const BoxDecoration(
+                    color: Colors.black87,
+                    borderRadius: BorderRadius.vertical(
+                      bottom: Radius.circular(12),
+                    ),
+                  ),
+                  child: Text(
+                    drink.name,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -149,7 +316,6 @@ class IBADrinksScreenState extends State<IBADrinksScreen> {
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
-                    // Imagem do Drink
                     ClipRRect(
                       borderRadius: const BorderRadius.vertical(
                         top: Radius.circular(12),
@@ -159,13 +325,11 @@ class IBADrinksScreenState extends State<IBADrinksScreen> {
                         fit: BoxFit.cover,
                       ),
                     ),
-                    // Botões de Like e Vídeo
                     Positioned(
                       top: 16,
                       right: 16,
                       child: Row(
                         children: [
-                          // Botão de Vídeo
                           if (drink.videoUrl != null &&
                               drink.videoUrl!.isNotEmpty)
                             Container(
@@ -193,7 +357,6 @@ class IBADrinksScreenState extends State<IBADrinksScreen> {
                                 },
                               ),
                             ),
-                          // Botão de Like
                           Container(
                             decoration: BoxDecoration(
                               color:
@@ -224,7 +387,6 @@ class IBADrinksScreenState extends State<IBADrinksScreen> {
                   ],
                 ),
               ),
-              // Nome do Drink
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: const BoxDecoration(
