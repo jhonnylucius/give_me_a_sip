@@ -58,6 +58,65 @@ class TipsScreen extends StatelessWidget {
                 content:
                     FlutterI18n.translate(context, 'tips_screen.tip4_content'),
               ),
+
+              // Modo Offline
+              _buildTipCard(
+                context,
+                icon: FontAwesomeIcons.wifi,
+                title:
+                    FlutterI18n.translate(context, 'tips_screen.offline_title'),
+                content: FlutterI18n.translate(
+                    context, 'tips_screen.offline_content'),
+              ),
+
+              // Feedback
+              _buildTipCard(
+                context,
+                icon: FontAwesomeIcons.comment,
+                title: FlutterI18n.translate(
+                    context, 'tips_screen.feedback_title'),
+                content: FlutterI18n.translate(
+                    context, 'tips_screen.feedback_content'),
+              ),
+
+              // Harmonização (Em breve)
+              _buildTipCard(
+                context,
+                icon: FontAwesomeIcons.wineGlass,
+                title: FlutterI18n.translate(
+                    context, 'tips_screen.coming_soon_title'),
+                content: FlutterI18n.translate(
+                    context, 'tips_screen.coming_soon_content'),
+              ),
+              // Personalização
+              _buildTipCard(
+                context,
+                icon: FontAwesomeIcons.userCog,
+                title: FlutterI18n.translate(
+                    context, 'tips_screen.personalization_title'),
+                content: FlutterI18n.translate(
+                    context, 'tips_screen.personalization_content'),
+              ),
+
+              // Segurança
+              _buildTipCard(
+                context,
+                icon: FontAwesomeIcons.shieldAlt,
+                title:
+                    FlutterI18n.translate(context, 'tips_screen.safety_title'),
+                content: FlutterI18n.translate(
+                    context, 'tips_screen.safety_content'),
+              ),
+
+              // Dica Profissional
+              _buildTipCard(
+                context,
+                icon: FontAwesomeIcons.cocktail,
+                title:
+                    FlutterI18n.translate(context, 'tips_screen.pro_tip_title'),
+                content: FlutterI18n.translate(
+                    context, 'tips_screen.pro_tip_content'),
+              ),
             ],
           ),
         ),
