@@ -66,7 +66,7 @@ class RankingService extends GetxService {
       }
 
       _logger.d('Buscando top drinks...');
-      final drinks = await _repository.getTopDrinks(limit: 50);
+      final drinks = await _repository.getTopDrinks(limit: 10);
       await _calculatePercentages(drinks);
       _logger.d('Drinks encontrados: ${drinks.length}');
 
