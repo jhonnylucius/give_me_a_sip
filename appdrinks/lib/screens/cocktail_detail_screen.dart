@@ -181,15 +181,23 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: RepaintBoundary(
-          key: _screenShotKey,
-          child: Column(
-            children: [
-              _buildMainImage(),
-              _buildContent(),
-              _buildRecipeInfo(),
-            ],
+      body: SafeArea(
+        // Adicione SafeArea aqui
+        child: SingleChildScrollView(
+          child: Padding(
+            // Adicione padding
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).padding.bottom + 16),
+            child: RepaintBoundary(
+              key: _screenShotKey,
+              child: Column(
+                children: [
+                  _buildMainImage(),
+                  _buildContent(),
+                  _buildRecipeInfo(),
+                ],
+              ),
+            ),
           ),
         ),
       ),
