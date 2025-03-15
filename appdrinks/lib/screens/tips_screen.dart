@@ -12,112 +12,118 @@ class TipsScreen extends StatelessWidget {
         title: Text(FlutterI18n.translate(context, 'tips_screen.title')),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Nova funcionalidade de busca multilíngue
-              _buildTipCard(
-                context,
-                icon: FontAwesomeIcons.language,
-                title: FlutterI18n.translate(
-                    context, 'tips_screen.multilanguage_title'),
-                content: FlutterI18n.translate(
-                    context, 'tips_screen.multilanguage_content'),
-              ),
-              // Nova funcionalidade de likes
-              _buildTipCard(
-                context,
-                icon: FontAwesomeIcons.thumbsUp,
-                title:
-                    FlutterI18n.translate(context, 'tips_screen.likes_title'),
-                content:
-                    FlutterI18n.translate(context, 'tips_screen.likes_content'),
-              ),
-              // Funcionalidades existentes
-              _buildTipCard(
-                context,
-                icon: FontAwesomeIcons.magic,
-                title: FlutterI18n.translate(context, 'tips_screen.tip1_title'),
-                content:
-                    FlutterI18n.translate(context, 'tips_screen.tip1_content'),
-              ),
-              _buildTipCard(
-                context,
-                icon: FontAwesomeIcons.child,
-                title: FlutterI18n.translate(context, 'tips_screen.tip2_title'),
-                content:
-                    FlutterI18n.translate(context, 'tips_screen.tip2_content'),
-              ),
-              _buildTipCard(
-                context,
-                icon: FontAwesomeIcons.starHalfAlt,
-                title: FlutterI18n.translate(context, 'tips_screen.tip4_title'),
-                content:
-                    FlutterI18n.translate(context, 'tips_screen.tip4_content'),
-              ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(
+                16.0, 16.0, 16.0, MediaQuery.of(context).padding.bottom + 16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Nova funcionalidade de busca multilíngue
+                _buildTipCard(
+                  context,
+                  icon: FontAwesomeIcons.language,
+                  title: FlutterI18n.translate(
+                      context, 'tips_screen.multilanguage_title'),
+                  content: FlutterI18n.translate(
+                      context, 'tips_screen.multilanguage_content'),
+                ),
+                // Nova funcionalidade de likes
+                _buildTipCard(
+                  context,
+                  icon: FontAwesomeIcons.thumbsUp,
+                  title:
+                      FlutterI18n.translate(context, 'tips_screen.likes_title'),
+                  content: FlutterI18n.translate(
+                      context, 'tips_screen.likes_content'),
+                ),
+                // Funcionalidades existentes
+                _buildTipCard(
+                  context,
+                  icon: FontAwesomeIcons.magic,
+                  title:
+                      FlutterI18n.translate(context, 'tips_screen.tip1_title'),
+                  content: FlutterI18n.translate(
+                      context, 'tips_screen.tip1_content'),
+                ),
+                _buildTipCard(
+                  context,
+                  icon: FontAwesomeIcons.child,
+                  title:
+                      FlutterI18n.translate(context, 'tips_screen.tip2_title'),
+                  content: FlutterI18n.translate(
+                      context, 'tips_screen.tip2_content'),
+                ),
+                _buildTipCard(
+                  context,
+                  icon: FontAwesomeIcons.starHalfAlt,
+                  title:
+                      FlutterI18n.translate(context, 'tips_screen.tip4_title'),
+                  content: FlutterI18n.translate(
+                      context, 'tips_screen.tip4_content'),
+                ),
 
-              // Modo Offline
-              _buildTipCard(
-                context,
-                icon: FontAwesomeIcons.wifi,
-                title:
-                    FlutterI18n.translate(context, 'tips_screen.offline_title'),
-                content: FlutterI18n.translate(
-                    context, 'tips_screen.offline_content'),
-              ),
+                // Modo Offline
+                _buildTipCard(
+                  context,
+                  icon: FontAwesomeIcons.wifi,
+                  title: FlutterI18n.translate(
+                      context, 'tips_screen.offline_title'),
+                  content: FlutterI18n.translate(
+                      context, 'tips_screen.offline_content'),
+                ),
 
-              // Feedback
-              _buildTipCard(
-                context,
-                icon: FontAwesomeIcons.comment,
-                title: FlutterI18n.translate(
-                    context, 'tips_screen.feedback_title'),
-                content: FlutterI18n.translate(
-                    context, 'tips_screen.feedback_content'),
-              ),
+                // Feedback
+                _buildTipCard(
+                  context,
+                  icon: FontAwesomeIcons.comment,
+                  title: FlutterI18n.translate(
+                      context, 'tips_screen.feedback_title'),
+                  content: FlutterI18n.translate(
+                      context, 'tips_screen.feedback_content'),
+                ),
 
-              // Harmonização (Em breve)
-              _buildTipCard(
-                context,
-                icon: FontAwesomeIcons.wineGlass,
-                title: FlutterI18n.translate(
-                    context, 'tips_screen.coming_soon_title'),
-                content: FlutterI18n.translate(
-                    context, 'tips_screen.coming_soon_content'),
-              ),
-              // Personalização
-              _buildTipCard(
-                context,
-                icon: FontAwesomeIcons.userCog,
-                title: FlutterI18n.translate(
-                    context, 'tips_screen.personalization_title'),
-                content: FlutterI18n.translate(
-                    context, 'tips_screen.personalization_content'),
-              ),
+                // Harmonização (Em breve)
+                _buildTipCard(
+                  context,
+                  icon: FontAwesomeIcons.wineGlass,
+                  title: FlutterI18n.translate(
+                      context, 'tips_screen.coming_soon_title'),
+                  content: FlutterI18n.translate(
+                      context, 'tips_screen.coming_soon_content'),
+                ),
+                // Personalização
+                _buildTipCard(
+                  context,
+                  icon: FontAwesomeIcons.userCog,
+                  title: FlutterI18n.translate(
+                      context, 'tips_screen.personalization_title'),
+                  content: FlutterI18n.translate(
+                      context, 'tips_screen.personalization_content'),
+                ),
 
-              // Segurança
-              _buildTipCard(
-                context,
-                icon: FontAwesomeIcons.shieldAlt,
-                title:
-                    FlutterI18n.translate(context, 'tips_screen.safety_title'),
-                content: FlutterI18n.translate(
-                    context, 'tips_screen.safety_content'),
-              ),
+                // Segurança
+                _buildTipCard(
+                  context,
+                  icon: FontAwesomeIcons.shieldAlt,
+                  title: FlutterI18n.translate(
+                      context, 'tips_screen.safety_title'),
+                  content: FlutterI18n.translate(
+                      context, 'tips_screen.safety_content'),
+                ),
 
-              // Dica Profissional
-              _buildTipCard(
-                context,
-                icon: FontAwesomeIcons.cocktail,
-                title:
-                    FlutterI18n.translate(context, 'tips_screen.pro_tip_title'),
-                content: FlutterI18n.translate(
-                    context, 'tips_screen.pro_tip_content'),
-              ),
-            ],
+                // Dica Profissional
+                _buildTipCard(
+                  context,
+                  icon: FontAwesomeIcons.cocktail,
+                  title: FlutterI18n.translate(
+                      context, 'tips_screen.pro_tip_title'),
+                  content: FlutterI18n.translate(
+                      context, 'tips_screen.pro_tip_content'),
+                ),
+              ],
+            ),
           ),
         ),
       ),
