@@ -28,44 +28,52 @@ class RankingScreen extends GetView<RankingController> {
           ),
         ],
       ),
-      body: RefreshIndicator(
-        onRefresh: controller.refreshRanking,
-        child: Obx(() {
-          if (controller.isLoading.value) {
-            return const Center(child: CocktailFillLoading());
-          }
+      body: SafeArea(
+        // Adicione SafeArea aqui
+        child: Padding(
+          // Adicione padding
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
+          child: RefreshIndicator(
+            onRefresh: controller.refreshRanking,
+            child: Obx(() {
+              if (controller.isLoading.value) {
+                return const Center(child: CocktailFillLoading());
+              }
 
-          if (controller.error.value.isNotEmpty) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    controller.error.value,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.grey[400]),
+              if (controller.error.value.isNotEmpty) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        controller.error.value,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.grey[400]),
+                      ),
+                      const SizedBox(height: 16),
+                      ElevatedButton(
+                        onPressed: controller.refreshRanking,
+                        child: Text(
+                          'Tentar Novamente',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: controller.refreshRanking,
-                    child: Text(
-                      'Tentar Novamente',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ],
-              ),
-            );
-          }
+                );
+              }
 
-          if (controller.rankedDrinks.isEmpty) {
-            return const Center(
-              child: Text('Nenhum drink encontrado no ranking'),
-            );
-          }
+              if (controller.rankedDrinks.isEmpty) {
+                return const Center(
+                  child: Text('Nenhum drink encontrado no ranking'),
+                );
+              }
 
-          return RankingList(drinks: controller.rankedDrinks);
-        }),
+              return RankingList(drinks: controller.rankedDrinks);
+            }),
+          ),
+        ),
       ),
     );
   }
