@@ -120,92 +120,95 @@ class IBACocktailDetailScreenState extends State<IBACocktailDetailScreen> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: RepaintBoundary(
-          key: _screenShotKey,
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  height: 400,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: Image.asset(
-                      widget.drink.getDrinkImageUrl(),
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Container(
-                          color: Colors.grey[900],
-                          child: const Icon(
-                            Icons.local_bar,
-                            color: Colors.redAccent,
-                            size: 50,
-                          ),
-                        );
-                      },
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: RepaintBoundary(
+            key: _screenShotKey,
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(16.0, 16.0, 16.0,
+                  MediaQuery.of(context).padding.bottom + 16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    height: 400,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Image.asset(
+                        widget.drink.getDrinkImageUrl(),
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Container(
+                            color: Colors.grey[900],
+                            child: const Icon(
+                              Icons.local_bar,
+                              color: Colors.redAccent,
+                              size: 50,
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 24),
-                Text(
-                  widget.drink.name,
-                  style: const TextStyle(
-                    color: Colors.redAccent,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[900],
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildInfoRow('Categoria', translatedCategory ?? ''),
-                      _buildInfoRow('Tipo', translatedAlcoholic ?? ''),
-                      _buildInfoRow('Copo', translatedGlass ?? ''),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 24),
-                _buildIngredientsList(),
-                const SizedBox(height: 24),
-                const Text(
-                  'Modo de Preparo',
-                  style: TextStyle(
-                    color: Colors.redAccent,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[900],
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Text(
-                    translatedInstructions ?? '',
+                  const SizedBox(height: 24),
+                  Text(
+                    widget.drink.name,
                     style: const TextStyle(
-                      color: Colors.white,
-                      height: 1.5,
+                      color: Colors.redAccent,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
-                const SizedBox(height: 24),
-                _buildMyVersion(),
-              ],
+                  const SizedBox(height: 16),
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[900],
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildInfoRow('Categoria', translatedCategory ?? ''),
+                        _buildInfoRow('Tipo', translatedAlcoholic ?? ''),
+                        _buildInfoRow('Copo', translatedGlass ?? ''),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  _buildIngredientsList(),
+                  const SizedBox(height: 24),
+                  const Text(
+                    'Modo de Preparo',
+                    style: TextStyle(
+                      color: Colors.redAccent,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[900],
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      translatedInstructions ?? '',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        height: 1.5,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  _buildMyVersion(),
+                ],
+              ),
             ),
           ),
         ),
