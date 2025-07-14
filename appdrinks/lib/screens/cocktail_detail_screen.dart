@@ -85,18 +85,27 @@ class CocktailDetailScreenState extends State<CocktailDetailScreen> {
         translatedIngredients = [];
         for (var i = 0; i < drink.ingredients.length; i++) {
           final ingredient = drink.ingredients[i];
-          if (ingredient != null && ingredient.isNotEmpty) {
-            final measure = i < drink.measures.length ? drink.measures[i] : '';
-            // Usar o originalName (nome original) para buscar a tradução correta
-            final originalName = drink.originalIngredients[i] ?? ingredient;
+          final ingredientName = ingredient is Map
+              ? ingredient['name']?.toString() ?? ''
+              : ingredient?.toString() ?? '';
+          if (ingredientName.isNotEmpty) {
+            final measure =
+                (i < drink.measures.length) ? drink.measures[i] : '';
+            final originalObj = (i < drink.originalIngredients.length)
+                ? drink.originalIngredients[i]
+                : null;
+            final originalName = originalObj is Map
+                ? originalObj != null
+                    ? ['name']?.toString() ?? ingredientName
+                    : originalObj?.toString() ?? ingredientName
+                : originalObj?.toString() ?? ingredientName;
             final translatedName =
                 translationService.translateIngredient(originalName);
 
             translatedIngredients!.add({
               'name': translatedName,
               'measure': measure ?? '',
-              'originalName':
-                  originalName, // Mantemos o nome original para o mapeamento de imagens
+              'originalName': originalName,
               'imageUrl': IngredientImageMapper.getImagePath(originalName) ??
                   'assets/data/images/ingredients/default.webp'
             });
