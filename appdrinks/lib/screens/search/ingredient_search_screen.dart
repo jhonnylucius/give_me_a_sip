@@ -1,4 +1,5 @@
-import 'package:app_netdrinks/controller/search_controller.dart' as netdrink;
+import 'package:app_netdrinks/controller/search_controller_local.dart'
+    as netdrink;
 import 'package:app_netdrinks/widgets/ingredients_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
@@ -12,7 +13,7 @@ class IngredientSearchScreen extends StatefulWidget {
 }
 
 class _IngredientSearchScreenState extends State<IngredientSearchScreen> {
-  final controller = Get.find<netdrink.SearchController>();
+  final controller = Get.find<netdrink.SearchControllerLocal>();
   final searchController = TextEditingController();
   final RxString searchQuery = ''.obs;
 
