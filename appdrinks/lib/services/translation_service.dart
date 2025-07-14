@@ -21,6 +21,7 @@ class TranslationService extends GetxService {
 
   bool get isInitialized => _isInitialized;
   Map<String, dynamic> get ingredientsData => _ingredientsData;
+  Map<String, dynamic> get drinksData => _drinksData; // NOVO
 
   @override
   Future<void> onInit() async {
