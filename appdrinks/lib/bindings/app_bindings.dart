@@ -2,7 +2,7 @@ import 'package:app_netdrinks/controller/cocktail_detail_controller.dart';
 import 'package:app_netdrinks/controller/cocktail_list_controller.dart';
 import 'package:app_netdrinks/controller/likes_controller.dart';
 import 'package:app_netdrinks/controller/ranking_controller.dart';
-import 'package:app_netdrinks/repository/cocktail_repository.dart';
+import 'package:app_netdrinks/repository/cocktail_repository_local.dart';
 import 'package:app_netdrinks/repository/iba_drinks_repository.dart';
 import 'package:app_netdrinks/repository/ranking_repository.dart';
 import 'package:app_netdrinks/services/iba_translation_service.dart';
@@ -10,7 +10,7 @@ import 'package:app_netdrinks/services/likes_service.dart';
 import 'package:app_netdrinks/services/locator_service.dart';
 import 'package:app_netdrinks/services/ranking_service.dart';
 import 'package:app_netdrinks/services/recipe_validation_service.dart';
-import 'package:app_netdrinks/services/search_service.dart';
+import 'package:app_netdrinks/services/search_service_local.dart';
 import 'package:app_netdrinks/services/translation_service.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -32,11 +32,11 @@ class AppBindings implements Bindings {
       logger.i('IBATranslationService inicializado');
 
       // Services
-      Get.put<SearchService>(SearchService(), permanent: true);
+      Get.put<SearchServiceLocal>(SearchServiceLocal(), permanent: true);
       logger.i('SearchService registrado');
 
       // Repositories
-      final repository = getIt<CocktailRepository>();
+      final repository = getIt<CocktailRepositoryLocal>();
       Get.put(repository, permanent: true);
       logger.i('CocktailRepository registrado');
 
