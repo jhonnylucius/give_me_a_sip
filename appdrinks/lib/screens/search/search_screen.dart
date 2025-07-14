@@ -150,7 +150,7 @@ class SearchScreenState extends State<SearchScreen> {
                   }
 
                   return ListView.builder(
-                    padding: const EdgeInsets.fromLTRB(8, 8, 8, 48),
+                    padding: const EdgeInsets.fromLTRB(8, 8, 8, 200),
                     itemCount: results.length,
                     itemBuilder: (context, index) {
                       final cocktail = results[index];
