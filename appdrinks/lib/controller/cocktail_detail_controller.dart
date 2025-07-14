@@ -1,5 +1,5 @@
 import 'package:app_netdrinks/models/cocktail.dart';
-import 'package:app_netdrinks/repository/cocktail_repository.dart';
+import 'package:app_netdrinks/repository/cocktail_repository_local.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
 class CocktailController extends GetxController {
-  final CocktailRepository repository;
+  final CocktailRepositoryLocal repository;
   final _loading = false.obs;
   final _cocktails = <Cocktail>[].obs;
 
