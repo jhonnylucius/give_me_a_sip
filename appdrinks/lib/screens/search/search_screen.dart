@@ -1,8 +1,10 @@
-import 'package:app_netdrinks/controller/search_controller.dart' as netdrink;
+import 'package:app_netdrinks/controller/search_controller_local.dart'
+    as netdrink;
 import 'package:app_netdrinks/widgets/cocktail_fill_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -12,7 +14,7 @@ class SearchScreen extends StatefulWidget {
 }
 
 class SearchScreenState extends State<SearchScreen> {
-  final controller = Get.put(netdrink.SearchController(
+  final controller = Get.put(netdrink.SearchControllerLocal(
     Get.find(),
     Get.find(),
   ));
@@ -99,18 +101,6 @@ class SearchScreenState extends State<SearchScreen> {
               child: Column(
                 children: [
                   _SearchButtonWidget(
-                    onPressed: () => controller.searchPopular(),
-                    label: FlutterI18n.translate(
-                        context, 'search_screen.popular_drinks'),
-                  ),
-                  const SizedBox(height: 8),
-                  _SearchButtonWidget(
-                    onPressed: () => controller.searchMaisRecentes(),
-                    label: FlutterI18n.translate(
-                        context, 'search_screen.recent_drinks'),
-                  ),
-                  const SizedBox(height: 8),
-                  _SearchButtonWidget(
                     onPressed: () => controller.searchNoAlcool(),
                     label: FlutterI18n.translate(
                         context, 'search_screen.non_alcoholic_drinks'),
@@ -160,36 +150,65 @@ class SearchScreenState extends State<SearchScreen> {
                   }
 
                   return ListView.builder(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.fromLTRB(8, 8, 8, 48),
                     itemCount: results.length,
                     itemBuilder: (context, index) {
                       final cocktail = results[index];
 
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
-                        child: Card(
-                          elevation: 0,
-                          color: Colors.transparent,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: ListTile(
-                            contentPadding: const EdgeInsets.all(8.0),
-                            leading: ClipRRect(
+                        child: InkWell(
+                          onTap: () async {
+                            final controller =
+                                Get.find<netdrink.SearchControllerLocal>();
+                            try {
+                              final detailsResponse =
+                                  controller.getById(cocktail.idDrink);
+                              if (detailsResponse != null) {
+                                Get.toNamed('/cocktail-detail',
+                                    arguments: detailsResponse);
+                              }
+                            } catch (e) {
+                              Logger().e('Erro ao buscar detalhes: $e');
+                            }
+                          },
+                          child: Card(
+                            elevation: 0,
+                            color: Colors.transparent,
+                            shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8),
-                              child: Image.network(
-                                cocktail.strDrinkThumb ?? '',
-                                width: 100,
-                                height: 100,
-                                fit: BoxFit.cover,
-                                errorBuilder: (_, __, ___) =>
-                                    const Icon(Icons.error),
-                              ),
                             ),
-                            title: Text(cocktail.strDrink),
-                            onTap: () =>
-                                controller.fetchCocktailDetailsAndNavigate(
-                              cocktail.idDrink,
+                            child: SizedBox(
+                              height: 100, // Altura total do card
+                              child: Row(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(8),
+                                    child: SizedBox(
+                                      width: 100,
+                                      height: 100,
+                                      child: Image.asset(
+                                        'assets/data/images/drinks/${cocktail.idDrink}.webp',
+                                        fit: BoxFit.cover,
+                                        errorBuilder: (_, __, ___) =>
+                                            const Icon(Icons.error),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 16),
+                                  Expanded(
+                                    child: Text(
+                                      cocktail.strDrink,
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
