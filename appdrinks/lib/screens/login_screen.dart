@@ -156,41 +156,39 @@ class LoginScreen extends StatelessWidget {
                   const SizedBox(height: 16),
                   SizedBox(
                     width: double.infinity, // Mesma largura dos outros botões
-                    child: SignInButton(
-                      Buttons.Google,
-                      text: FlutterI18n.translate(
-                          context, "login.sign_in_with_google"),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(36),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 12,
-                      ),
-                      onPressed: () async {
-                        try {
-                          await _authService.signInWithGoogle();
-                          final user = FirebaseAuth.instance.currentUser;
-                          if (user != null) {
-                            Get.offAllNamed('/splash-after-google');
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(FlutterI18n.translate(
-                                    context, 'login.google_user_not_found')),
-                              ),
-                            );
-                          }
-                        } catch (e) {
+                    child: SignInButton(Buttons.Google,
+                        text: FlutterI18n.translate(
+                            context, "login.sign_in_with_google"),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(36),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 12,
+                        ), onPressed: () async {
+                      try {
+                        final userCredential =
+                            await _authService.signInWithGoogle();
+                        if (userCredential != null &&
+                            userCredential.user != null) {
+                          Get.offAllNamed('/splash-after-google');
+                        } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: Text(
-                                  '${FlutterI18n.translate(context, 'login.google_login_error')}: $e'),
+                              content: Text(FlutterI18n.translate(
+                                  context, 'login.google_user_not_found')),
                             ),
                           );
                         }
-                      },
-                    ),
+                      } catch (e) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                                '${FlutterI18n.translate(context, 'login.google_login_error')}: $e'),
+                          ),
+                        );
+                      }
+                    }),
                   ),
                   const SizedBox(height: 16),
                   TextButton(
