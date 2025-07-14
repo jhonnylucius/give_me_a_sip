@@ -1,4 +1,5 @@
-import 'package:app_netdrinks/controller/search_controller.dart' as custom;
+import 'package:app_netdrinks/controller/search_controller_local.dart'
+    as custom;
 import 'package:app_netdrinks/models/cocktail.dart';
 import 'package:app_netdrinks/widgets/cocktail_fill_loading.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
 class SearchResultsScreen extends StatelessWidget {
-  final custom.SearchController controller = Get.find();
+  final custom.SearchControllerLocal controller = Get.find();
 
   SearchResultsScreen({super.key});
 
@@ -26,10 +27,10 @@ class SearchResultsScreen extends StatelessWidget {
           return const Center(child: CocktailFillLoading());
         }
 
-        final results =
-            controller.currentSearchType.value == custom.SearchType.ingredients
-                ? controller.multiIngredientsResults
-                : controller.searchResults;
+        final results = controller.currentSearchType.value ==
+                custom.SearchTypeLocal.ingredients
+            ? controller.multiIngredientsResults
+            : controller.searchResults;
 
         if (results.isEmpty) {
           return Center(
@@ -94,12 +95,9 @@ class CocktailCard extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () async {
-          final controller = Get.find<custom.SearchController>();
-
+          final controller = Get.find<custom.SearchControllerLocal>();
           try {
-            // Buscar detalhes completos do cocktail independente do tipo de pesquisa
-            final detailsResponse =
-                await controller.searchService.getById(cocktail.idDrink);
+            final detailsResponse = controller.getById(cocktail.idDrink);
             if (detailsResponse != null) {
               Get.toNamed('/cocktail-detail', arguments: detailsResponse);
             }
@@ -108,16 +106,15 @@ class CocktailCard extends StatelessWidget {
           }
         },
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            ClipRRect(
-              borderRadius:
-                  const BorderRadius.vertical(top: Radius.circular(15)),
-              child: SizedBox(
-                height: 150,
-                width: double.infinity,
-                child: Image.network(
-                  cocktail.strDrinkThumb ?? '',
+            Expanded(
+              flex: 8,
+              child: ClipRRect(
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(15)),
+                child: Image.asset(
+                  cocktail.getDrinkImageUrl(),
                   fit: BoxFit.cover,
                   errorBuilder: (_, __, ___) => Container(
                     color: Colors.grey[900],
@@ -126,8 +123,9 @@ class CocktailCard extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
+            Container(
               padding: const EdgeInsets.all(8.0),
+              alignment: Alignment.center,
               child: Text(
                 cocktail.strDrink,
                 style: const TextStyle(
