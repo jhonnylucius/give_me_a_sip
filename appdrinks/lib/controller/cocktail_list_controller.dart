@@ -1,7 +1,7 @@
 import 'package:app_netdrinks/controller/likes_controller.dart';
 import 'package:app_netdrinks/models/cocktail.dart';
 import 'package:app_netdrinks/models/recipe_status.dart';
-import 'package:app_netdrinks/repository/cocktail_repository.dart';
+import 'package:app_netdrinks/repository/cocktail_repository_local.dart';
 import 'package:app_netdrinks/repository/iba_drinks_repository.dart';
 import 'package:app_netdrinks/services/recipe_validation_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,7 +10,7 @@ import 'package:hive/hive.dart';
 import 'package:logger/logger.dart';
 
 class CocktailListController extends GetxController {
-  final CocktailRepository repository;
+  final CocktailRepositoryLocal repository;
   final Logger logger = Logger();
 
   final _cocktails = <Cocktail>[].obs;
