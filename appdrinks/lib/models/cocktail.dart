@@ -34,7 +34,7 @@ class Cocktail {
   final String? strDrinkThumb;
 
   @HiveField(10)
-  final List<String?> ingredients;
+  final List<Map<String, dynamic>> ingredients;
 
   @HiveField(11)
   final List<String?> measures;
@@ -101,12 +101,15 @@ class Cocktail {
       strTags: json['strTags'],
       strCategory: json['category'] ?? json['strCategory'],
       strIBA: json['strIBA'],
-      strAlcoholic: json['alcohol'] ?? json['strAlcoholic'],
+      strAlcoholic: json['alcoholic'] ?? json['strAlcoholic'],
       strGlass: json['glass'] ?? json['strGlass'],
       strInstructions: instructions,
       strDrinkThumb:
           json['strDrinkThumb'], // CORREÇÃO: Não modificar a URL da imagem
-      ingredients: ingredients,
+      ingredients: (json['ingredients'] as List<dynamic>?)
+              ?.map((e) => Map<String, dynamic>.from(e))
+              .toList() ??
+          [],
       measures: measures,
       originalIngredients: originalIngredients,
       translations: json['translations'] != null
@@ -149,7 +152,7 @@ class Cocktail {
     String? strGlass,
     String? strInstructions,
     String? strDrinkThumb,
-    List<String?>? ingredients,
+    List<Map<String, dynamic>>? ingredients,
     List<String?>? measures,
     List<String?>? originalIngredients,
     Map<String, String>? translations,
@@ -215,12 +218,13 @@ class Cocktail {
   List<Map<String, String>> getIngredientsWithMeasures() {
     List<Map<String, String>> result = [];
     for (int i = 0; i < ingredients.length; i++) {
-      if (ingredients[i] != null && ingredients[i]!.isNotEmpty) {
+      final ingredientName = ingredients[i]['name'];
+      if (ingredientName != null && ingredientName.isNotEmpty) {
         result.add({
-          'ingredient': ingredients[i]!,
+          'ingredient': ingredientName,
           'measure': measures[i] ?? '',
-          'originalName': originalIngredients[i] ?? ingredients[i]!,
-          'imageUrl': getIngredientImageUrl(ingredients[i]!)
+          'originalName': ingredientName,
+          'imageUrl': getIngredientImageUrl(ingredientName),
         });
       }
     }
