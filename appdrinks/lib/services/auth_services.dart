@@ -212,43 +212,32 @@ class AuthService {
         googleProvider.setCustomParameters({'prompt': 'select_account'});
         userCredential = await _firebaseAuth.signInWithPopup(googleProvider);
       } else {
-        // 1. Login Google
         final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
         if (googleUser == null) {
           Logger().w('Usuário cancelou login Google');
           return null;
         }
-
-        // 2. Autenticação Google
         final GoogleSignInAuthentication googleAuth =
             await googleUser.authentication;
         Logger().i('Token obtido: ${googleAuth.accessToken != null}');
-
-        // 3. Credencial Firebase
         final credential = GoogleAuthProvider.credential(
           accessToken: googleAuth.accessToken,
           idToken: googleAuth.idToken,
         );
-
-        // 4. Login Firebase
         userCredential = await _firebaseAuth.signInWithCredential(credential);
         Logger().i('Login Firebase realizado: ${userCredential.user?.uid}');
-
-        // 5. Salvar no Firestore
         if (userCredential.user != null) {
           await FirebaseFirestore.instance
               .collection('users')
               .doc(userCredential.user!.uid)
               .set({
-            'displayName': userCredential.user!.displayName,
-            'email': userCredential.user!.email,
+            'displayName': userCredential.user!.displayName ?? '',
+            'email': userCredential.user!.email ?? '',
             'lastLogin': FieldValue.serverTimestamp(),
           }, SetOptions(merge: true));
-
           Logger().i('Dados salvos no Firestore');
         }
       }
-
       return userCredential;
     } catch (e) {
       Logger().e('Erro no login com Google: $e');
