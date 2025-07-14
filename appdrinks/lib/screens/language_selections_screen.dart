@@ -3,6 +3,7 @@ import 'package:country_flags/country_flags.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LanguageSelectionScreen extends StatelessWidget {
   const LanguageSelectionScreen({super.key});
@@ -20,6 +21,11 @@ class LanguageSelectionScreen extends StatelessWidget {
     try {
       final translationService = Get.find<TranslationService>();
       await translationService.setLanguage(languageCode);
+
+      // Salva o idioma nas preferências
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('language', languageCode);
+
       Get.offAllNamed('/home');
     } catch (e) {
       Logger().e('Erro ao salvar idioma: $e');
