@@ -3,17 +3,17 @@ import 'package:logger/logger.dart';
 
 import '../models/cocktail.dart';
 import '../models/drink_likes.dart';
-import '../repository/cocktail_repository.dart';
+import '../repository/cocktail_repository_local.dart';
 
 class RankingRepository {
   final FirebaseFirestore _firestore;
   final Logger _logger;
-  final CocktailRepository _cocktailRepository;
+  final CocktailRepositoryLocal _cocktailRepository;
 
   RankingRepository({
     FirebaseFirestore? firestore,
     Logger? logger,
-    required CocktailRepository cocktailRepository,
+    required CocktailRepositoryLocal cocktailRepository,
   })  : _firestore = firestore ?? FirebaseFirestore.instance,
         _logger = logger ?? Logger(),
         _cocktailRepository = cocktailRepository;
