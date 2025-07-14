@@ -1,5 +1,5 @@
 
-<div align="center"> <img src="https://img.icons8.com/color/96/000000/cocktail.png" width="80"/> <h1>NetDrinks 🍹</h1> <p>Seu app de drinks, receitas e inspiração para bartenders e curiosos!</p> <a href="https://play.google.com/store/apps/details?id=com.luciano.appdrinks&pli=1"> <img src="https://img.shields.io/badge/Disponível%20na%20Play%20Store-00C853?style=for-the-badge&logo=google-play&logoColor=white"/> </a> </div>
+<div align="center"> <img src="https://img.icons8.com/color/96/000000/cocktail.png" width="80"/> <h1>NetDrinks 🍹</h1> <p>Seu app de drinks, receitas e inspiração para bartenders e curiosos!</p> <a href="https://play.google.com/store/apps/details?id=com.luciano.appdrinks"> <img src="https://img.shields.io/badge/Disponível%20na%20Play%20Store-00C853?style=for-the-badge&logo=google-play&logoColor=white"/> </a> </div>
 
 ---
 
@@ -42,8 +42,7 @@ O **NetDrinks** é um aplicativo mobile desenvolvido em Flutter/Dart, que reú
 
 ## **📲 Instale agora!**
 
-<img alt="Disponível na Play Store" src="https://img.shields.io/badge/Download na Play Store-00C853?style=for-the-badge&amp;logo=google-play&amp;logoColor=white">
-
+ <a href="https://play.google.com/store/apps/details?id=com.luciano.appdrinks"> <img src="https://img.shields.io/badge/Disponível%20na%20Play%20Store-00C853?style=for-the-badge&logo=google-play&logoColor=white"/>
 ---
 
 ## **💡 Aprendizados & Evolução**
