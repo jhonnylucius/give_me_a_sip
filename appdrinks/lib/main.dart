@@ -15,7 +15,7 @@ import 'package:app_netdrinks/screens/search/search_results_screen.dart';
 import 'package:app_netdrinks/screens/search/search_screen.dart';
 import 'package:app_netdrinks/screens/splash_screen.dart';
 import 'package:app_netdrinks/screens/verify_email_screen.dart';
-import 'package:app_netdrinks/services/locator_service.dart';
+import 'package:app_netdrinks/services/locator_service_local.dart';
 import 'package:app_netdrinks/services/translation_service.dart';
 import 'package:app_netdrinks/widgets/terms_of_service_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -56,7 +56,7 @@ Future<void> main() async {
         options: DefaultFirebaseOptions.currentPlatform);
 
     // 4. Setup do GetIt
-    await setupLocator();
+    await setupLocatorLocal();
 
     // 5. Carrega preferências
     final prefs = await SharedPreferences.getInstance();
